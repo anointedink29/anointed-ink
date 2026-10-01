@@ -72,6 +72,32 @@ SMS_BODY = ("Hi Nestor, I saw your site.%0A%0AIdea:%0APlacement:%0ARough size in
 SMS = f"sms:{TEL}?&body={SMS_BODY}"
 IG_DM = "https://ig.me/m/tat2nestuhh"
 
+# ---- artists ---------------------------------------------------------------
+# Every photo in img/manifest.json carries an "artist" key that must be a slug here;
+# lint.py fails the build on any other value. Each artist gets /artists/<slug>/.
+# Write only what each artist has confirmed. For Cristhian that is his name, his Instagram
+# handle and display name (Nestor's 2026-09-29 email: his QR code plus three photos of his
+# work). NOT known, so never written: resident or guest, start date, years, rate, booking
+# days. His three photos are his own portfolio: photo metadata shows none of the three was
+# taken at Anointed Ink, so each carries "atShop": false and the site says none was tattooed
+# there (lint.py fails a page that shows one and says otherwise, or leaves that out).
+OWNER = "nestor-juarez"
+ARTISTS = [
+    dict(slug="nestor-juarez", name=ARTIST, short="Nestor", alt_names=[HANDLE],
+         handle=IG_HANDLE, ig=IG, dm=IG_DM, role="Owner and tattoo artist",
+         person_id="/about/#nestor",
+         photo_note=("Several carry his watermark, which reads <em>Ghtto_Mex</em> or "
+                     "<em>Tattoonestor_juarez</em>. Some pieces are photographed fresh, still "
+                     "under wrap, which is why a few of them look glossy or soft.")),
+    dict(slug="cristhian-oyola", name="Cristhian Oyola", short="Cristhian",
+         alt_names=["Oyola Ink"], handle="@andrees_ink",
+         ig="https://www.instagram.com/andrees_ink/", dm="https://ig.me/m/andrees_ink",
+         role="Tattoo artist", person_id="/artists/cristhian-oyola/#person",
+         photo_note=("These come from his portfolio and were not tattooed at "
+                     "Anointed Ink.")),
+]
+ARTIST_BY = {a["slug"]: a for a in ARTISTS}
+
 # ---- Illinois rules we are allowed to state, with citations -----------------
 LAW_AGE = ("18 and over, no exceptions. Illinois law does not allow a parent to consent to a "
            "minor being tattooed (720 ILCS 5/12C-35).")

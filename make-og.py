@@ -7,15 +7,20 @@ run JS and several will not take WebP or AVIF. Run after build.py.
   python3 make-og.py <hero-slug>
 """
 import json, os, subprocess, sys, base64
-from _data import GRATING, GCOUNT, PHONE, RATING_AS_OF  # one source with the site
+from _data import GRATING, GCOUNT, PHONE, RATING_AS_OF, OWNER  # one source with the site
 
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 OUT = "img/og.jpg"
 
 def main():
-    man = json.load(open("img/manifest.json"))
+    # The card says "Custom tattoos by Nestor Juarez", so its photo must be his, and never a
+    # portfolio-only piece (noPromo, eg a sports team's mark).
+    man = [m for m in json.load(open("img/manifest.json"))
+           if m.get("artist") == OWNER and not m.get("noPromo")]
     slug = sys.argv[1] if len(sys.argv) > 1 else man[0]["slug"]
-    hero = next((m for m in man if m["slug"] == slug), man[0])
+    hero = next((m for m in man if m["slug"] == slug), None)
+    if not hero:
+        sys.exit(f"{slug}: not one of {OWNER}'s promotable photos; the card would misattribute it")
     data = base64.b64encode(open(f"img/{hero['slug']}-1000.webp", "rb").read()).decode()
 
     html = """<!doctype html><meta charset="utf-8"><style>

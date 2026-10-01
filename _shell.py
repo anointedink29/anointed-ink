@@ -12,6 +12,34 @@ MAN = [m for m in json.load(open("img/manifest.json")) if m["slug"] not in WITHH
 BYSLUG = {m["slug"]: m for m in MAN}
 
 
+# ------------------------------------------------------------------- artists
+def by_artist(slug):
+    """One artist's photos, best first. Counts and claims about an artist use only these."""
+    return [m for m in MAN if m["artist"] == slug]
+
+
+OWN = by_artist(OWNER)          # Nestor's work: the style pages and every "by Nestor" claim
+
+
+def artist_of(m):
+    return ARTIST_BY[m["artist"]]
+
+
+def person_id(a):
+    return BASE + a["person_id"]
+
+
+def credit(m, cap=None):
+    """Caption text with the artist credit every photo on this site carries."""
+    cap = (m.get("caption", "") if cap is None else cap).strip()
+    name = artist_of(m)["name"]
+    if not cap:
+        return f"Tattoo by {name}"
+    if cap[-1] in ".!?":
+        return f"{cap} Tattoo by {name}."
+    return f"{cap}, by {name}"
+
+
 def rel(path):
     """Relative prefix from a page at `path` back to the site root."""
     depth = path.count("/")
@@ -41,21 +69,25 @@ def figure(slug, p="", tag_attrs=True, eager=False):
     m = BYSLUG[slug]
     r = rel(p)
     fw, fh = m["sizes"]["1000"]
+    cap = credit(m)
     attrs = ""
     if tag_attrs:
         attrs = (f' data-styles="{" ".join(m["styles"])}"'
+                 f' data-artist="{m["artist"]}"'
                  f' data-full="{r}img/{slug}-1000.webp"'
                  f' data-fw="{fw}" data-fh="{fh}"'
                  f' data-alt="{html.escape(m["alt"], quote=True)}"'
-                 f' data-caption="{html.escape(m["caption"], quote=True)}"')
-    cap = f'<figcaption>{html.escape(m["caption"])}</figcaption>' if m.get("caption") else ""
-    return f'<figure{attrs} tabindex="0">{pic(slug, 400, p, lazy=not eager)}{cap}</figure>'
+                 f' data-caption="{html.escape(cap, quote=True)}"')
+    return (f'<figure{attrs} tabindex="0">{pic(slug, 400, p, lazy=not eager)}'
+            f'<figcaption>{html.escape(cap)}</figcaption></figure>')
 
 
-def by_tags(tags, limit=None, exclude=()):
-    """Manifest entries carrying any of `tags`, best first."""
+def by_tags(tags, limit=None, exclude=(), artist=OWNER):
+    """Manifest entries carrying any of `tags`, best first. Nestor's only unless `artist` is
+    given (None means every artist), because the style pages and their copy are his."""
     out = [m for m in MAN
-           if any(t in m["styles"] for t in tags) and m["slug"] not in exclude]
+           if any(t in m["styles"] for t in tags) and m["slug"] not in exclude
+           and (artist is None or m["artist"] == artist)]
     return out[:limit] if limit else out
 
 
@@ -67,13 +99,14 @@ def shop_ld():
         "name": BIZ,
         "description": (f"Custom tattoo shop in {CITY}, {STATE_FULL}. Black and grey Chicano "
                         f"realism, portraits, color realism, memorials, cover-ups and custom "
-                        f"work by {ARTIST}."),
+                        f"work. Owned by {ARTIST}."),
         "url": BASE + "/", "telephone": PHONE, "email": EMAIL,
         "address": {"@type": "PostalAddress", "streetAddress": STREET, "addressLocality": CITY,
                     "addressRegion": STATE, "postalCode": ZIP, "addressCountry": "US"},
         "geo": {"@type": "GeoCoordinates", "latitude": LAT, "longitude": LNG},
         "hasMap": GBP, "priceRange": "$$", "currenciesAccepted": "USD",
-        "image": [f"{BASE}/img/{m['slug']}-1000.webp" for m in MAN[:6]],
+        "image": [f"{BASE}/img/{m['slug']}-1000.webp"
+                  for m in [m for m in OWN if not m.get("noPromo")][:6]],
         "logo": f"{BASE}/img/icon-512.png",
         "openingHoursSpecification": [
             {"@type": "OpeningHoursSpecification", "dayOfWeek": f"https://schema.org/{d}",
@@ -113,7 +146,7 @@ def breadcrumbs(trail, path):
 
 # ----------------------------------------------------------------- head/foot
 def head(title, desc, path, extra_ld=None, og_img="og", preload=None, crumbs=None,
-         extra_head="", lang="en"):
+         extra_head="", lang="en", og_alt=None):
     robots = ("index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"
               if INDEXABLE else "noindex,nofollow")
     canon = f"{BASE}/{path}" if path else BASE + "/"
@@ -133,8 +166,15 @@ def head(title, desc, path, extra_ld=None, og_img="og", preload=None, crumbs=Non
     if preload:
         pl = (f'<link rel="preload" as="image" href="{r}img/{preload}-1000.avif" '
               f'type="image/avif" fetchpriority="high">')
+    for x in (og_img, preload):
+        if x in BYSLUG and BYSLUG[x].get("noPromo"):
+            raise SystemExit(f"{path}: {x} is portfolio only, never a share or preload image")
     ogimg = f"{BASE}/img/og.jpg" if og_img == "og" else f"{BASE}/img/{og_img}-1000.webp"
     ogw, ogh = (1200, 630) if og_img == "og" else BYSLUG[og_img]["sizes"]["1000"]
+    if og_alt is None:
+        if og_img in BYSLUG and BYSLUG[og_img]["artist"] != OWNER:
+            raise SystemExit(f"{path}: share image {og_img} is not {ARTIST}'s; pass og_alt")
+        og_alt = f"{BIZ}, custom tattoos by {ARTIST} in {CITY}, {STATE}"
     return f"""<!doctype html>
 <html lang="{lang}">
 <head>
@@ -152,7 +192,7 @@ def head(title, desc, path, extra_ld=None, og_img="og", preload=None, crumbs=Non
 <meta property="og:image" content="{ogimg}">
 <meta property="og:image:width" content="{ogw}">
 <meta property="og:image:height" content="{ogh}">
-<meta property="og:image:alt" content="{BIZ}, custom tattoos by {ARTIST} in {CITY}, {STATE}">
+<meta property="og:image:alt" content="{html.escape(og_alt)}">
 <meta property="og:locale" content="{lang}_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{html.escape(title)}">
@@ -214,13 +254,14 @@ def lightbox():
 
 def foot(path=""):
     r = rel(path)
-    pages = "".join(f'<li><a href="{r}{h}">{t}</a></li>' for h, t in NAV)
+    pages = "".join(f'<li><a href="{r}{h}">{t}</a></li>'
+                    for h, t in NAV[:-1] + [("artists/", "Artists"), NAV[-1]])
     styles = "".join(f'<li><a href="{r}{s["slug"]}/">{s["nav"]}</a></li>' for s in STYLE_PAGES[:6])
     return f"""</main>
 <footer><div class="wrap"><div class="foot">
  <div>
   <h3>{BIZ}</h3>
-  <p>Custom tattooing by {ARTIST} in {CITY}, {STATE_FULL}.<br>
+  <p>Custom tattooing in {CITY}, {STATE_FULL}. Owned by {ARTIST}.<br>
   Black &amp; grey Chicano realism, portraits, color, memorials and cover-ups.</p>
   <p><a href="tel:{TEL}">{PHONE}</a><br><a href="mailto:{EMAIL}">{EMAIL}</a></p>
   <p><a href="{IG}" rel="noopener me">Instagram</a> &middot;
@@ -235,7 +276,7 @@ def foot(path=""):
    <li><a href="{GBP}" rel="noopener">Directions</a></li></ul></div>
 </div>
 <div class="legal">&copy; 2026 {BIZ}. Every tattoo photograph on this site is
-{ARTIST}&rsquo;s own work.</div>
+credited to the artist who tattooed it.</div>
 </div></footer>
 <div class="stickybar">
  <a class="btn-p" href="{SMS}" style="background:var(--gold);color:#14100a">Text your idea</a>

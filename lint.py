@@ -11,6 +11,7 @@ the registrant remains in violation (797.1700(b)); and the claims are reachable 
   python3 lint.py      exit 0 = clean, exit 1 = do not ship
 """
 import glob, html, json, os, re, sys
+from _data import ARTISTS, BIZ, CITY
 
 FAIL = []
 WARN = []
@@ -90,13 +91,187 @@ def check_text(path, text):
                     "Illinois has no such exception (720 ILCS 5/12C-35).")
 
 
+# ---------------------------------------------------------------- artist credit
+# Every photo belongs to an artist in _data.ARTISTS, every figure credits that artist, and no
+# copy claims one artist's work beside another artist's photo. Showing one artist's portfolio
+# as another's, or as shop work, is the deceptive-advertising exposure described at the top
+# (815 ILCS 510; 797.1600(b)). Added 2026-10-01 with the second artist.
+ART = {a["slug"]: a for a in ARTISTS}
+SHOWN = re.compile(r'(?:src|srcset|data-full)="[^"]*?img/(tattoo-[a-z0-9-]+?)-(?:400|1000)\.')
+NAME = r"[A-Z][a-z]+(?: [A-Z][a-z]+)?"
+# "tattoo/tattooed/tattoos/tattooing by X" and "work by X". The footer said "Custom tattooing
+# by Nestor Juarez" under another artist's photos and the first version of this rule missed it.
+TATTOOED_BY = re.compile(rf"\b(?:[Tt]attoo(?:ed|s|ing)?|[Ww]ork) by ({NAME})"
+                         rf"|\b({NAME}) tattooed (?:himself|herself|themselves)\b")
+OWN_WORK = re.compile(r"\bown (?:work|tattooing|tattoos|pieces)\b", re.I)
+# Provenance. A photo with "atShop": false in the manifest was tattooed somewhere else (an
+# artist's own portfolio). A page showing one must say so, and must never say the work was
+# done here. Anchored on the verb, so "tattoo artist at Anointed Ink" (a role) is not a claim.
+SHOP = (rf"(?:here|in-house|in (?:the|our) shop|at (?:the|our) shop|at {re.escape(BIZ)}"
+        rf"|in {re.escape(CITY)}|on 111th Street)")
+PROVENANCE = re.compile(rf"\b(?:tattooed|done|inked|made|completed|finished|created)\s+"
+                        rf"(?:by {NAME}\s+)?(?:(?:right|all|both)\s+)?{SHOP}\b"
+                        rf"|\b(?:tattoos|pieces|work)\s+(?:by|from)\b[^.!?:]{{0,40}}?\s{SHOP}\b",
+                        re.I)
+NEGATED = re.compile(r"\b(?:not|never|none|no|neither|nor|wasn't|weren't|isn't|aren't)\b", re.I)
+DISCLOSED = re.compile(rf"\b(?:not|none|never)\b[^.!?]{{0,40}}?\btattooed at {re.escape(BIZ)}\b",
+                       re.I)
+SITE_WIDE = re.compile(r"\b(?:every|all)\b[^.!?]{0,60}\b(?:photo|photograph|image|picture|tattoo|"
+                       r"piece)s?\b[^.!?]{0,60}\b(?:this|the) (?:site|website)\b", re.I)
+
+
+def artist_named(name):
+    for a in ARTISTS:
+        if name in (a["name"], a["short"]) or name.split()[0] == a["short"]:
+            return a["slug"]
+    return None
+
+
+def names_in(text):
+    """Artist slugs named in `text`, in order of their last mention."""
+    hits = []
+    for a in ARTISTS:
+        for n in (a["name"], a["short"]):
+            for m in re.finditer(rf"\b{re.escape(n)}\b", text):
+                hits.append((m.start(), a["slug"]))
+    return [slug for _, slug in sorted(hits)]
+
+
+def ld_descriptions(s):
+    """Every "description" string in the page's JSON-LD (the shop blurb rides on every page)."""
+    out = []
+    for blk in re.findall(r'<script type="application/ld\+json">(.*?)</script>', s, re.S):
+        try:
+            stack = [json.loads(blk)]
+        except Exception:
+            continue  # reported in main()
+        while stack:
+            o = stack.pop()
+            if isinstance(o, dict):
+                for k, v in o.items():
+                    if k == "description" and isinstance(v, str):
+                        out.append(v)
+                    else:
+                        stack.append(v)
+            elif isinstance(o, list):
+                stack.extend(o)
+    return out
+
+
+def provenance_claims(text):
+    """'tattooed here' style claims in `text` whose sentence carries no negation."""
+    hits = []
+    for m in PROVENANCE.finditer(text):
+        start = max(text.rfind(c, 0, m.start()) for c in ".!?") + 1
+        if not NEGATED.search(text[start:m.start()]):
+            hits.append((m, text[max(0, m.start() - 60):m.end() + 40]))
+    return hits
+
+
+def check_credit(path, s, man):
+    # 1. every figure with a photo credits the photo's artist, and only that artist
+    for fig in re.finditer(r"<figure\b([^>]*)>(.*?)</figure>", s, re.S):
+        slugs = set(SHOWN.findall(fig.group(0)))
+        for slug in slugs:
+            m = man.get(slug)
+            if not m:
+                FAIL.append(f"{path}: figure shows {slug}, which is not in the manifest"); continue
+            a = ART.get(m.get("artist"))
+            if not a:
+                continue  # reported by the manifest check
+            caps = re.findall(r"<figcaption>(.*?)</figcaption>", fig.group(2), re.S)
+            caps += re.findall(r'data-caption="([^"]*)"', fig.group(1))
+            if not caps:
+                FAIL.append(f"{path}: figure {slug} has no caption crediting {a['name']}")
+            for c in caps:
+                c = html.unescape(re.sub("<[^>]+>", "", c))
+                if f"by {a['name']}" not in c:
+                    FAIL.append(f"{path}: caption on {slug} does not credit {a['name']}: {c[:80]}")
+                for o in ARTISTS:
+                    if o["slug"] != a["slug"] and o["name"] in c:
+                        FAIL.append(f"{path}: caption on {slug} names {o['name']}, "
+                                    f"but the photo is {a['name']}'s")
+
+    # 2. claims in the copy, checked against whose photos the page actually shows
+    on_page = {man[x].get("artist") for x in SHOWN.findall(s) if x in man}
+    meta = " ".join(re.findall(r'<meta name="description" content="([^"]*)"', s))
+    body = re.sub(r"<(script|style|figure)\b.*?</\1>", " ", s, flags=re.S)
+    visible = re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", body))).replace("\u2019", "'")
+    text = ". ".join([visible, html.unescape(meta)] + ld_descriptions(s))
+    text = re.sub(r"\s+", " ", text).replace("\u2019", "'")
+    for m in TATTOOED_BY.finditer(text):
+        who = artist_named(m.group(1) or m.group(2))
+        ctx = text[max(0, m.start() - 50):m.end() + 40]
+        if not who:
+            FAIL.append(f"{path}: credits work to someone not in ARTISTS: ...{ctx}...")
+        elif on_page - {who}:
+            FAIL.append(f"{path}: says '{m.group(0)}' on a page showing another artist's "
+                        f"photos: ...{ctx}...")
+    for m in OWN_WORK.finditer(text):
+        named = names_in(text[max(0, m.start() - 80):m.start()])
+        ctx = text[max(0, m.start() - 60):m.end() + 40]
+        if named and on_page - {named[-1]}:
+            FAIL.append(f"{path}: '{m.group(0)}' claim for {ART[named[-1]]['name']} beside "
+                        f"another artist's photo: ...{ctx}...")
+        elif not named and len(on_page) > 1:
+            FAIL.append(f"{path}: '{m.group(0)}' on a page showing more than one artist: "
+                        f"...{ctx}...")
+    if len({m.get("artist") for m in man.values()}) > 1:
+        for m in SITE_WIDE.finditer(text):
+            sent = m.group(0) + text[m.end():m.end() + 80].split(".")[0]
+            if "credited" not in sent and names_in(sent):
+                FAIL.append(f"{path}: site-wide claim names one artist, but the site shows "
+                            f"several: ...{sent[:140]}...")
+
+    # 3. work not done at the shop is disclosed, and never claimed as done here
+    away = sorted({x for x in SHOWN.findall(s) if man.get(x, {}).get("atShop") is False})
+    if away:
+        caps = [html.unescape(re.sub("<[^>]+>", "", c)) for c in
+                re.findall(r"<figcaption>(.*?)</figcaption>", s, re.S) +
+                re.findall(r'data-caption="([^"]*)"', s)]
+        for m, ctx in provenance_claims(". ".join([text] + caps)):
+            FAIL.append(f"{path}: says '{m.group(0)}' on a page showing work not tattooed at "
+                        f"{BIZ} ({', '.join(away)}): ...{ctx}...")
+        if not DISCLOSED.search(visible):
+            FAIL.append(f"{path}: shows {', '.join(away)}, which was not tattooed at {BIZ}, but "
+                        f"the page never says so (eg 'not tattooed at {BIZ}')")
+
+    # 4. portfolio-only photos never become a share, preload or business image
+    for slug, m in man.items():
+        if not m.get("noPromo"):
+            continue
+        for tag in re.findall(r"<(?:meta|link)\b[^>]*>", s):
+            if f"img/{slug}-" in tag:
+                FAIL.append(f"{path}: {slug} is portfolio only, but it is in {tag[:90]}")
+        for blk in re.findall(r'<script type="application/ld\+json">(.*?)</script>', s, re.S):
+            try:
+                obj = json.loads(blk)
+            except Exception:
+                continue  # reported below
+            stack = [obj]
+            while stack:
+                o = stack.pop()
+                if isinstance(o, dict):
+                    for k, v in o.items():
+                        if k in ("image", "logo") and f"img/{slug}-" in json.dumps(v):
+                            FAIL.append(f"{path}: {slug} is portfolio only, but JSON-LD uses "
+                                        f"it as an {k}")
+                        stack.append(v)
+                elif isinstance(o, list):
+                    stack.extend(o)
+
+
 def main():
     pages = sorted(glob.glob("**/*.html", recursive=True))
     if not pages:
         print("no pages built"); return 1
+    man = {}
+    if os.path.exists("img/manifest.json"):
+        man = {m["slug"]: m for m in json.load(open("img/manifest.json"))}
     for p in pages:
         s = open(p).read()
         check_text(p, s)
+        check_credit(p, s, man)
 
         # one h1, present
         h1 = re.findall(r"<h1[^>]*>(.*?)</h1>", s, re.S)
@@ -143,6 +318,13 @@ def main():
             if len(m["alt"]) < 20:
                 WARN.append(f"manifest: thin alt text on {m['slug']}")
             check_text(f"manifest:{m['slug']}", m["alt"] + " " + m.get("caption", ""))
+            if m.get("atShop") is False:
+                for hit, ctx in provenance_claims(m["alt"] + ". " + m.get("caption", "")):
+                    FAIL.append(f"manifest: {m['slug']} was not tattooed at {BIZ}, but its alt "
+                                f"or caption says '{hit.group(0)}'")
+            if m.get("artist") not in ART:
+                FAIL.append(f"manifest: {m['slug']} has artist {m.get('artist')!r}, which is not "
+                            "in ARTISTS (_data.py). Every photo is credited to a known artist.")
 
     print(f"checked {len(pages)} pages")
     for w in WARN[:25]:

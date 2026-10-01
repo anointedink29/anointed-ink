@@ -47,7 +47,7 @@ cd ../photos && python3 process.py
 | `_shell.py` | Page head, nav, footer, schema, responsive image helpers. |
 | `build.py` | Page content and the emitter. |
 | `lint.py` | The build gate (see below). |
-| `img/manifest.json` | Per-photo metadata: alt text, style tags, dimensions, quality rank. |
+| `img/manifest.json` | Per-photo metadata: artist, alt text, style tags, dimensions, quality rank. |
 
 ## Why `lint.py` exists
 
@@ -74,6 +74,15 @@ So the linter is a gate, not a checklist. It fails the build on:
   (Corrected 2026-09-24: this used to say the rule requires state forms signed by both parties.)
 - **"18+ with parental consent" phrasing.** Illinois has no parental consent exception for
   tattooing (720 ILCS 5/12C-35(a)).
+- **Artist credit** (added 2026-10-01 with the second artist). Every photo in
+  `img/manifest.json` must carry an `artist` listed in `ARTISTS` (`_data.py`), and every
+  figure caption must credit that artist. "Own work", "tattooed by X", "tattoos by X",
+  "tattooing by X" or "work by X" copy (body text, meta description or JSON-LD description)
+  fails on any page that shows another artist's photo, and a site-wide "every photo on this
+  site is X's" line fails once the site has more than one artist. A page that shows an
+  `"atShop": false` photo fails if it says the work was tattooed or done here, at the shop or
+  at Anointed Ink, or if it lacks the "not tattooed at Anointed Ink" disclosure. A `noPromo`
+  photo can never be a share, preload or business image.
 - `aggregateRating` in JSON-LD, em dashes, UK spellings, stock photo sources, missing alt
   text, invalid JSON-LD.
 
@@ -83,5 +92,21 @@ So the linter is a gate, not a checklist. It fails the build on:
 up reviews about itself is ineligible for the star feature, so the markup buys nothing. The
 5.0 from 115 Google reviews is published as visible, **date-stamped**, linked body text instead.
 
-**Every photograph is Nestor's own work.** No stock imagery, ever. On a tattoo site a stock
-tattoo reads as the artist's portfolio. `lint.py` fails the build if a stock source appears.
+**Every photograph is credited to the artist who tattooed it.** No stock imagery, ever. On a
+tattoo site a stock tattoo reads as the artist's portfolio. `lint.py` fails the build if a
+stock source appears.
+
+**Artists.** `ARTISTS` in `_data.py` lists who tattoos here; each gets `/artists/<slug>/`
+with Person JSON-LD that `worksFor` the shop, plus an `/artists/` index. Nestor's 65 photos are
+the style pages, the home page, Oak Lawn and the Spanish page (`by_tags` and `OWN` are his
+only), because their copy says "by Nestor". Cristhian Oyola's three photos are his own
+portfolio (photo metadata shows none of the three was taken at Anointed Ink), so each carries
+`"atShop": false`, the site says none of them was tattooed at Anointed Ink, and they are never
+counted as Nestor's or in the home page's numbers. The interlocking-LA piece is `noPromo`:
+portfolio only, never an ad or share image.
+
+To add an artist: add them to `ARTISTS` and `ARTIST_COPY` (`build.py`) with only what they
+have confirmed, put their originals under `../photos/raw/<slug>/`, append catalog entries with
+`"artist": "<slug>"` and a `"file"` path (never renumber existing entries), add
+`"atShop": false` to any piece not tattooed at Anointed Ink, then run `process.py`,
+`build.py` and `lint.py`.

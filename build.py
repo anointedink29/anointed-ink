@@ -10,7 +10,8 @@ every fact in there has a named source in ../CLIENT-BRIEF.md.
 import html, json, os, re, shutil
 from _data import *
 from _shell import (head, foot, visit, hours_table, lightbox, pic, figure, by_tags,
-                    breadcrumbs, MAN, BYSLUG, rel)
+                    breadcrumbs, MAN, BYSLUG, rel, OWN, by_artist, artist_of, person_id,
+                    credit)
 
 PAGES = {}
 
@@ -19,13 +20,17 @@ def write(path, content):
     PAGES[path] = content
 
 
+def and_list(items):
+    return items[0] if len(items) == 1 else ", ".join(items[:-1]) + " and " + items[-1]
+
+
 def trust_bar():
     return f"""<div class="trust"><div class="wrap trust-in">
  <span><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> <b>{GRATING}</b> from
   {GCOUNT} <a href="{GBP}" rel="noopener">Google reviews</a></span>
  <span><b>{RATE}/hour</b> shop rate</span>
  <span><b>18+</b> photo ID required</span>
- <span><b>{len(MAN)} pieces</b> in the gallery</span>
+ <span><b>{len(OWN)} pieces</b> by Nestor <a href="gallery/#{OWNER}">in the gallery</a></span>
  <span><b>Mon to Sat</b> 12pm to 7pm</span>
 </div></div>"""
 
@@ -131,7 +136,7 @@ def build_home():
     cards = "".join(
         f'<a class="card" href="{href}"><h3>{t}</h3><p>{d}</p>'
         f'<span class="more">See the work &rarr;</span></a>' for t, d, href in STYLE_CARDS)
-    feat = [m["slug"] for m in MAN if m["quality"] >= 4][:12]
+    feat = [m["slug"] for m in OWN if m["quality"] >= 4][:12]
     gal = "".join(figure(x, eager=(i < 6)) for i, x in enumerate(feat))
     faq = "".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q, a in FAQ)
     faq_ld = {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
@@ -163,7 +168,7 @@ def build_home():
   <div class="cta">
    <a class="btn btn-p" href="{SMS}">Text your idea</a>
    <a class="btn btn-s" href="tel:{TEL}">Call {PHONE}</a>
-   <a class="btn btn-s" href="gallery/">See {len(MAN)} tattoos</a>
+   <a class="btn btn-s" href="gallery/#{OWNER}">See {len(OWN)} tattoos by Nestor</a>
   </div>
  </div>
  <div class="hero-img">{pic('tattoo-catrina-woman-with-roses', 1000, lazy=False,
@@ -182,11 +187,11 @@ def build_home():
 
 <section class="alt"><div class="wrap">
  <div class="sec-head"><p class="eyebrow">Portfolio</p><h2>Selected work</h2>
- <p>Every photograph on this site is Nestor&rsquo;s own tattooing. Click any piece to see it
- larger.</p></div>
+ <p>Every piece in this section is Nestor&rsquo;s own tattooing. Click any piece to see it
+ larger, or <a href="artists/">meet the artists</a>.</p></div>
  <div class="gal-grid">{gal}</div>
- <p style="margin-top:28px"><a class="btn btn-s" href="gallery/">See all {len(MAN)} pieces
- &rarr;</a></p>
+ <p style="margin-top:28px"><a class="btn btn-s" href="gallery/#{OWNER}">See all {len(OWN)} of
+ Nestor&rsquo;s pieces &rarr;</a></p>
 </div></section>
 
 <section><div class="wrap">
@@ -238,38 +243,49 @@ def build_gallery():
         for s in m["styles"]:
             counts[s] = counts.get(s, 0) + 1
     order = [s for s, _ in sorted(counts.items(), key=lambda x: -x[1]) if counts[s] >= 2]
-    chips = ('<button class="chip" data-filter="all" aria-pressed="true">All '
-             f'{len(MAN)}</button>')
-    chips += "".join(
+    per = [(a, by_artist(a["slug"])) for a in ARTISTS]
+    per = [(a, ms) for a, ms in per if ms]
+    shown = [m for _, ms in per for m in ms]          # grouped by artist, each best first
+    tally = and_list([f"{len(ms)} from {a['name']}&rsquo;s own portfolio"
+                      if all(m.get("atShop") is False for m in ms)
+                      else f"{len(ms)} by {a['name']}" for a, ms in per])
+    who = ('<button class="chip" data-filter="all" aria-pressed="true">All '
+           f'{len(MAN)}</button>')
+    who += "".join(
+        f'<button class="chip" data-filter="{a["slug"]}" data-kind="artist" '
+        f'aria-pressed="false">{a["name"]} {len(ms)}</button>' for a, ms in per)
+    chips = "".join(
         f'<button class="chip" data-filter="{s}" aria-pressed="false">'
         f'{STYLE_LABELS.get(s, s)} {counts[s]}</button>' for s in order)
     figs = "".join(figure(m["slug"], "gallery/", eager=(i < 6))
-                   for i, m in enumerate(MAN))
+                   for i, m in enumerate(shown))
+    notes = " ".join(
+        f'<a href="../artists/{a["slug"]}/">{a["name"]}</a>: {a["photo_note"]}' for a, _ in per)
     ld = {"@context": "https://schema.org", "@type": "ImageGallery",
-          "name": f"Tattoo portfolio by {ARTIST}",
-          "description": f"{len(MAN)} tattoos by {ARTIST} at {BIZ} in {CITY}, {STATE}.",
+          "name": f"Tattoo gallery, {BIZ}",
+          "description": f"{len(MAN)} tattoo photographs, each credited to its artist: "
+                         f"{html.unescape(tally)}.",
           "associatedMedia": [
               {"@type": "ImageObject", "contentUrl": f"{BASE}/img/{m['slug']}-1000.webp",
                "thumbnailUrl": f"{BASE}/img/{m['slug']}-400.webp",
-               "caption": m["caption"], "creator": {"@id": BASE + "/about/#nestor"},
-               "creditText": ARTIST} for m in MAN]}
+               "caption": credit(m), "creator": {"@id": person_id(artist_of(m))},
+               "creditText": artist_of(m)["name"]} for m in shown]}
     return head(
-        f"Tattoo Gallery | {len(MAN)} Tattoos by {ARTIST}",
-        f"{len(MAN)} tattoos by {ARTIST} at {BIZ} in {CITY}, IL. Filter by black and grey "
-        "realism, Chicano, portraits, color, Aztec, memorials and cover-ups.",
+        f"Tattoo Gallery | {and_list([a['name'] for a, _ in per])}",
+        f"{BIZ} tattoo gallery, {CITY}, IL: {html.unescape(tally)}, each photo credited to "
+        "its artist.",
         "gallery/", extra_ld=[ld], crumbs=[("Gallery", "gallery/")],
         og_img="tattoo-catrina-woman-with-roses") + f"""
 <section><div class="wrap">
  <div class="sec-head"><p class="eyebrow">Portfolio</p><h1>The gallery</h1>
- <p>{len(MAN)} tattoos, all of them Nestor&rsquo;s own work. Filter by style, and click any
- piece to open it full size.</p></div>
+ <p>{len(MAN)} tattoos: {tally}. Every photo is credited to the artist who tattooed it.
+ Filter by artist or by style, and click any piece to open it full size.</p></div>
+ <div class="filters" role="group" aria-label="Filter by artist" style="margin-bottom:12px">{who}</div>
  <div class="filters" role="group" aria-label="Filter by style">{chips}</div>
  <p class="count">Showing {len(MAN)} pieces.</p>
  <div class="masonry">{figs}</div>
  <div class="note" style="margin-top:34px"><strong>About these photographs.</strong>
- Every image here is work Nestor tattooed himself. Several carry his own watermark, which reads
- <em>Ghtto_Mex</em> or <em>Tattoonestor_juarez</em>. Some pieces are photographed fresh, still
- under wrap, which is why a few of them look glossy or soft.</div>
+ Each one is credited to the artist who tattooed it. {notes}</div>
  <div class="cta"><a class="btn btn-p" href="tel:{TEL}">Call {PHONE}</a>
  <a class="btn btn-s" href="../book/">Book a consultation</a></div>
 </div></section>
@@ -545,14 +561,14 @@ def build_style(sp):
     # A couple of categories have only a few tagged frames. Back them with the densest
     # large-scale work rather than showing a thin grid, and say so in the heading.
     if tagged < 8:
-        extra = [m for m in MAN if m not in photos and
+        extra = [m for m in OWN if m not in photos and
                  ("sleeve" in m["styles"] or m["quality"] >= 4)][:12 - tagged]
         photos = photos + extra
     figs = "".join(figure(m["slug"], sp["slug"] + "/") for m in photos)
     aside = "".join(f"<li>{x}</li>" for x in c["aside"])
     others = "".join(
         f'<a class="card" href="../{o["slug"]}/"><h3>{o["h1"]}</h3>'
-        f'<p>{len(by_tags(o["tags"]))} pieces in the gallery</p></a>'
+        f'<p>{len(by_tags(o["tags"]))} pieces by {ARTIST_BY[OWNER]["short"]}</p></a>'
         for o in STYLE_PAGES if o["slug"] != sp["slug"])[:100000]
     qa = STYLE_FAQ.get(sp["slug"], [])
     faq_html = "".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q, a in qa)
@@ -647,20 +663,150 @@ def build_about():
   <div class="card"><h3>{GRATING} stars</h3><p>From {GCOUNT}
    <a href="{GBP}" rel="noopener">Google reviews</a>.</p></div>
   <div class="card"><h3>{RATE}/hour</h3><p>Shop rate. Smaller pieces quoted flat.</p></div>
-  <div class="card"><h3>{len(MAN)} pieces</h3><p><a href="../gallery/">In the gallery</a>.</p></div>
+  <div class="card"><h3>{len(OWN)} pieces</h3><p>Of his work <a href="../gallery/#{OWNER}">in the gallery</a>.</p></div>
  </div>
  <div class="cta" style="margin-top:36px">
   <a class="btn btn-p" href="../book/">Book a consultation</a>
-  <a class="btn btn-s" href="../gallery/">See the work</a></div>
+  <a class="btn btn-s" href="../gallery/#{OWNER}">See the work</a>
+  <a class="btn btn-s" href="../artists/">Meet the artists</a></div>
 </div></section>
 {reviews_block()}
 {visit("about/")}
 """ + foot("about/")
 
 
+# ================================================================== ARTISTS
+# Per-artist copy. Write only what the artist has confirmed (see ARTISTS in _data.py), and
+# describe work by what the photos show. Credentials, superiority, health, pain, aftercare
+# and long-horizon promises fail lint.py here as everywhere else.
+ARTIST_COPY = {
+"nestor-juarez": dict(
+ title=f"{ARTIST}, Owner and Tattoo Artist | {BIZ}",
+ desc=(f"Tattoos by {ARTIST} ({HANDLE}), owner of {BIZ} in {CITY}, IL. Black and grey Chicano "
+       "realism, portraits, color, memorials and cover-ups."),
+ body=f"""
+<p>Nestor owns {BIZ} and has been tattooing for {YEARS} years, working as
+<strong>{HANDLE}</strong>. Black and grey Chicano realism is what he is asked for most, and the
+same week will take in portraits, color realism, Aztec and cultural work, memorials and
+cover-ups.</p>
+<p>His full story is on <a href="../../about/">the About page</a>, and every style page on this
+site shows his work.</p>""",
+ book=f"""
+<p>Text or call the shop at <a href="tel:{TEL}">{PHONE}</a>, or message Nestor on Instagram at
+<a href="{IG_DM}" rel="noopener">{IG_HANDLE}</a>. Send a reference image, the placement and a
+rough size.</p>""",
+ og="tattoo-catrina-woman-with-roses", og_alt=None),
+"cristhian-oyola": dict(
+ title=f"Cristhian Oyola, Tattoo Artist | {BIZ}",
+ desc=(f"Cristhian Oyola (@andrees_ink), tattoo artist at {BIZ} in {CITY}, IL. Black and "
+       "grey, script and religious work. Message him on Instagram."),
+ body="""
+<p>Cristhian posts his work on Instagram under the name Oyola Ink. The three photographs
+below show black and grey work, script and lettering, and religious imagery. They are a script
+prayer with a blackletter MAL, a praying cherub over a color sunflower, and a California
+outline with palm trees.</p>
+<p>All three come from his portfolio. None of them was tattooed at Anointed Ink.</p>""",
+ book="""
+<p>To ask about a piece with Cristhian, message him on Instagram at
+<a href="https://ig.me/m/andrees_ink" rel="noopener">@andrees_ink</a>. For anything else, the
+shop&rsquo;s contact details are below.</p>""",
+ og="tattoo-praying-cherub-over-sunflower",
+ og_alt="Praying cherub over a sunflower, a tattoo by Cristhian Oyola"),
+}
+
+
+def build_artists_index():
+    p = "artists/"
+    cards = ""
+    for a in ARTISTS:
+        work = by_artist(a["slug"])
+        thumb = BYSLUG.get(ARTIST_COPY[a["slug"]]["og"])     # the same photo as the share card
+        img = f'<div class="thumb">{pic(thumb["slug"], 400, p)}</div>' if thumb else ""
+        n = len(work)
+        away = len([m for m in work if m.get("atShop") is False])
+        note = ""
+        if away and away == n:
+            note = (f' {"It is" if n == 1 else "They are"} from {a["short"]}&rsquo;s portfolio '
+                    f'and {"was" if n == 1 else "were"} not tattooed at {BIZ}.')
+        elif away:
+            note = (f' {away} of them {"is" if away == 1 else "are"} from {a["short"]}&rsquo;s '
+                    f'portfolio and {"was" if away == 1 else "were"} not tattooed at {BIZ}.')
+        cards += (f'<a class="post" href="{a["slug"]}/">{img}<div class="body">'
+                  f'<span class="kicker">{a["role"]}</span><h3>{a["name"]}</h3>'
+                  f'<p>On Instagram as {a["handle"]}. {n} {"piece" if n == 1 else "pieces"} '
+                  f'in the gallery.{note}</p><span class="meta">See the work &rarr;</span>'
+                  '</div></a>')
+    return head(f"Tattoo Artists | {BIZ}, {CITY}, IL",
+                f"The tattoo artists at {BIZ} in {CITY}, IL: "
+                f"{and_list([a['name'] for a in ARTISTS])}. See each artist's work and how to "
+                "book with them.",
+                p, crumbs=[("Artists", p)]) + f"""
+<section><div class="wrap">
+ <div class="sec-head"><p class="eyebrow">Artists</p><h1>The artists</h1>
+ <p>Every tattoo photo on this site is credited to the artist who tattooed it. Each artist page
+ shows that artist&rsquo;s work and how to book with them.</p></div>
+ <div class="posts two">{cards}</div>
+</div></section>
+{visit(p)}
+""" + foot(p)
+
+
+def build_artist(a):
+    p = f"artists/{a['slug']}/"
+    c = ARTIST_COPY[a["slug"]]
+    owner = a["slug"] == OWNER
+    work = by_artist(a["slug"])
+    shown = work[:12] if owner else work
+    figs = "".join(figure(m["slug"], p, eager=(i < 4)) for i, m in enumerate(shown))
+    ld = {"@context": "https://schema.org", "@type": "Person", "@id": person_id(a),
+          "name": a["name"], "alternateName": a["alt_names"],
+          "jobTitle": "Owner and Tattoo Artist" if owner else "Tattoo Artist",
+          "worksFor": {"@id": BASE + "/#shop"},
+          "url": BASE + ("/about/" if owner else "/" + p),
+          "sameAs": [IG, FB, SNAP] if owner else [a["ig"]]}
+    if owner:
+        more = (f'<a class="btn btn-s" href="../../gallery/#{a["slug"]}">See all {len(work)} of '
+                f'{a["short"]}&rsquo;s pieces &rarr;</a>')
+        cta = (f'<a class="btn btn-p" href="{SMS}">Text your idea</a>'
+               f'<a class="btn btn-s" href="tel:{TEL}">Call {PHONE}</a>')
+    else:
+        more = (f'<a class="btn btn-s" href="{a["ig"]}" rel="noopener">More on Instagram '
+                f'{a["handle"]} &rarr;</a>')
+        cta = (f'<a class="btn btn-p" href="{a["dm"]}" rel="noopener">Message {a["handle"]} '
+               'on Instagram</a>')
+    return head(c["title"], c["desc"], p, extra_ld=[ld],
+                crumbs=[("Artists", "artists/"), (a["name"], p)],
+                og_img=c["og"], og_alt=c["og_alt"]) + f"""
+<section><div class="wrap">
+ <div class="sec-head"><p class="eyebrow"><a href="../" style="color:var(--gold)">Artists</a></p>
+ <h1>{a["name"]}</h1>
+ <p>{a["role"]} at {BIZ}. On Instagram as
+ <a href="{a["ig"]}" rel="noopener">{a["handle"]}</a>.</p></div>
+ <div class="grid g2">
+  <div>{c["body"]}</div>
+  <div><h3>Booking</h3>{c["book"]}
+   <div class="note" style="margin-top:20px">{LAW_AGE} {LAW_ID}</div>
+   <div class="cta">{cta}</div></div>
+ </div>
+ <h2 style="margin-top:60px">{"Selected work" if owner else "The work"}</h2>
+ <p class="areas" style="margin-bottom:24px">Every photo here is credited to
+ {a["name"]}.</p>
+ <div class="gal-grid">{figs}</div>
+ <p style="margin-top:28px">{more}</p>
+</div></section>
+{visit(p)}
+{lightbox()}
+""" + foot(p)
+
+
 # ===================================================================== BOOK
 def build_book():
     steps = "".join(f"<li><h3>{t}</h3><p>{d}</p></li>" for t, d in STEPS)
+    others = "".join(
+        f'<div class="note" style="margin-top:22px">Booking with {a["name"]}? Message '
+        f'{a["short"]} on Instagram at <a href="{a["dm"]}" rel="noopener">{a["handle"]}</a>. '
+        f'<a href="../artists/{a["slug"]}/">See {a["short"]}&rsquo;s work</a>.</div>'
+        for a in ARTISTS if a["slug"] != OWNER)
     return head(f"Book a Tattoo | {BIZ}, {CITY}, IL",
                 f"Send {ARTIST} your tattoo idea. {BIZ}, {STREET}, {CITY}, {STATE} {ZIP}. Text or call "
                 f"{PHONE}. A deposit holds the date.",
@@ -676,6 +822,7 @@ def build_book():
     <a href="{IG}" rel="noopener me">Instagram {IG_HANDLE}</a><br>
     <a href="{FB}" rel="noopener me">Facebook</a><br>
     <a href="mailto:{EMAIL}">{EMAIL}</a></p>
+   {others}
    <h3 style="margin-top:34px">What to send</h3>
    <ul class="areas" style="line-height:2.1">
     <li>A reference image or two</li>
@@ -804,7 +951,7 @@ def build_pricing():
 
 # ================================================================== OAK LAWN
 def build_oaklawn():
-    photos = [m for m in MAN if m["quality"] >= 4][:12]
+    photos = [m for m in OWN if m["quality"] >= 4][:12]
     figs = "".join(figure(m["slug"], "tattoo-artist-oak-lawn/") for m in photos)
     ld = {"@context": "https://schema.org", "@type": "Service",
           "serviceType": "Tattooing", "provider": {"@id": BASE + "/#shop"},
@@ -931,7 +1078,7 @@ def expand_images(body, path):
         slug = slug.strip()
         if slug not in BYSLUG:
             return ""
-        cap = html.escape(cap.strip() or BYSLUG[slug]["caption"])
+        cap = html.escape(credit(BYSLUG[slug], cap.strip() or BYSLUG[slug]["caption"]))
         return (f'<figure>{pic(slug, 1000, path, sizes="(max-width:820px) 92vw, 760px")}'
                 f"<figcaption>{cap}</figcaption></figure>")
     return re.sub(r"\[\[IMG:([^\]]+)\]\]", sub, body)
@@ -1056,6 +1203,9 @@ def emit():
     write("tattoo-artist-oak-lawn/index.html", build_oaklawn())
     write("es/tatuajes-estilo-chicano/index.html", build_spanish())
     write("about/index.html", build_about())
+    write("artists/index.html", build_artists_index())
+    for a in ARTISTS:
+        write(f"artists/{a['slug']}/index.html", build_artist(a))
     write("book/index.html", build_book())
     if BLOG_POSTS:
         write("blog/index.html", build_blog_index())

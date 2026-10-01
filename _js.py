@@ -28,12 +28,17 @@ JS = """
  function apply(tag,push){
   var shown=0;
   figs.forEach(function(f){
-   var ok = tag==='all' || (' '+f.dataset.styles+' ').indexOf(' '+tag+' ')>-1;
+   var ok = tag==='all' ||
+    (' '+f.dataset.styles+' '+(f.dataset.artist||'')+' ').indexOf(' '+tag+' ')>-1;
    f.hidden=!ok; if(ok) shown++;
   });
-  chips.forEach(function(c){ c.setAttribute('aria-pressed', c.dataset.filter===tag?'true':'false'); });
+  var kind='style';
+  chips.forEach(function(c){
+   c.setAttribute('aria-pressed', c.dataset.filter===tag?'true':'false');
+   if(c.dataset.filter===tag&&c.dataset.kind) kind=c.dataset.kind;
+  });
   if(countEl){
-   var label=tag==='all'?'pieces':'pieces in this style';
+   var label=tag==='all'?'pieces':(kind==='artist'?'pieces by this artist':'pieces in this style');
    countEl.textContent='Showing '+shown+' '+label+'.';
   }
   if(push){

@@ -108,6 +108,7 @@ a.card:hover{border-color:var(--gold);transform:translateY(-2px)}
  font-size:.83rem;color:#fff;opacity:0;transition:opacity .22s;
  background:linear-gradient(transparent,rgba(0,0,0,.86))}
 .masonry figure:hover figcaption,.masonry figure:focus-within figcaption{opacity:1}
+@media (hover:none){.masonry figcaption{opacity:1}}
 .masonry figure[hidden]{display:none}
 .gal-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
 .gal-grid figure{margin:0;border-radius:var(--rs);overflow:hidden;border:1px solid var(--line);
@@ -170,6 +171,7 @@ table.hrs tr:last-child th,table.hrs tr:last-child td{border-bottom:0}
 
 /* ---------- blog ---------- */
 .posts{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.posts.two{grid-template-columns:repeat(2,1fr);max-width:860px}
 .post{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
  overflow:hidden;text-decoration:none;color:inherit;display:flex;flex-direction:column;
  transition:border-color .18s,transform .18s}
@@ -251,7 +253,7 @@ footer h3{color:var(--tx);font-size:.76rem;letter-spacing:.17em;text-transform:u
  .masonry{column-count:2;column-gap:10px}
  .masonry figure{margin-bottom:10px}
  .gal-grid{grid-template-columns:repeat(2,1fr)}
- .posts{grid-template-columns:1fr}
+ .posts,.posts.two{grid-template-columns:1fr}
  .foot{grid-template-columns:1fr}
  .stickybar{display:flex}
  .callbtn{display:none}  /* the sticky bar carries Call; the pill pushed the menu button off-screen */
