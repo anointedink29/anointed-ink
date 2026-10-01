@@ -8,7 +8,7 @@ source is recorded in ../CLIENT-BRIEF.md. Do not add a value without one.
 
 # ---- launch switches -------------------------------------------------------
 INDEXABLE = False                                    # noindex until Nestor approves
-BASE = "https://ogeddiesmith.github.io/anointed-ink" # Pages origin; swap for the real domain
+BASE = "https://anointed.ink"                       # custom domain (HTTPS works once GoDaddy has all 4 GitHub A records)
 BUILT = "2026-09-24"
 
 # ---- NAP, matches the Google Business Profile exactly ----------------------
