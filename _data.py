@@ -10,7 +10,7 @@ source is recorded in ../CLIENT-BRIEF.md. Do not add a value without one.
 INDEXABLE = False                                    # noindex until Nestor approves
 BASE = "https://anointed.ink"                       # custom domain (HTTPS works once GoDaddy has all 4 GitHub A records)
 BUILT = "2026-09-24"
-GTM_ID = "GTM-T28XGJZL"                              # SD GTM account; fires GA4 G-9KT98PXLXD (created 2026-10-02)
+GTM_ID = "GTM-5V38S4MR"                              # Anointed Ink's own GTM account (6380221591); fires GA4 G-MCC1ZVKMPR (property 557063878). Moved 2026-10-02.
 
 # ---- NAP, matches the Google Business Profile exactly ----------------------
 BIZ    = "Anointed Ink"
