@@ -7,7 +7,7 @@ source is recorded in ../CLIENT-BRIEF.md. Do not add a value without one.
 """
 
 # ---- launch switches -------------------------------------------------------
-INDEXABLE = False                                    # noindex until Nestor approves
+INDEXABLE = True                                     # public since 2026-10-05 (Eddie: "we are good to go")
 BASE = "https://anointed.ink"                       # custom domain (HTTPS works once GoDaddy has all 4 GitHub A records)
 BUILT = "2026-09-24"
 GTM_ID = "GTM-5V38S4MR"                              # Anointed Ink's own GTM account (6380221591); fires GA4 G-MCC1ZVKMPR (property 557063878). Moved 2026-10-02.
