@@ -1,0 +1,25 @@
+name: Check site
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check-site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Build site
+        run: python -X utf8 build.py
+      - name: Check content and markup
+        run: python -X utf8 lint.py
+      - name: Verify committed site matches sources
+        run: git diff --exit-code -- '*.html' robots.txt sitemap.xml .nojekyll

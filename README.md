@@ -3,22 +3,25 @@
 Static marketing site for **Anointed Ink**, the tattoo shop owned by **Nestor Juarez**
 (`Tat2Nestuhh`) at 5920 W 111th St, Chicago Ridge, IL 60415.
 
-Live preview: https://ogeddiesmith.github.io/anointed-ink/
+Configured site URL: https://anointed.ink/
+
+For local commands, Codex setup, and the publishing workflow, see [SETUP.md](SETUP.md).
 
 Built by [Simply Digital](https://simplydigitalmarketing.co).
 
 ---
 
-## Status: preview, not launched
+## Status: configured for public indexing
 
-The site ships **`noindex`** with `Disallow: /` in robots.txt. It names a real business with a
-real phone number, and Nestor has not signed off on the copy yet.
+The current source has indexing enabled and uses `https://anointed.ink`.
+`CNAME` contains `anointed.ink`, and robots.txt allows crawling. Verify GitHub
+Pages settings, DNS, and HTTPS separately when checking the live deployment.
 
-Two switches in `_data.py` take it live:
+Current switches in `_data.py`:
 
 ```python
-INDEXABLE = False   # -> True once the copy is approved
-BASE = "https://ogeddiesmith.github.io/anointed-ink"   # -> the real domain
+INDEXABLE = True
+BASE = "https://anointed.ink"
 ```
 
 `anointedink.com` and `.net` are both taken by an unrelated screen printing business.
