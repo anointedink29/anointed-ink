@@ -23,6 +23,18 @@ Preview runs in the foreground; press Ctrl+C to stop. For another port, use
 `.\project.cmd preview --port 8001`. The site's external analytics scripts can
 still load during local preview.
 
+The launcher skips the desktop-only browser bridge in standalone CLI sessions
+when `CODEX_WINDOWS_REGISTERED_CORE` is absent. This removes its startup warning
+without editing shared desktop configuration. App-hosted sessions with the
+required context keep the bridge enabled.
+
+To update the WinGet CLI after closing it, run
+`powershell -NoProfile -File .\update-codex.ps1` from normal PowerShell.
+With `-WaitForExit`, it waits up to
+one hour for that installed CLI and its helpers to exit, then updates and checks
+the version. It never terminates a session. Results are written to
+`%TEMP%\anointed-codex-update\cli-update.log`.
+
 ## Finish this setup
 
 Python 3.13.15 was installed and the 32-page build passed on 2026-10-09.
@@ -61,11 +73,18 @@ codex --version
 codex doctor
 ```
 
-Diagnostics inside this restricted chat reported connectivity errors and an
-integrity-check failure for `memories_1.sqlite`. Recheck with normal PowerShell
-before concluding the database is damaged. If the failure persists, preserve
-the database and seek repair guidance; do not delete it as a routine setup step.
-Do not disable Defender or the sandbox based only on diagnostic suggestions.
+Approved diagnostics outside the sandbox passed connectivity and all existing
+database integrity checks on 2026-10-09. The earlier restricted-chat failure for
+`memories_1.sqlite` did not reproduce. The project launcher now reports two
+advisory warnings (Dev Drive and Defender) with zero failures. Administrator
+inspection confirmed Defender and real-time protection are enabled, no
+exclusions are set, and Controlled Folder Access is disabled. No recent blocking
+was detected. Do not disable Defender or the sandbox based only on these notes.
+
+The desktop Store update check found no upgrade on 2026-10-09. OpenAI's linked
+signed MSIX was version 26.930.7945.0, older than installed 26.1002.7124.0;
+Windows refused the downgrade. Doctor reports a newer build available, but its
+installation remains pending until a current package is distributed.
 
 ## Daily workflow
 

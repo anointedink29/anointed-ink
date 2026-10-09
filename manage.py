@@ -37,6 +37,16 @@ def check():
     run(sys.executable, "-X", "utf8", "lint.py")
 
 
+def codex_command():
+    command = [tool("codex")]
+    # The desktop browser bridge requires context supplied by its host app.
+    # Standalone CLI sessions cannot start it without that context. Keep the
+    # shared app configuration intact and override only this invocation.
+    if os.name == "nt" and not os.environ.get("CODEX_WINDOWS_REGISTERED_CORE"):
+        command.extend(["-c", "mcp_servers.node_repl.enabled=false"])
+    return command
+
+
 def finish_setup():
     git = tool("git")
     expected = "https://github.com/anointedink29/anointed-ink.git"
@@ -78,11 +88,11 @@ def main():
         print(f"Preview: http://127.0.0.1:{args.port} (Ctrl+C to stop)", flush=True)
         run(sys.executable, "-X", "utf8", "-m", "http.server", str(args.port), "--bind", "127.0.0.1")
     elif args.command == "codex":
-        run(tool("codex"), "-C", str(ROOT))
+        run(*codex_command(), "-C", str(ROOT))
     elif args.command == "resume":
-        run(tool("codex"), "-C", str(ROOT), "resume", "--last")
+        run(*codex_command(), "-C", str(ROOT), "resume", "--last")
     elif args.command == "doctor":
-        run(tool("codex"), "doctor")
+        run(*codex_command(), "doctor")
     else:
         finish_setup()
 
