@@ -96,6 +96,12 @@ ARTISTS = [
          role="Tattoo artist", person_id="/artists/cristhian-oyola/#person",
          photo_note=("These come from his portfolio and were not tattooed at "
                      "Anointed Ink.")),
+    dict(slug="dangelo", name="D'Angelo", short="D'Angelo",
+         alt_names=["eastchicagoink23"], handle="@eastchicagoink23",
+         ig="https://www.instagram.com/eastchicagoink23/",
+         dm="https://ig.me/m/eastchicagoink23", role="Tattoo artist",
+         person_id="/artists/dangelo/#person",
+         photo_note="Eight photographs from D'Angelo&rsquo;s portfolio."),
 ]
 ARTIST_BY = {a["slug"]: a for a in ARTISTS}
 

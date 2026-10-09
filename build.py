@@ -271,9 +271,9 @@ def build_gallery():
                "caption": credit(m), "creator": {"@id": person_id(artist_of(m))},
                "creditText": artist_of(m)["name"]} for m in shown]}
     return head(
-        f"Tattoo Gallery | {and_list([a['name'] for a, _ in per])}",
-        f"{BIZ} tattoo gallery, {CITY}, IL: {html.unescape(tally)}, each photo credited to "
-        "its artist.",
+        f"Tattoo Gallery | {BIZ}",
+        f"{BIZ} tattoo gallery: {html.unescape(tally)}. "
+        "Filter by artist or style.",
         "gallery/", extra_ld=[ld], crumbs=[("Gallery", "gallery/")],
         og_img="tattoo-catrina-woman-with-roses") + f"""
 <section><div class="wrap">
@@ -712,6 +712,21 @@ outline with palm trees.</p>
 shop&rsquo;s contact details are below.</p>""",
  og="tattoo-praying-cherub-over-sunflower",
  og_alt="Praying cherub over a sunflower, a tattoo by Cristhian Oyola"),
+"dangelo": dict(
+ title=f"D'Angelo, Tattoo Artist | {BIZ}",
+ desc=("Explore eight tattoos by D'Angelo: snakes, dragons, animal portraits "
+       "and illustrated characters. Message @eastchicagoink23 on Instagram."),
+ body="""
+<p>D'Angelo shares his work on Instagram as <strong>@eastchicagoink23</strong>.
+The eight photographs below show a snake and roses, a red mask, a purple dragon,
+a lioness and cubs, religious imagery and illustrated characters.</p>
+<p>Each piece is from D'Angelo&rsquo;s portfolio and is credited to him.</p>""",
+ book="""
+<p>To ask about a tattoo with D'Angelo, message him on Instagram at
+<a href="https://ig.me/m/eastchicagoink23" rel="noopener">@eastchicagoink23</a>.
+Send your idea, the placement and a rough size.</p>""",
+ og="tattoo-dangelo-snake-and-roses",
+ og_alt="Snake and roses, a tattoo by D'Angelo"),
 }
 
 
@@ -737,9 +752,8 @@ def build_artists_index():
                   f'in the gallery.{note}</p><span class="meta">See the work &rarr;</span>'
                   '</div></a>')
     return head(f"Tattoo Artists | {BIZ}, {CITY}, IL",
-                f"The tattoo artists at {BIZ} in {CITY}, IL: "
-                f"{and_list([a['name'] for a in ARTISTS])}. See each artist's work and how to "
-                "book with them.",
+                f"Meet {and_list([a['name'] for a in ARTISTS])} at {BIZ}. "
+                "Explore each artist's tattoo portfolio and find booking details.",
                 p, crumbs=[("Artists", p)]) + f"""
 <section><div class="wrap">
  <div class="sec-head"><p class="eyebrow">Artists</p><h1>The artists</h1>

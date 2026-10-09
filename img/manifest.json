@@ -2064,5 +2064,261 @@
     1000
    ]
   }
+ },
+ {
+  "slug": "tattoo-dangelo-snake-and-roses",
+  "index": 84,
+  "artist": "dangelo",
+  "alt": "Black and grey snake winding around roses and leaves on the upper arm",
+  "caption": "Snake and roses",
+  "subject": "snake and roses",
+  "styles": [
+   "animal",
+   "floral"
+  ],
+  "palette": "black-and-grey",
+  "placement": "upper arm",
+  "quality": 4,
+  "isCollage": false,
+  "throughWrap": false,
+  "w": 1086,
+  "h": 1448,
+  "sizes": {
+   "400": [
+    400,
+    533
+   ],
+   "1000": [
+    1000,
+    1333
+   ]
+  },
+  "atShop": null,
+  "source": "inbox/artist profiles/angelo/IMG_20261009_145941 (4).png",
+  "sourceSha256": "989a2aabb568ba8ae4f56b6d60f79a56e9360a3f444a157f3b5378a1a7ee3207"
+ },
+ {
+  "slug": "tattoo-dangelo-red-mask",
+  "index": 85,
+  "artist": "dangelo",
+  "alt": "Red horned mask with black and grey petals on the forearm",
+  "caption": "Red mask and petals",
+  "subject": "red mask and petals",
+  "styles": [
+   "anime-character",
+   "floral"
+  ],
+  "palette": "color",
+  "placement": "forearm",
+  "quality": 4,
+  "isCollage": false,
+  "throughWrap": false,
+  "w": 1122,
+  "h": 1402,
+  "sizes": {
+   "400": [
+    400,
+    500
+   ],
+   "1000": [
+    1000,
+    1250
+   ]
+  },
+  "atShop": null,
+  "source": "inbox/artist profiles/angelo/IMG_20261009_145941 (5).png",
+  "sourceSha256": "1f45016b0072c6354fa3df2b3fee1d37955e44bba8423df81f32edebb4f5eee3"
+ },
+ {
+  "slug": "tattoo-dangelo-purple-dragon",
+  "index": 86,
+  "artist": "dangelo",
+  "alt": "Purple dragon with a curved scaled body and raised claws on the thigh",
+  "caption": "Purple dragon",
+  "subject": "purple dragon",
+  "styles": [
+   "animal"
+  ],
+  "palette": "color",
+  "placement": "thigh",
+  "quality": 4,
+  "isCollage": false,
+  "throughWrap": false,
+  "w": 1122,
+  "h": 1402,
+  "sizes": {
+   "400": [
+    400,
+    500
+   ],
+   "1000": [
+    1000,
+    1250
+   ]
+  },
+  "atShop": null,
+  "source": "inbox/artist profiles/angelo/IMG_20261009_145941 (6).png",
+  "sourceSha256": "7152280d37e497c0edf1271350e476c4ae22fdf7db69ae1afdc99c517ecd0bdd"
+ },
+ {
+  "slug": "tattoo-dangelo-lioness-and-cubs",
+  "index": 87,
+  "artist": "dangelo",
+  "alt": "Black and grey crowned lioness with two cubs, flowers and script on the calf",
+  "caption": "Lioness and cubs with script",
+  "subject": "lioness and cubs with script",
+  "styles": [
+   "animal",
+   "floral",
+   "lettering-script"
+  ],
+  "palette": "black-and-grey",
+  "placement": "calf",
+  "quality": 4,
+  "isCollage": false,
+  "throughWrap": false,
+  "w": 1086,
+  "h": 1448,
+  "sizes": {
+   "400": [
+    400,
+    533
+   ],
+   "1000": [
+    1000,
+    1333
+   ]
+  },
+  "atShop": null,
+  "source": "inbox/artist profiles/angelo/IMG_20261009_145941 (7).png",
+  "sourceSha256": "ef85dbc695b4fb3e81756eef0b208dbe782daeb40b225df498544647d27a3bd7"
+ },
+ {
+  "slug": "tattoo-dangelo-skeletal-crowned-figure",
+  "index": 88,
+  "artist": "dangelo",
+  "alt": "Black and grey skeletal face with a thorned crown and elongated fingers along the forearm",
+  "caption": "Skeletal crowned figure",
+  "subject": "skeletal crowned figure",
+  "styles": [
+   "religious",
+   "ornamental"
+  ],
+  "palette": "black-and-grey",
+  "placement": "forearm",
+  "quality": 4,
+  "isCollage": false,
+  "throughWrap": false,
+  "w": 1448,
+  "h": 1086,
+  "sizes": {
+   "400": [
+    400,
+    300
+   ],
+   "1000": [
+    1000,
+    750
+   ]
+  },
+  "atShop": null,
+  "source": "inbox/artist profiles/angelo/IMG_20261009_145941 (8).png",
+  "sourceSha256": "d06fe3c641d1e8fbe48642a593f472c274c4c1bad63404077621961c0a287916"
+ },
+ {
+  "slug": "tattoo-dangelo-jesus-and-crosses",
+  "index": 89,
+  "artist": "dangelo",
+  "alt": "Black and grey portrait of Jesus with a crown of thorns, Savior script and three crosses on the calf",
+  "caption": "Jesus and three crosses",
+  "subject": "jesus and three crosses",
+  "styles": [
+   "religious",
+   "portrait",
+   "lettering-script"
+  ],
+  "palette": "black-and-grey",
+  "placement": "calf",
+  "quality": 4,
+  "isCollage": false,
+  "throughWrap": false,
+  "w": 1086,
+  "h": 1448,
+  "sizes": {
+   "400": [
+    400,
+    533
+   ],
+   "1000": [
+    1000,
+    1333
+   ]
+  },
+  "atShop": null,
+  "source": "inbox/artist profiles/angelo/IMG_20261009_145941 (9).png",
+  "sourceSha256": "33d72d28339ae556ad32eec947b52527f7cc695122710bfbd19bb62d84a981b7"
+ },
+ {
+  "slug": "tattoo-dangelo-dark-rabbit",
+  "index": 90,
+  "artist": "dangelo",
+  "alt": "Black and grey illustrated rabbit face with long ears and exposed teeth on the forearm",
+  "caption": "Dark rabbit face",
+  "subject": "dark rabbit face",
+  "styles": [
+   "anime-character"
+  ],
+  "palette": "black-and-grey",
+  "placement": "forearm",
+  "quality": 4,
+  "isCollage": false,
+  "throughWrap": false,
+  "w": 1086,
+  "h": 1448,
+  "sizes": {
+   "400": [
+    400,
+    533
+   ],
+   "1000": [
+    1000,
+    1333
+   ]
+  },
+  "atShop": null,
+  "source": "inbox/artist profiles/angelo/IMG_20261009_145941 (10).png",
+  "sourceSha256": "e21bf413a57328509321dfd14c080355ac6680b8bd60ecbfd097789c3f8f1abf"
+ },
+ {
+  "slug": "tattoo-dangelo-woman-and-playing-cards",
+  "index": 91,
+  "artist": "dangelo",
+  "alt": "Black and grey illustrated woman with roses, playing cards and red accents on the thigh",
+  "caption": "Illustrated woman and playing cards",
+  "subject": "illustrated woman and playing cards",
+  "styles": [
+   "anime-character",
+   "floral"
+  ],
+  "palette": "color",
+  "placement": "thigh",
+  "quality": 4,
+  "isCollage": false,
+  "throughWrap": false,
+  "w": 1086,
+  "h": 1448,
+  "sizes": {
+   "400": [
+    400,
+    533
+   ],
+   "1000": [
+    1000,
+    1333
+   ]
+  },
+  "atShop": null,
+  "source": "inbox/artist profiles/angelo/IMG_20261009_145941 (11).png",
+  "sourceSha256": "38cd1c115582e3b2cf8145e02f275bbe15dfd323c94115e8b4b7b9529ff047d7"
  }
 ]
