@@ -103,6 +103,10 @@ Last updated: 2026-11-08
 - The idea builder (`idea_builder()`, script in `_js.py`) fills the text to Nestor from the visitor's picks. No AI and
   no upload; its style chips map to manifest tags.
 - Every figure still needs a plain `<figcaption>` with "by <artist>": lint reads only an attribute-free figcaption.
+- The logo is traced from the shop's sign (Simply Digital's brand kit holds the SVG masters). On the site: the icons,
+  `img/logo.png` (schema), `img/logo-footer.webp` and `img/logo-reverse.webp` (share card).
+- `piercing/` shows D'Angelo Andolini's posted prices with their date (`PIERCING_AS_OF`); re-read the list in the shop
+  before changing a price. `walk-in-tattoos/` carries the walk-in policy (`WALK_INS`).
 - The hero motion stops for visitors who turn motion off, and the page reads fine without JavaScript.
 - `_js.py` is a Python string: a JavaScript `'\n'` must be written `'\\n'` there. A bare one becomes a real line
   break inside the script and stops every script on the page. After editing it, check the built page has no script errors.

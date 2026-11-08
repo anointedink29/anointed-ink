@@ -114,6 +114,30 @@ LAW_ID = ("Bring a government-issued photo ID showing your date of birth. Illino
 LAW_MINORS_PRESENT = ("Anyone under 18 has to be with a parent or legal guardian just to be on "
                       "the premises while tattooing is happening (720 ILCS 5/12C-35(b)).")
 
+# ---- piercing ---------------------------------------------------------------
+# D'Angelo Andolini's price list on the shop counter, read off Eddie's photo of 2026-11-06 (IMG_0403).
+# Re-read the posted list before changing a price, and date-stamp it like the rating.
+PIERCER = "D'Angelo Andolini"
+PIERCING_AS_OF = "November 6, 2026"
+PIERCING_PRICES = [
+    ("Most piercings", "$50"),
+    ("Doubles: ear lobes, nipples, angel bites and other pairs", "$100"),
+    ("Dermals", "$100"),
+    ("Surface staple", "$80"),
+    ("Industrial", "$100"),
+    ("VCH", "$100"),
+]
+PIERCE_SMS = (f"sms:{TEL}?&body=Hi, I saw your site and want to book a piercing with D'Angelo."
+              "%0A%0APiercing:%0ADays that work:")
+# Minors and piercing, from the statute (720 ILCS 5/12C-40, read 2026-11-08 at ftp.ilga.gov).
+LAW_PIERCE_MINOR = ("Illinois law requires a parent or legal guardian's written consent to pierce anyone "
+                    "under 18, and a specific consent form for piercings in the mouth (720 ILCS "
+                    "5/12C-40).")
+
+# ---- walk-ins ---------------------------------------------------------------
+# The shop's own flyer says "Walk-ins welcome"; Eddie confirmed it 2026-11-08.
+WALK_INS = "Walk-ins welcome, Monday to Saturday, 12pm to 7pm, when an artist is free."
+
 # ---- style pages -----------------------------------------------------------
 # slug, nav label, h1, style tags pulled from the photo manifest
 STYLE_PAGES = [
@@ -159,5 +183,5 @@ STYLE_LABELS = {
 # ---- main nav --------------------------------------------------------------
 NAV = [("", "Home"), ("gallery/", "Gallery"),
        ("black-and-grey-chicano-realism/", "Black &amp; Grey"),
-       ("cover-up-tattoos/", "Cover-Ups"), ("pricing/", "Pricing"),
+       ("cover-up-tattoos/", "Cover-Ups"), ("piercing/", "Piercing"), ("pricing/", "Pricing"),
        ("blog/", "Blog"), ("about/", "About"), ("book/", "Send your idea")]

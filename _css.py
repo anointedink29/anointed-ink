@@ -351,6 +351,7 @@ footer{border-top:1px solid var(--line);background:var(--bg2);padding:58px 0 44p
 .foot{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:34px}
 footer a{color:var(--muted);text-decoration:none}
 footer a:hover{color:var(--accent2)}
+.footlogo{width:260px;height:auto;margin:0 0 18px}
 footer h3{color:var(--tx);font:700 .76rem/1.3 var(--f);letter-spacing:.17em;text-transform:uppercase;
  margin-bottom:1.1em}
 .foot ul{list-style:none;padding:0;margin:0;line-height:2.05}

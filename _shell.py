@@ -122,7 +122,7 @@ def shop_ld():
         "hasMap": GBP, "priceRange": "$$", "currenciesAccepted": "USD",
         "image": [f"{BASE}/img/{m['slug']}-1000.webp"
                   for m in [m for m in OWN if not m.get("noPromo")][:6]],
-        "logo": f"{BASE}/img/icon-512.png",
+        "logo": f"{BASE}/img/logo.png",
         "openingHoursSpecification": [
             {"@type": "OpeningHoursSpecification", "dayOfWeek": f"https://schema.org/{d}",
              "opens": o, "closes": c} for d, o, c in HOURS] + [
@@ -134,14 +134,16 @@ def shop_ld():
                     "alternateName": HANDLE, "jobTitle": "Owner and Tattoo Artist"},
         "knowsAbout": ["Black and grey Chicano realism", "Portrait tattoos", "Cover-up tattoos",
                        "Color realism tattoos", "Memorial tattoos", "Aztec and cultural tattoos",
-                       "Religious tattoos"],
+                       "Religious tattoos", "Body piercing"],
         "hasOfferCatalog": {
             "@type": "OfferCatalog", "name": "Tattoo services",
             "itemListElement": [
                 {"@type": "Offer", "itemOffered": {
                     "@type": "Service",
                     "name": re.sub("<[^>]+>", "", sp["h1"]).replace("&amp;", "and"),
-                    "url": f"{BASE}/{sp['slug']}/"}} for sp in STYLE_PAGES]},
+                    "url": f"{BASE}/{sp['slug']}/"}} for sp in STYLE_PAGES] + [
+                {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Body piercing",
+                                                   "url": f"{BASE}/piercing/"}}]},
         # aggregateRating and review are deliberately absent. Under Google's self-serving
         # review policy a business marking up its own reviews is INELIGIBLE for the star
         # feature, so the markup buys nothing and the only outcomes are neutral or bad.
@@ -287,7 +289,9 @@ def visit(path="", h2="Visit the shop"):
   {", ".join(AREAS)}.</p>
  </div>
  <div><h3>Hours</h3>{hours_table()}
-  <p class="areas" style="margin-top:20px">Plus code {PLUSCODE}</p></div>
+  <p class="areas" style="margin-top:20px"><strong style="color:var(--tx)">Walk-ins welcome</strong>
+  when an artist is free. <a href="{r}walk-in-tattoos/">What to expect</a>.</p>
+  <p class="areas" style="margin-top:12px">Plus code {PLUSCODE}</p></div>
 </div></div></section>"""
 
 
@@ -307,7 +311,8 @@ def foot(path=""):
     return f"""</main>
 <footer><div class="wrap"><div class="foot">
  <div>
-  <h3>{BIZ}</h3>
+  <img class="footlogo" src="{r}img/logo-footer.webp" alt="{BIZ} Tattoo Studio" width="520" height="244" loading="lazy" decoding="async">
+  <h3 class="sr">{BIZ}</h3>
   <p>Custom tattooing in {CITY}, {STATE_FULL}. Owned by {ARTIST}.<br>
   Black &amp; grey Chicano realism, portraits, color, memorials and cover-ups.</p>
   <p><a href="tel:{TEL}">{PHONE}</a><br><a href="mailto:{EMAIL}">{EMAIL}</a></p>
@@ -320,6 +325,7 @@ def foot(path=""):
  <div><h3>Visit</h3><ul>
    <li>{STREET}</li><li>{CITY}, {STATE} {ZIP}</li>
    <li>Mon to Sat, 12pm to 7pm</li><li>Sunday closed</li>
+   <li><a href="{r}walk-in-tattoos/">Walk-ins welcome</a></li>
    <li><a href="{GBP}" rel="noopener">Directions</a></li></ul></div>
 </div>
 <div class="legal">&copy; 2026 {BIZ}. Every tattoo photograph on this site is

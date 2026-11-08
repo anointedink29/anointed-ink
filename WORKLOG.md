@@ -114,3 +114,20 @@ Keep entries concise and append new work below. Store durable context in `MEMORY
   text event still fires.
 - Outstanding: the sign's original logo file (for the favicon and schema logo); merch, a piercing page and the
   walk-in line wait on the owners' answers.
+
+## 2026-11-08 (later): Logo, piercing page and walk-ins (Simply Digital)
+
+- Request: Eddie asked for the shop's sign logo traced, a piercing page, and "walk-ins welcome" with its own page.
+- Changes: new icons from the sign's cross (`img/icon.svg`, `favicon-32.png`, `apple-touch-icon.png`,
+  `icon-512.png`); the traced logo as `img/logo.png` (the schema logo), `img/logo-footer.webp` (footer) and
+  `img/logo-reverse.webp` (share card, `make-og.py`). New pages: `piercing/` (D'Angelo Andolini's prices as posted in
+  the shop on 2026-11-06, booked through the shop's number) and `walk-in-tattoos/`. Piercing is in the nav; every Visit
+  section and the footer say walk-ins are welcome; the home FAQ answers "Do you take walk-ins?"; the shop schema adds
+  Body piercing; the sitemap dates changed pages (`LASTMOD` in `build.py`).
+- Facts and sources: piercing prices and their date live in `_data.py` (`PIERCING_PRICES`, `PIERCING_AS_OF`); the
+  minors' piercing line (`LAW_PIERCE_MINOR`) is from 720 ILCS 5/12C-40, read 2026-11-08; walk-ins from the shop's flyer,
+  confirmed by Eddie.
+- Validation: build and lint pass (35 pages, 0 failures, the two standing warnings); a clean rebuild matches the
+  committed files; 175 of 175 page-widths pass real phone emulation; titles, descriptions, H1s and canonicals of the 33
+  existing pages are unchanged.
+- Outstanding: whether D'Angelo has his own booking link; whether Brittney is named as an owner on the site.

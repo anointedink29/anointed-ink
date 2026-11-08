@@ -32,7 +32,7 @@ body{width:1200px;height:630px;display:flex;color:#f4f1f6;font-family:S,-apple-s
  overflow:hidden;background:radial-gradient(75% 95% at 76% 40%,#523863 0%,#3f2a4a 42%,#221827 78%,#120e15 100%)}
 .l{flex:1;padding:64px 40px 64px 64px;display:flex;flex-direction:column;justify-content:center}
 .eyebrow{font-size:19px;font-weight:700;letter-spacing:.22em;color:#e0d2fa;margin-bottom:22px}
-h1{font-family:C,Georgia,serif;font-size:76px;line-height:1.02;font-weight:800;letter-spacing:.01em;margin-bottom:22px}
+.logo{width:600px;height:auto;display:block;margin:-6px 0 18px -14px}
 .sub{font-size:26px;color:#d6cfdc;line-height:1.45;margin-bottom:30px}
 .meta{display:flex;gap:14px;align-items:center;font-size:22px;font-weight:700}
 .pill{background:#1e1724;border:1.5px solid #b8b1c2;padding:11px 20px}
@@ -45,7 +45,7 @@ h1{font-family:C,Georgia,serif;font-size:76px;line-height:1.02;font-weight:800;l
 </style><body>
 <div class="l">
  <div class="eyebrow">CHICAGO RIDGE, ILLINOIS</div>
- <h1>Anointed Ink</h1>
+ <img class="logo" src="data:image/webp;base64,__LOGO__" alt="">
  <div class="sub">Custom tattoos by Nestor Juarez.<br>Black &amp; grey Chicano realism, portraits,
  cover-ups.</div>
  <div class="meta">
@@ -57,7 +57,7 @@ h1{font-family:C,Georgia,serif;font-size:76px;line-height:1.02;font-weight:800;l
 <div class="r"><div class="arch"><img src="data:image/webp;base64,__IMG__"></div></div>
 </body>""".replace("__IMG__", data).replace("__R__", GRATING).replace("__N__", GCOUNT)\
         .replace("__P__", PHONE).replace("__D__", RATING_AS_OF)\
-        .replace("__CINZEL__", font("cinzel.woff2")).replace("__SCHIB__", font("schibsted.woff2"))
+        .replace("__CINZEL__", font("cinzel.woff2")).replace("__LOGO__", base64.b64encode(open("img/logo-reverse.webp", "rb").read()).decode()).replace("__SCHIB__", font("schibsted.woff2"))
 
     open("_og.html", "w").write(html)
     subprocess.run([CHROME, "--headless", "--disable-gpu", "--hide-scrollbars",

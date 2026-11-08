@@ -77,6 +77,9 @@ STYLE_CARDS = [
 ]
 
 FAQ = [
+    ("Do you take walk-ins?",
+     "Yes. Walk-ins are welcome Monday to Saturday, 12pm to 7pm, when an artist is free. Text or call "
+     f"{PHONE} first to check who is open. Larger custom pieces are drawn ahead and booked with a deposit."),
     ("Do I need a deposit to book?",
      "Yes. A deposit holds your appointment and it comes off the price of the tattoo. "
      "It pays for the drawing time that happens before you ever sit down, which is why it is "
@@ -255,6 +258,8 @@ def build_home():
  <p>Nestor does not limit himself to one lane. The through line is custom work built around your
  idea, not a design that forty other people already have.</p></div>
  <div class="grid g4">{cards}</div>
+ <p class="areas" style="margin-top:24px">Piercing too: <a href="piercing/">see the prices and how to book</a>.
+ Walk-ins are welcome when an artist is free: <a href="walk-in-tattoos/">what to expect</a>.</p>
 </div></section>
 
 <section class="chapel"><div class="wrap">
@@ -1037,6 +1042,111 @@ def build_pricing():
 """ + foot("pricing/")
 
 
+# ================================================================= PIERCING
+PIERCE_FAQ = [
+    ("How much is a piercing at Anointed Ink?",
+     f"$50 for most piercings, as posted in the shop on {PIERCING_AS_OF}. Doubles, dermals, industrials and "
+     "VCH piercings are $100, and a surface staple is $80. Confirm the price when you book."),
+    ("Do I need to book a piercing ahead?",
+     f"Yes. Piercings are booked with a deposit. Text or call the shop at {PHONE} and ask for D'Angelo."),
+    ("Can I get pierced if I am under 18?",
+     f"Ask D'Angelo before you book. {LAW_PIERCE_MINOR} Anyone under 18 also has to be here with a parent "
+     "or legal guardian, because tattooing and piercing both happen in the shop (720 ILCS 5/12C-35(b) and "
+     "5/12C-40(a)(2))."),
+    ("Who does the piercing?",
+     f"{PIERCER}, at {BIZ}, {STREET}, {CITY}."),
+]
+
+
+def build_piercing():
+    rows = "".join(f"<tr><th>{k}</th><td>{v}</td></tr>" for k, v in PIERCING_PRICES)
+    faq = "".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q, a in PIERCE_FAQ)
+    faq_ld = {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
+        {"@type": "Question", "name": q,
+         "acceptedAnswer": {"@type": "Answer", "text": html.unescape(a)}} for q, a in PIERCE_FAQ]}
+    return head(f"Body Piercing in {CITY}, IL | {BIZ}",
+                f"Body piercing at {BIZ} on 111th Street in {CITY}, IL. Most piercings $50; doubles, "
+                "dermals and industrials $100. Booked with a deposit.",
+                "piercing/", extra_ld=[faq_ld], crumbs=[("Piercing", "piercing/")]) + f"""
+<section><div class="wrap">
+ <div class="sec-head"><p class="eyebrow">Piercing</p><h1>Body piercing in {CITY}</h1>
+ <p>{PIERCER} pierces at {BIZ} on 111th Street. These are the prices on his list at the counter,
+ as posted on {PIERCING_AS_OF}. Confirm the price when you book.</p></div>
+ <div class="grid g2">
+  <div>
+   <h2>Prices</h2>
+   <table class="hrs"><caption class="sr">Piercing prices as posted in the shop</caption><tbody>{rows}</tbody></table>
+   <p class="areas" style="margin-top:16px">As posted in the shop on {PIERCING_AS_OF}.</p>
+  </div>
+  <div>
+   <h2>How to book</h2>
+   <p>Piercings are booked ahead with a deposit. Text or call the shop at {PHONE}, say which
+   piercing you want and which days work, and ask for D'Angelo.</p>
+   <div class="cta"><a class="btn btn-p" href="{PIERCE_SMS}">Text to book a piercing</a>
+   <a class="btn btn-s" href="tel:{TEL}">Call {PHONE}</a></div>
+   <div class="card" style="margin-top:28px"><h3>Bring photo ID</h3>
+    <p>A government-issued photo ID showing your date of birth.</p></div>
+   <div class="card" style="margin-top:16px"><h3>Under 18</h3>
+    <p>Ask D'Angelo before you book. {LAW_PIERCE_MINOR}</p></div>
+  </div>
+ </div>
+ <h2 style="margin-top:64px">Questions about piercing</h2>
+ <div style="margin-top:24px">{faq}</div>
+</div></section>
+{visit("piercing/")}
+""" + foot("piercing/")
+
+
+# ================================================================= WALK-INS
+WALKIN_FAQ = [
+    ("Do you take walk-in tattoos?",
+     f"Yes. {WALK_INS} Text or call {PHONE} first to check who is open."),
+    ("What are the walk-in hours?", f"{HOURS_HUMAN}"),
+    ("How much does a walk-in tattoo cost?",
+     f"Small pieces are quoted as a flat price before you sit down. Larger work runs at the shop rate of "
+     f"{RATE} an hour."),
+    ("What do I need to bring?",
+     f"{LAW_ID} Bring a reference image on your phone too."),
+]
+
+
+def build_walkins():
+    faq = "".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q, a in WALKIN_FAQ)
+    faq_ld = {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
+        {"@type": "Question", "name": q,
+         "acceptedAnswer": {"@type": "Answer", "text": html.unescape(a)}} for q, a in WALKIN_FAQ]}
+    return head(f"Walk-In Tattoos in {CITY}, IL | {BIZ}",
+                f"Walk-ins welcome at {BIZ}, {STREET}, {CITY}. Monday to Saturday, 12pm to 7pm. What "
+                "to bring and how walk-in pricing works.",
+                "walk-in-tattoos/", extra_ld=[faq_ld], crumbs=[("Walk-ins", "walk-in-tattoos/")]) + f"""
+<section><div class="wrap">
+ <div class="sec-head"><p class="eyebrow">Walk-ins</p><h1>Walk-in tattoos in {CITY}</h1>
+ <p>{WALK_INS} Text or call {PHONE} first to check who is open.</p></div>
+ <div class="grid g2">
+  <div>
+   <h2>What fits a walk-in</h2>
+   <p>Walk-ins suit smaller pieces that do not need a custom drawing first. Larger custom work,
+   portraits and <a href="../cover-up-tattoos/">cover-ups</a> are drawn ahead and booked with a
+   deposit, so start those with a text and a reference image.</p>
+   <h2>What it costs</h2>
+   <p>Small pieces are quoted as a flat price before you sit down. Larger work runs at the shop
+   rate of {RATE} an hour. <a href="../pricing/">How pricing works</a>.</p>
+   <div class="cta"><a class="btn btn-p" href="{SMS}">Text before you come</a>
+   <a class="btn btn-s" href="tel:{TEL}">Call {PHONE}</a></div>
+  </div>
+  <div>
+   <div class="card"><h3>Hours</h3><p>{HOURS_HUMAN}</p></div>
+   <div class="card" style="margin-top:16px"><h3>Bring photo ID</h3><p>{LAW_AGE} {LAW_ID}</p></div>
+   <div class="card" style="margin-top:16px"><h3>Bringing kids</h3><p>{LAW_MINORS_PRESENT}</p></div>
+  </div>
+ </div>
+ <h2 style="margin-top:64px">Questions about walk-ins</h2>
+ <div style="margin-top:24px">{faq}</div>
+</div></section>
+{visit("walk-in-tattoos/")}
+""" + foot("walk-in-tattoos/")
+
+
 # ================================================================== OAK LAWN
 def build_oaklawn():
     photos = [m for m in OWN if m["quality"] >= 4][:12]
@@ -1282,12 +1392,18 @@ def build_blog_index():
 
 
 # ==================================================================== WRITE
+# Pages whose content changed after BUILT (the facelift, 2026-11-08); the sitemap says so.
+LASTMOD = {"": "2026-11-08", "piercing/": "2026-11-08", "walk-in-tattoos/": "2026-11-08"}
+
+
 def emit():
     write("index.html", build_home())
     write("gallery/index.html", build_gallery())
     for sp in STYLE_PAGES:
         write(f"{sp['slug']}/index.html", build_style(sp))
     write("pricing/index.html", build_pricing())
+    write("piercing/index.html", build_piercing())
+    write("walk-in-tattoos/index.html", build_walkins())
     write("tattoo-artist-oak-lawn/index.html", build_oaklawn())
     write("es/tatuajes-estilo-chicano/index.html", build_spanish())
     write("about/index.html", build_about())
@@ -1322,7 +1438,7 @@ def emit():
             f"<image:caption>{html.escape(m['alt'])}</image:caption></image:image>"
             for m in MAN)
     sm = "".join(
-        f"<url><loc>{BASE}/{u}</loc><lastmod>{BUILT}</lastmod>"
+        f"<url><loc>{BASE}/{u}</loc><lastmod>{LASTMOD.get(u, BUILT)}</lastmod>"
         f"<priority>{'1.0' if u == '' else '0.8'}</priority>{imgs_for(u)}</url>" for u in urls)
     open("sitemap.xml", "w").write(
         '<?xml version="1.0" encoding="UTF-8"?>'

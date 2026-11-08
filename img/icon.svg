@@ -1,4 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Anointed Ink mark">
-  <rect id="ground" width="512" height="512" fill="#08080a"/>
-  <path fill="#c9a24a" fill-rule="evenodd" d="M256 88.06C274.14 135.68 369.37 210.51 369.37 292.13A113.37 113.37 0 0 1 256 405.5A113.37 113.37 0 0 1 142.63 292.13C142.63 210.51 237.86 135.68 256 88.06ZM240.69 357.84L271.31 357.84L271.31 289.3L304.75 289.3L304.75 258.69L271.31 258.69L271.31 225.24L240.69 225.24L240.69 258.69L207.25 258.69L207.25 289.3L240.69 289.3Z"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Anointed Ink">
+<defs>
+ <radialGradient id="g" cx="50%" cy="42%" r="70%"><stop offset="0" stop-color="#6b4d80"/><stop offset=".55" stop-color="#3f2a4a"/><stop offset="1" stop-color="#1a1220"/></radialGradient>
+ <radialGradient id="h" cx="50%" cy="44%" r="38%"><stop offset="0" stop-color="#cbb5f3" stop-opacity=".55"/><stop offset="1" stop-color="#cbb5f3" stop-opacity="0"/></radialGradient>
+ <linearGradient id="m" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".45" stop-color="#bdb6c8"/><stop offset=".6" stop-color="#7d7589"/><stop offset="1" stop-color="#ece8f1"/></linearGradient>
+</defs>
+<rect width="512" height="512" rx="96" fill="url(#g)"/>
+<circle cx="256" cy="226" r="200" fill="url(#h)"/>
+<g transform="translate(-720.25 -49.88) scale(0.62500)">
+ <path d="M1524 410L1524 327C1524 311.6 1466 313 1470 299C1473 295 1479 284 1485 284C1529.7 260.5 1554.3 240.3 1562 228C1569.7 240.3 1594.3 260.5 1639 284C1645 284 1651 295 1654 299C1658 313 1600 311.6 1600 327L1600 410L1746 410C1761.4 410 1760 363 1774 367C1778 370 1789 376 1789 382C1822.2 415.1 1850.6 433.3 1868 439C1850.6 444.7 1822.2 462.9 1789 496C1789 502 1778 508 1774 511C1760 515 1761.4 468 1746 468L1600 468L1600 689C1600 707.7 1652 706 1648 723C1645 727 1639 738 1633 738C1591.8 746 1569.1 752.8 1562 757C1554.9 752.8 1532.2 746 1491 738C1485 738 1479 727 1476 723C1472 706 1524 707.7 1524 689L1524 468L1378 468C1362.6 468 1364 515 1350 511C1346 508 1335 502 1335 496C1301.8 462.9 1273.4 444.7 1256 439C1273.4 433.3 1301.8 415.1 1335 382C1335 376 1346 370 1350 367C1364 363 1362.6 410 1378 410Z" fill="url(#m)" stroke="#2a2232" stroke-width="10" stroke-linejoin="round"/>
+ <path d="M1562 243V739M1270 439H1854" stroke="#4a4256" stroke-width="7" stroke-linecap="round" opacity=".8"/>
+</g>
 </svg>
