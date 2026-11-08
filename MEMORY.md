@@ -104,4 +104,6 @@ Last updated: 2026-11-08
   no upload; its style chips map to manifest tags.
 - Every figure still needs a plain `<figcaption>` with "by <artist>": lint reads only an attribute-free figcaption.
 - The hero motion stops for visitors who turn motion off, and the page reads fine without JavaScript.
+- `_js.py` is a Python string: a JavaScript `'\n'` must be written `'\\n'` there. A bare one becomes a real line
+  break inside the script and stops every script on the page. After editing it, check the built page has no script errors.
 
