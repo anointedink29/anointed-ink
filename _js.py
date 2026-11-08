@@ -1,6 +1,88 @@
 # Front-end JS. Plain string. No backticks and no template literals anywhere, so this
 # stays safe to embed in any generator.
 JS = """
+
+/* home hero: the altarpiece opens once, then turns toward the pointer; the gallery wall's
+   frames tilt the same way. All of it stops for visitors who turn motion off. */
+(function(){
+ var d=document, root=d.documentElement, hero=d.getElementById('hero'), stage=d.getElementById('stage');
+ var mm=function(q){ return !!(window.matchMedia&&window.matchMedia(q).matches); };
+ if(mm('(prefers-reduced-motion: reduce)')) return;
+ var hover=mm('(hover: hover)');
+ if(stage&&hero){
+  root.classList.add('js-altar');
+  var open=function(){ root.classList.add('altar-open'); };
+  requestAnimationFrame(function(){ requestAnimationFrame(open); });
+  setTimeout(open,1200);
+  if(hover){
+   hero.addEventListener('pointermove',function(e){
+    var r=hero.getBoundingClientRect(), x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
+    stage.style.setProperty('--ry',(x*9).toFixed(2)+'deg');
+    stage.style.setProperty('--rx',(-y*5).toFixed(2)+'deg');
+    stage.style.setProperty('--sheen',((x+.5)*100).toFixed(1)+'%');
+    hero.style.setProperty('--hx',(e.clientX-r.left)+'px');
+    hero.style.setProperty('--hy',(e.clientY-r.top)+'px');
+   });
+   hero.addEventListener('pointerleave',function(){
+    stage.style.setProperty('--ry','0deg'); stage.style.setProperty('--rx','0deg');
+   });
+  }
+ }
+ if(hover){
+  [].slice.call(d.querySelectorAll('.hang figure')).forEach(function(el){
+   el.addEventListener('pointermove',function(e){
+    var r=el.getBoundingClientRect();
+    el.style.setProperty('--ty',(((e.clientX-r.left)/r.width-.5)*10).toFixed(1)+'deg');
+    el.style.setProperty('--tx',((.5-(e.clientY-r.top)/r.height)*8).toFixed(1)+'deg');
+   });
+  });
+ }
+})();
+
+/* idea builder: no AI and no upload. The picks fill the text to Nestor and pull three of his
+   matching pieces from the gallery data on the page; nothing leaves the phone until Text. */
+(function(){
+ var d=document, b=d.querySelector('.builder'); if(!b) return;
+ var data=[]; try{ data=JSON.parse(d.getElementById('idea-data').textContent); }catch(e){}
+ var tel=b.getAttribute('data-tel'), thumbs=d.getElementById('idea-thumbs'),
+     msg=d.getElementById('idea-msg'), send=d.getElementById('idea-send'), text=d.getElementById('idea-text');
+ function picked(g){
+  return [].slice.call(b.querySelectorAll('.ichips[data-group="'+g+'"] .ichip[aria-pressed="true"]'));
+ }
+ function words(list){ return list.map(function(x){ return x.textContent.toLowerCase(); }).join(', '); }
+ function update(){
+  var st=picked('style'), pl=picked('place'), sz=picked('size'), idea=(text.value||'').trim();
+  var lines=['Hi Nestor, I saw your site.'];
+  if(idea) lines.push('Idea: '+idea);
+  if(st.length) lines.push('Style: '+words(st));
+  if(pl.length) lines.push('Placement: '+words(pl));
+  if(sz.length) lines.push('Rough size: '+words(sz));
+  msg.textContent=lines.join('\\n');
+  send.href='sms:'+tel+'?&body='+encodeURIComponent(lines.join('\\n'));
+  var tags=st.map(function(x){ return x.getAttribute('data-tag'); });
+  var scored=data.map(function(p){
+   var n=0; tags.forEach(function(t){ if(p.t.indexOf(t)>-1) n++; }); return {p:p,n:n};
+  }).filter(function(x){ return tags.length?x.n>0:true; });
+  scored.sort(function(a,c){ return c.n-a.n; });
+  thumbs.innerHTML='';
+  scored.slice(0,3).forEach(function(x){
+   var i=d.createElement('img');
+   i.src='img/'+x.p.s+'-400.webp'; i.alt=x.p.a; i.width=x.p.w; i.height=x.p.h;
+   i.loading='lazy'; i.decoding='async'; thumbs.appendChild(i);
+  });
+ }
+ b.addEventListener('click',function(e){
+  var c=e.target.closest('.ichip'); if(!c) return;
+  var grp=c.parentNode, on=c.getAttribute('aria-pressed')==='true';
+  if(grp.hasAttribute('data-single')){
+   [].slice.call(grp.querySelectorAll('.ichip')).forEach(function(o){ o.setAttribute('aria-pressed','false'); });
+  }
+  c.setAttribute('aria-pressed',on?'false':'true');
+  update();
+ });
+ text.addEventListener('input',update);
+ update();
+})();
 (function(){
  'use strict';
  var d=document;

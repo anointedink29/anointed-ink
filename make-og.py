@@ -23,22 +23,25 @@ def main():
         sys.exit(f"{slug}: not one of {OWNER}'s promotable photos; the card would misattribute it")
     data = base64.b64encode(open(f"img/{hero['slug']}-1000.webp", "rb").read()).decode()
 
+    font = lambda f: base64.b64encode(open(f"fonts/{f}", "rb").read()).decode()
     html = """<!doctype html><meta charset="utf-8"><style>
+@font-face{font-family:C;src:url(data:font/woff2;base64,__CINZEL__) format("woff2");font-weight:400 900}
+@font-face{font-family:S;src:url(data:font/woff2;base64,__SCHIB__) format("woff2");font-weight:400 900}
 *{margin:0;padding:0;box-sizing:border-box}
-body{width:1200px;height:630px;display:flex;background:#0a0a0c;color:#eceae6;
- font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;overflow:hidden}
-.l{flex:1;padding:66px 54px;display:flex;flex-direction:column;justify-content:center}
-.eyebrow{font-size:20px;font-weight:800;letter-spacing:.24em;color:#d4a548;margin-bottom:26px}
-h1{font-size:62px;line-height:1.04;font-weight:800;letter-spacing:-.025em;margin-bottom:24px}
-.sub{font-size:26px;color:#a29d96;line-height:1.45;margin-bottom:32px}
-.meta{display:flex;gap:16px;align-items:center;font-size:22px;font-weight:700}
-.pill{background:#17171c;border:1px solid #2b2b34;border-radius:999px;padding:11px 22px}
-.asof{font-size:17px;color:#77726b;margin-top:14px}
-.stars{color:#d4a548;letter-spacing:.06em}
-.r{width:452px;position:relative;flex-shrink:0}
-.r img{width:100%;height:100%;object-fit:cover}
-.r::after{content:"";position:absolute;inset:0;
- background:linear-gradient(90deg,#0a0a0c 0%,rgba(10,10,12,.35) 34%,transparent 100%)}
+body{width:1200px;height:630px;display:flex;color:#f4f1f6;font-family:S,-apple-system,Helvetica,Arial,sans-serif;
+ overflow:hidden;background:radial-gradient(75% 95% at 76% 40%,#523863 0%,#3f2a4a 42%,#221827 78%,#120e15 100%)}
+.l{flex:1;padding:64px 40px 64px 64px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-size:19px;font-weight:700;letter-spacing:.22em;color:#e0d2fa;margin-bottom:22px}
+h1{font-family:C,Georgia,serif;font-size:76px;line-height:1.02;font-weight:800;letter-spacing:.01em;margin-bottom:22px}
+.sub{font-size:26px;color:#d6cfdc;line-height:1.45;margin-bottom:30px}
+.meta{display:flex;gap:14px;align-items:center;font-size:22px;font-weight:700}
+.pill{background:#1e1724;border:1.5px solid #b8b1c2;padding:11px 20px}
+.asof{font-size:17px;color:#bcb3c3;margin-top:14px}
+.stars{color:#efe8dc;letter-spacing:.06em}
+.r{width:420px;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding-right:56px}
+.arch{width:330px;height:500px;border:11px solid #0d0a0f;border-radius:50% 50% 6px 6px/30% 30% 6px 6px;overflow:hidden;
+ box-shadow:0 0 0 2px #4d4756,0 0 0 4px #b8b1c2,0 40px 60px -20px rgba(0,0,0,.7)}
+.arch img{width:100%;height:100%;object-fit:cover;object-position:50% 30%}
 </style><body>
 <div class="l">
  <div class="eyebrow">CHICAGO RIDGE, ILLINOIS</div>
@@ -51,9 +54,10 @@ h1{font-size:62px;line-height:1.04;font-weight:800;letter-spacing:-.025em;margin
  </div>
  <div class="asof">Google rating as of __D__</div>
 </div>
-<div class="r"><img src="data:image/webp;base64,__IMG__"></div>
+<div class="r"><div class="arch"><img src="data:image/webp;base64,__IMG__"></div></div>
 </body>""".replace("__IMG__", data).replace("__R__", GRATING).replace("__N__", GCOUNT)\
-        .replace("__P__", PHONE).replace("__D__", RATING_AS_OF)
+        .replace("__P__", PHONE).replace("__D__", RATING_AS_OF)\
+        .replace("__CINZEL__", font("cinzel.woff2")).replace("__SCHIB__", font("schibsted.woff2"))
 
     open("_og.html", "w").write(html)
     subprocess.run([CHROME, "--headless", "--disable-gpu", "--hide-scrollbars",

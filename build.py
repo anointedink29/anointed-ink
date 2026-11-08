@@ -132,12 +132,85 @@ STEPS = [
 ]
 
 
+# The home hero: three of Nestor's pieces hung as an altarpiece under the cross from the shop's
+# sign. Each panel carries its plate (title and credit), so lint's credit rule holds. The img
+# classes keep the old watermark out of the arch (zoom-top) or the frame (op-left).
+ALTAR = [("tattoo-catrina-woman-with-roses", "Catrina and roses", "wing wl", 400, "op-top"),
+         ("tattoo-jesus-portrait-with-thorns", "Jesus, crown of thorns", "mid", 1000, "zoom-top"),
+         ("tattoo-laugh-now-cry-later-masks", "Laugh now, cry later", "wing wr", 400, "op-left")]
+
+# Selected work on the home page, hung salon style. Picked for pieces whose photos carry no
+# old watermark inside the frame; the class sets the crop.
+HANG = [("tattoo-classical-statue-portrait", ""), ("tattoo-hummingbird-and-flowers", ""),
+        ("tattoo-jesus-with-dove-and-candles", "op-l20"), ("tattoo-roaring-tiger-face", ""),
+        ("tattoo-aztec-sun-stone-medallion", "op-l20"), ("tattoo-pocket-watch-and-rose", ""),
+        ("tattoo-cherub-on-clouds", ""), ("tattoo-heart-clock-with-roses", "op-t8")]
+
+# The idea builder's choices. Style chips carry the manifest tag they match.
+IDEA_STYLES = [("Black and grey", "black-and-grey-realism"), ("Religious", "religious"),
+               ("Memorial", "memorial"), ("Portrait", "portrait"), ("Chicano", "chicano"),
+               ("Aztec and cultural", "aztec-cultural"), ("Color", "color-realism"),
+               ("Cover-up", "cover-up"), ("Animals", "animal"), ("Floral", "floral")]
+IDEA_PLACES = ["Forearm", "Upper arm", "Hand", "Chest", "Back", "Ribs", "Leg"]
+IDEA_SIZES = ["Palm size", "Hand length", "Half sleeve", "Full sleeve", "Not sure yet"]
+
+
+def altar():
+    panels = "".join(
+        f'<figure class="panel {cls}"><div class="ph">'
+        f'{pic(slug, w, cls=icls, lazy=(w != 1000), sizes=("(max-width:940px) 44vw, 300px" if w == 1000 else None))}'
+        f'</div><figcaption><b>{title}</b> <span>by {ARTIST}</span></figcaption></figure>'
+        for slug, title, cls, w, icls in ALTAR)
+    return ('<div class="altar" role="group" aria-label="Three tattoos by ' + ARTIST + '">'
+            '<div class="rays" aria-hidden="true"></div><div class="stage" id="stage">'
+            '<svg class="cross" aria-hidden="true" focusable="false"><use href="#ai-cross"/></svg>'
+            + panels + '<div class="shadow" aria-hidden="true"></div></div>'
+            '<p class="altar-credit">Tattoos by ' + ARTIST + '</p></div>')
+
+
+def idea_builder():
+    chips = lambda items: "".join(
+        f'<button type="button" class="ichip" aria-pressed="false"{tag}>{label}</button>'
+        for label, tag in items)
+    styles = chips([(l, f' data-tag="{t}"') for l, t in IDEA_STYLES])
+    places = chips([(l, "") for l in IDEA_PLACES])
+    sizes = chips([(l, "") for l in IDEA_SIZES])
+    first = [x for x, _ in HANG]     # clean photos lead, so the default three carry no old watermark
+    order = [BYSLUG[x] for x in first] + [m for m in OWN if m["slug"] not in first]
+    data = json.dumps([{"s": m["slug"], "t": m["styles"], "a": m["alt"],
+                        "w": m["sizes"]["400"][0], "h": m["sizes"]["400"][1]} for m in order],
+                      ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+    return f"""<section id="idea"><div class="wrap">
+ <div class="sec-head"><p class="eyebrow">Start here</p><h2>Start your idea</h2>
+ <p>Pick what you have in mind. Your choices fill in the text to Nestor, and pieces of his that
+ match show up beside it. Nothing is sent until you tap Text.</p></div>
+ <div class="builder" data-tel="{TEL}">
+  <div>
+   <fieldset><legend>Style, pick any</legend><div class="ichips" data-group="style">{styles}</div></fieldset>
+   <fieldset><legend>Placement</legend><div class="ichips" data-group="place" data-single>{places}</div></fieldset>
+   <fieldset><legend>Rough size</legend><div class="ichips" data-group="size" data-single>{sizes}</div></fieldset>
+   <label for="idea-text">Your idea</label>
+   <textarea id="idea-text" maxlength="400" placeholder="For example: my grandmother&rsquo;s rosary, with roses"></textarea>
+  </div>
+  <div>
+   <p class="lbl">Nestor&rsquo;s pieces like it</p>
+   <div class="thumbs" id="idea-thumbs"></div>
+   <p class="thumbs-note">Tattoos by {ARTIST}, from the gallery.</p>
+   <p class="lbl" style="margin-top:20px">Your text to Nestor</p>
+   <div class="sms" id="idea-msg" aria-live="polite">Hi Nestor, I saw your site.</div>
+   <div class="cta" style="margin-top:18px"><a class="btn btn-p" id="idea-send" href="{SMS}">Text this idea to Nestor</a></div>
+  </div>
+ </div>
+ <script type="application/json" id="idea-data">{data}</script>
+</div></section>"""
+
+
 def build_home():
     cards = "".join(
         f'<a class="card" href="{href}"><h3>{t}</h3><p>{d}</p>'
         f'<span class="more">See the work &rarr;</span></a>' for t, d, href in STYLE_CARDS)
-    feat = [m["slug"] for m in OWN if m["quality"] >= 4][:12]
-    gal = "".join(figure(x, eager=(i < 6)) for i, x in enumerate(feat))
+    gal = "".join(figure(x, cls=c, widths=[400, 1000], sizes="(max-width:940px) 46vw, 300px")
+                  for x, c in HANG)
     faq = "".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q, a in FAQ)
     faq_ld = {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
         {"@type": "Question", "name": html.unescape(re.sub("<[^>]+>", "", q)),
@@ -151,8 +224,8 @@ def build_home():
         f"Tattoo Shop in {CITY}, IL | {BIZ}",
         f"Custom tattoos by {ARTIST} in {CITY}, IL. Black and grey Chicano realism, portraits, "
         f"cover-ups and memorials. {GRATING} stars from {GCOUNT} Google reviews.",
-        "", extra_ld=[faq_ld], preload="tattoo-catrina-woman-with-roses") + f"""
-<div class="hero"><div class="wrap hero-grid">
+        "", extra_ld=[faq_ld], preload="tattoo-jesus-portrait-with-thorns") + f"""
+<div class="hero" id="hero"><div class="wall" aria-hidden="true"></div><div class="halo" aria-hidden="true"></div><div class="floor" aria-hidden="true"></div><div class="wrap hero-grid">
  <div>
   <p class="eyebrow">{BIZ} &middot; {CITY}, {STATE_FULL}</p>
   <h1>Custom tattoos for people who were never meant to blend in</h1>
@@ -171,8 +244,7 @@ def build_home():
    <a class="btn btn-s" href="gallery/#{OWNER}">See {len(OWN)} tattoos by Nestor</a>
   </div>
  </div>
- <div class="hero-img">{pic('tattoo-catrina-woman-with-roses', 1000, lazy=False,
-                            sizes='(max-width:940px) 92vw, 46vw')}</div>
+ {altar()}
 </div></div>
 
 {trust_bar()}
@@ -185,12 +257,12 @@ def build_home():
  <div class="grid g4">{cards}</div>
 </div></section>
 
-<section class="alt"><div class="wrap">
+<section class="chapel"><div class="wrap">
  <div class="sec-head"><p class="eyebrow">Portfolio</p><h2>Selected work</h2>
  <p>Every piece in this section is Nestor&rsquo;s own tattooing. Click any piece to see it
  larger, or <a href="artists/">meet the artists</a>.</p></div>
- <div class="gal-grid">{gal}</div>
- <p style="margin-top:28px"><a class="btn btn-s" href="gallery/#{OWNER}">See all {len(OWN)} of
+ <div class="hang">{gal}</div>
+ <p style="margin-top:40px"><a class="btn btn-s" href="gallery/#{OWNER}">See all {len(OWN)} of
  Nestor&rsquo;s pieces &rarr;</a></p>
 </div></section>
 
@@ -208,7 +280,7 @@ def build_home():
    realistic, including when the answer is that it needs to be bigger than you hoped.</p>
    <p><a class="btn btn-p" href="cover-up-tattoos/">How cover-ups work &rarr;</a></p>
   </div>
-  <div class="hero-img">{pic('tattoo-crowned-skull-cover-up', 1000,
+  <div class="hero-img coverup">{pic('tattoo-crowned-skull-cover-up', 1000,
                              sizes='(max-width:940px) 92vw, 46vw')}
    <p class="areas" style="padding:14px 4px 0;font-size:.87rem">Stencil over the existing tattoo,
    and the finished crowned skull. Same arm, before and after.</p></div>
@@ -225,6 +297,8 @@ def build_home():
  <div class="cta"><a class="btn btn-p" href="book/">Start a booking</a>
  <a class="btn btn-s" href="{IG}" rel="noopener me">Message on Instagram</a></div>
 </div></section>
+
+{idea_builder()}
 
 <section><div class="wrap">
  <div class="sec-head"><p class="eyebrow">Questions</p><h2>Before you book</h2></div>
@@ -653,7 +727,7 @@ def build_about():
    <p>A lot of what comes through the door is faith-led. Christ portraits, scripture, memorial
    pieces for people who have been lost. That is deliberate, and the shop&rsquo;s name is not an
    accident.</p>
-   <p style="font-size:1.15rem;color:var(--gold);font-weight:800">{TAGLINE}</p>
+   <p class="tagline">{TAGLINE}</p>
   </div>
   <div class="hero-img">{pic('tattoo-catrina-woman-with-roses', 1000,
                              'about/', sizes='(max-width:940px) 92vw, 46vw')}</div>

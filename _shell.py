@@ -55,8 +55,9 @@ def rel(path):
     return "../" * depth if depth else ""
 
 
-def pic(slug, width, p="", cls="", lazy=True, sizes=None, w=None, h=None):
-    """<picture> with AVIF then WebP then a JPEG fallback at 400."""
+def pic(slug, width, p="", cls="", lazy=True, sizes=None, w=None, h=None, widths=None):
+    """<picture> with AVIF then WebP then a JPEG fallback at 400. `widths` (eg [400, 1000])
+    lists both sizes with their real pixel widths, so the browser picks by `sizes`."""
     m = BYSLUG[slug]
     sw, sh = m["sizes"][str(width)]
     if w and h:
@@ -66,15 +67,20 @@ def pic(slug, width, p="", cls="", lazy=True, sizes=None, w=None, h=None):
             else 'fetchpriority="high" decoding="async"')
     sz = f' sizes="{sizes}"' if sizes else ""
     fb = f"{r}img/{slug}-400.jpg"
+
+    def srcset(ext):
+        if not widths:
+            return f"{r}img/{slug}-{width}.{ext}"
+        return ", ".join(f"{r}img/{slug}-{x}.{ext} {m['sizes'][str(x)][0]}w" for x in widths)
     return (f'<picture>'
-            f'<source type="image/avif" srcset="{r}img/{slug}-{width}.avif"{sz}>'
-            f'<source type="image/webp" srcset="{r}img/{slug}-{width}.webp"{sz}>'
+            f'<source type="image/avif" srcset="{srcset("avif")}"{sz}>'
+            f'<source type="image/webp" srcset="{srcset("webp")}"{sz}>'
             f'<img src="{fb}" alt="{html.escape(m["alt"])}" width="{sw}" height="{sh}" '
             f'{load}{" class=" + cls if cls else ""}></picture>')
 
 
-def figure(slug, p="", tag_attrs=True, eager=False):
-    """A gallery figure wired for the filter and the lightbox."""
+def figure(slug, p="", tag_attrs=True, eager=False, cls="", widths=None, sizes=None):
+    """A gallery figure wired for the filter and the lightbox. `cls` goes on the img (eg op-top)."""
     m = BYSLUG[slug]
     r = rel(p)
     fw, fh = m["sizes"]["1000"]
@@ -87,7 +93,7 @@ def figure(slug, p="", tag_attrs=True, eager=False):
                  f' data-fw="{fw}" data-fh="{fh}"'
                  f' data-alt="{html.escape(m["alt"], quote=True)}"'
                  f' data-caption="{html.escape(cap, quote=True)}"')
-    return (f'<figure{attrs} tabindex="0">{pic(slug, 400, p, lazy=not eager)}'
+    return (f'<figure{attrs} tabindex="0">{pic(slug, 400, p, cls=cls, lazy=not eager, widths=widths, sizes=sizes)}'
             f'<figcaption>{html.escape(cap)}</figcaption></figure>')
 
 
@@ -154,6 +160,31 @@ def breadcrumbs(trail, path):
 
 
 # ----------------------------------------------------------------- head/foot
+# The cross from the shop's sign, drawn once per page and reused by the nav and the home hero.
+SPRITE = ('<svg class="ai-sprite" aria-hidden="true" focusable="false"><defs>'
+          '<linearGradient id="ai-chrome" x1="0" y1="0" x2="1" y2="1">'
+          '<stop offset="0" stop-color="#ffffff"/><stop offset=".35" stop-color="#cfc9d8"/>'
+          '<stop offset=".55" stop-color="#6f6879"/><stop offset=".72" stop-color="#e9e5ee"/>'
+          '<stop offset="1" stop-color="#8d8697"/></linearGradient>'
+          '<symbol id="ai-cross" viewBox="0 0 100 140"><path d="M50 0 59 11 56 13V34H86L88 31 100 40 88 49 '
+          '86 46H56V124L59 127 50 140 41 127 44 124V46H14L12 49 0 40 12 31 14 34H44V13L41 11Z" '
+          'fill="url(#ai-chrome)" stroke="rgba(0,0,0,.55)" stroke-width="1.6"/>'
+          '<path d="M50 4V136M4 40H96" stroke="rgba(255,255,255,.55)" stroke-width="1"/></symbol>'
+          '</defs></svg>')
+
+
+def shop_photo(r=""):
+    """The sign over the shop's counter, on its violet wall (Eddie's photo, 11-06; no people in
+    the crop). It is not a tattoo, so it sits outside the portfolio manifest."""
+    return (f'<figure class="shopwall"><picture>'
+            f'<source type="image/webp" srcset="{r}img/shop-sign-800.webp 800w, '
+            f'{r}img/shop-sign-1400.webp 1400w" sizes="(max-width:940px) 92vw, 1150px">'
+            f'<img src="{r}img/shop-sign-800.jpg" alt="The {BIZ} sign on the shop&rsquo;s violet '
+            f'wall: wings, a cross and two tattoo machines" width="1400" height="816" '
+            f'loading="lazy" decoding="async"></picture>'
+            f'<figcaption>The sign over the counter, {STREET}, {CITY}.</figcaption></figure>')
+
+
 def head(title, desc, path, extra_ld=None, og_img="og", preload=None, crumbs=None,
          extra_head="", lang="en", og_alt=None):
     robots = ("index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"
@@ -208,7 +239,7 @@ def head(title, desc, path, extra_ld=None, og_img="og", preload=None, crumbs=Non
 <meta name="twitter:title" content="{html.escape(title)}">
 <meta name="twitter:description" content="{html.escape(desc)}">
 <meta name="twitter:image" content="{ogimg}">
-<meta name="theme-color" content="#08080a">
+<meta name="theme-color" content="#120e15">
 <meta name="geo.region" content="US-IL">
 <meta name="geo.placename" content="{CITY}">
 <meta name="geo.position" content="{LAT};{LNG}">
@@ -216,15 +247,18 @@ def head(title, desc, path, extra_ld=None, og_img="og", preload=None, crumbs=Non
 <link rel="icon" type="image/svg+xml" href="{BASE}/img/icon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="{BASE}/img/favicon-32.png">
 <link rel="apple-touch-icon" href="{BASE}/img/apple-touch-icon.png">
+<link rel="preload" href="/fonts/cinzel.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/schibsted.woff2" as="font" type="font/woff2" crossorigin>
 {pl}{extra_head}
 <style>{CSS}</style>
 {blocks}
 </head>
 <body>
 {GTM_BODY}
+{SPRITE}
 <a class="skip" href="#main">Skip to content</a>
 <header><div class="wrap nav">
-<a class="brand" href="{r or "./"}">Anointed <span>Ink</span></a>
+<a class="brand" href="{r or "./"}"><svg aria-hidden="true" focusable="false"><use href="#ai-cross"/></svg>Anointed <span>Ink</span></a>
 <nav class="navlinks" aria-label="Main">{links}</nav>
 <a class="callbtn" href="tel:{TEL}">Call {PHONE}</a>
 <button class="burger" aria-label="Menu" aria-expanded="false">&#9776;</button>
@@ -239,9 +273,11 @@ def hours_table():
 
 
 def visit(path="", h2="Visit the shop"):
+    r = rel(path)
     return f"""<section id="visit" class="alt"><div class="wrap">
 <div class="sec-head"><p class="eyebrow">Find us</p><h2>{h2}</h2>
 <p>We are on 111th Street in {CITY}, minutes from Oak Lawn, Worth, Alsip and Burbank.</p></div>
+{shop_photo(r)}
 <div class="visit">
  <div>
   <address class="addr"><strong>{BIZ}</strong><br>{STREET}<br>{CITY}, {STATE} {ZIP}<br>
@@ -290,8 +326,8 @@ def foot(path=""):
 credited to the artist who tattooed it.</div>
 </div></footer>
 <div class="stickybar">
- <a class="btn-p" href="{SMS}" style="background:var(--gold);color:#14100a">Text your idea</a>
- <a class="btn-s" href="tel:{TEL}" style="border:1px solid var(--line2);color:var(--tx);background:var(--surface)">Call</a>
+ <a class="btn btn-p" href="{SMS}">Text your idea</a>
+ <a class="btn btn-s" href="tel:{TEL}">Call</a>
 </div>
 <script>{JS}</script>
 </body></html>"""

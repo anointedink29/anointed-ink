@@ -1,6 +1,6 @@
 # Anointed Ink project memory
 
-Last updated: 2026-10-09
+Last updated: 2026-11-08
 
 ## Purpose and preferences
 
@@ -30,6 +30,8 @@ Last updated: 2026-10-09
 | `lint.py` | Content, SEO, markup, and artist-credit validation gate |
 | `img/manifest.json` | Photo metadata, artist attribution, and usage restrictions |
 | `make-og.py` | Social preview image generation; currently has a macOS Chrome path |
+| `fonts/` | Self-hosted Cinzel (headings) and Schibsted Grotesk (text), SIL Open Font License, licenses beside them |
+| `img/shop-sign-*` | The shop's sign on its violet wall, used in Visit the shop. Not a tattoo, so not in the manifest |
 
 - Generated HTML, `robots.txt`, and `sitemap.xml` are checked into the repository.
 - Standard workflow: change sources, run `python -X utf8 build.py`, then `python -X utf8 lint.py`, and review the diff. UTF-8 mode matters because the builder writes Unicode using the interpreter's default encoding.
@@ -74,7 +76,7 @@ Last updated: 2026-10-09
 - Actions, Pages configuration/deployment, live HTTPS, and outside-sandbox Codex health checks are complete as recorded above. Do not repeat these as unresolved setup work.
 - Codex CLI update is verified complete at 0.161.0; doctor advertises a further update to 0.162.0. Desktop update remains pending. Latest project launcher health diagnostics passed: 22 ok, 1 idle, 2 advisory warnings, 0 failures. Do not delete memory databases or change security protections as a routine fix.
 - Read current Git status before changes. The user authorized a local commit of the reviewed tooling and continuity notes on 2026-10-09. This request does not include pushing or publishing; keep debug.log out of commits.
-- No new site feature or design change has been requested. Ask for the user's next site task once outstanding setup verification is handled.
+- The 2026-11-08 facelift by Simply Digital is the current design (see Design system below). Waiting on the owners: the sign's original logo file (for the favicon and schema logo), merch, and whether to add a piercing page.
 
 ## Codex maintenance requested on 2026-10-09
 
@@ -89,3 +91,17 @@ Last updated: 2026-10-09
 
 - Reviewed `manage.py`, `update-codex.ps1`, setup guidance, and accumulated continuity notes for the user-requested local commit. The launcher override affects only invocations without desktop host context; the updater waits for package processes without terminating them.
 - Re-ran `.\project.cmd check`: 32 pages passed, zero failures, two existing sleeve-session warnings, and no generated-file changes. PowerShell parser and diff whitespace checks passed. Latest launcher doctor verification remains 22 ok, 1 idle, 2 warnings, zero failures.
+
+## Design system (2026-11-08, Simply Digital)
+
+- The look comes from the shop itself: its violet wall, black leather and chrome, and the cross from its sign.
+- `_css.py` tokens: `--accent` (lavender links and labels), `--cta` (bone buttons), `--wall-1` to `--wall-3` (the
+  violet), `--chrome-*` and `--frame` (photo frames). `--gold` is kept as an alias of `--accent`, so older markup keeps
+  working. Headings use `--fd` (Cinzel); text uses `--f` (Schibsted Grotesk).
+- The home hero is `ALTAR` in `build.py`: three of Nestor's pieces, the center one under the cross. Selected work is
+  `HANG` (hung salon style). Both pick photos whose crops keep the old Ghtto_Mex watermark out of the frame.
+- The idea builder (`idea_builder()`, script in `_js.py`) fills the text to Nestor from the visitor's picks. No AI and
+  no upload; its style chips map to manifest tags.
+- Every figure still needs a plain `<figcaption>` with "by <artist>": lint reads only an attribute-free figcaption.
+- The hero motion stops for visitors who turn motion off, and the page reads fine without JavaScript.
+

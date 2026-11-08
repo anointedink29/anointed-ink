@@ -94,3 +94,23 @@ Keep entries concise and append new work below. Store durable context in `MEMORY
 - Reviewed the invocation-scoped MCP override, process-waiting WinGet updater, setup guidance, and accumulated verification notes. Fixed the updater command formatting in SETUP.md and refreshed the handoff scope.
 - Validation: project build/lint passed all 32 pages, zero failures, two existing sleeve-session warnings; generated files unchanged. PowerShell syntax and diff whitespace checks passed. Recent launcher doctor passed with zero failures.
 - Local commit scope: manage.py, update-codex.ps1, SETUP.md, MEMORY.md, and WORKLOG.md. Preserve the existing debug.log; no push or publishing requested.
+
+## 2026-11-08: Site facelift (Simply Digital, for the owners)
+
+- Request: Eddie asked Simply Digital to give anointed.ink a facelift; he got the owners' permission to publish it on
+  2026-11-08.
+- Changes: a new look on all 33 pages, taken from the shop itself (its violet wall, black leather and chrome, and the
+  cross from its sign). Palette tokens and self-hosted fonts in `_css.py` and `fonts/` (Cinzel and Schibsted Grotesk,
+  SIL Open Font License). In `_shell.py`: the cross icon, the shop-sign photo in Visit the shop (`img/shop-sign-*`) and
+  an optional two-size srcset in `pic()` and `figure()`. In `build.py`: the home hero is three of Nestor's pieces hung
+  as an altarpiece (`ALTAR`), Selected work is hung salon style (`HANG`), and a no-AI idea builder (`idea_builder()`)
+  fills the text to Nestor. `_js.py` adds the hero's opening and pointer movement (off when motion is reduced) and the
+  builder. `make-og.py` restyled and `img/og.jpg` regenerated.
+- Unchanged: every URL, title, description, H1, schema block and internal link, and the sitemap (compared page by page
+  with the previous build; the home page gains one H2, "Start your idea").
+- Validation: build and lint pass (33 pages, 0 failures, the two standing sleeve-FAQ warnings); a rebuild from a clean
+  copy matches the committed files; 165 of 165 page-widths pass a real phone-emulation sweep (360, 375, 390, 1024, 1280)
+  with no script errors; the menu opens and closes by keyboard; the idea builder's text link starts `sms:`, so the GTM
+  text event still fires.
+- Outstanding: the sign's original logo file (for the favicon and schema logo); merch, a piercing page and the
+  walk-in line wait on the owners' answers.
