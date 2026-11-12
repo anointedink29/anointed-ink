@@ -52,6 +52,7 @@ hr{border:0;border-top:1px solid var(--line);margin:44px 0}
 .skip{position:absolute;left:-9999px}
 .skip:focus{left:12px;top:12px;z-index:200;background:var(--cta);color:var(--cta-tx);
  padding:11px 18px;font-weight:700}
+.nowrap{white-space:nowrap}
 .sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
  clip:rect(0 0 0 0);white-space:nowrap;border:0}
 .ai-sprite{position:absolute;width:0;height:0;overflow:hidden}
@@ -104,6 +105,12 @@ header{position:sticky;top:0;z-index:90;background:rgba(18,14,21,.9);
 .btn-s:hover{color:var(--tx);background:linear-gradient(var(--surface2),var(--surface2)) padding-box,
  linear-gradient(135deg,var(--chrome-hi),var(--chrome-mid) 45%,var(--chrome-hi)) border-box}
 .btn:focus-visible{outline:2px solid currentColor;outline-offset:-6px;border-radius:0}
+.rating{margin:22px 0 0;padding:3px 0 3px 15px;border-left:2px solid var(--accent);font-size:.98rem;
+ line-height:1.6;color:var(--tx);max-width:54ch}
+.rating .asof{color:var(--muted2)}
+.herolink{margin:18px 0 0;font-weight:700;font-size:.98rem}
+.herolink a{color:var(--tx);text-decoration:none;border-bottom:1px solid var(--accent);padding-bottom:3px}
+.herolink a:hover{color:var(--accent2);border-color:var(--accent2)}
 .hero-img{position:relative;padding:9px;background:var(--frame);border-radius:var(--rs);
  box-shadow:0 0 0 1.5px var(--chrome-lo),0 0 0 3px var(--chrome-mid),0 30px 60px -24px rgba(0,0,0,.75)}
 .hero-img img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:50% 36%;border-radius:2px}
@@ -135,6 +142,10 @@ img.op-left{object-position:0% 50%}
 img.zoom-top{transform:scale(1.14);transform-origin:50% 92%}
 img.op-l20{object-position:20% 50%}
 img.op-t8{object-position:50% 8%}
+img.op-t0{object-position:50% 0}
+img.op-t30{object-position:50% 30%}
+img.op-b{object-position:50% 88%}
+img.op-l40{object-position:40% 50%}
 .wing.wl{transform-origin:100% 50%;transform:rotateY(var(--open-l,30deg));margin-bottom:22px}
 .wing.wr{transform-origin:0% 50%;transform:rotateY(var(--open-r,-30deg));margin-bottom:22px}
 .panel figcaption{width:fit-content;max-width:100%;margin:14px auto 0;padding:6px 11px 7px;background:var(--plate);
@@ -154,8 +165,10 @@ img.op-t8{object-position:50% 8%}
 
 /* ---------- trust ---------- */
 .trust{border-bottom:1px solid var(--line);background:var(--bg2)}
-.trust-in{display:flex;gap:14px 30px;flex-wrap:wrap;justify-content:space-between;
- padding:19px 0;font-size:.95rem;color:var(--muted)}
+.trust-in{display:flex;gap:14px 0;flex-wrap:wrap;justify-content:center;
+ padding-top:19px;padding-bottom:19px;font-size:.95rem;color:var(--muted)}  /* top/bottom only: .wrap owns the side gutter */
+.trust-in>span{padding:0 18px;border-left:1px solid var(--line2)}
+.trust-in>span:first-child{border-left:0}
 .trust b{color:var(--tx)}
 .stars{color:var(--cta);letter-spacing:.06em}
 
@@ -178,23 +191,60 @@ section+section{border-top:1px solid var(--line)}
 a.card{text-decoration:none;color:inherit;transition:border-color .18s,transform .18s,box-shadow .18s}
 a.card:hover{border-color:var(--chrome-mid);transform:translateY(-3px);box-shadow:0 18px 30px -18px rgba(0,0,0,.8)}
 
+/* the home page's style cards: one of his pieces in an arched frame, then the style */
+.scards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:40px 24px}
+.scard{display:flex;flex-direction:column;text-decoration:none;color:inherit}
+.scard figure{position:relative;margin:0 0 20px;padding:8px;background:var(--frame);overflow:hidden;
+ border-radius:50% 50% 6px 6px/25% 25% 6px 6px;transition:box-shadow .25s,transform .25s;
+ box-shadow:0 0 0 1.5px var(--chrome-lo),0 0 0 3px var(--chrome-mid),0 26px 40px -24px rgba(0,0,0,.85)}
+.scard picture{display:block;overflow:hidden;border-radius:50% 50% 3px 3px/24% 24% 3px 3px}
+.scard img{width:100%;aspect-ratio:4/5;object-fit:cover;transform:scale(var(--z,1));
+ transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.scard img.zb{--z:1.22;transform-origin:50% 100%}
+.scard figcaption{position:absolute;left:8px;right:8px;bottom:8px;padding:30px 12px 9px;font-size:.74rem;
+ line-height:1.35;color:#f1ecf4;background:linear-gradient(transparent,rgba(10,7,12,.9));border-radius:0 0 3px 3px}
+.scard:hover figure{transform:translateY(-4px);
+ box-shadow:0 0 0 1.5px var(--chrome-mid),0 0 0 3px var(--chrome-hi),0 32px 46px -24px rgba(0,0,0,.9)}
+.scard:hover img{transform:scale(calc(var(--z,1) * 1.05))}
+.scard-b{display:flex;flex-direction:column;flex:1}
+.scard h3{font:700 1.14rem/1.25 var(--fd);letter-spacing:.03em;margin:0 0 .5em;color:var(--tx)}
+.scard p{color:var(--muted);font-size:.94rem;margin:0}
+.scard .more{margin-top:auto;padding-top:14px;font-weight:700;font-size:.9rem;color:var(--accent)}
+.scard:hover .more{color:var(--accent2)}
+
+/* cover-ups on the home page: four jobs, each before and after */
+.cov{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:48px;align-items:start}
+.covers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.covers figure{margin:0;padding:6px 6px 0;background:var(--frame);border-radius:var(--rs);cursor:zoom-in;
+ box-shadow:0 0 0 1.5px var(--chrome-lo),0 0 0 3px var(--chrome-mid),0 22px 36px -22px rgba(0,0,0,.85)}
+.covers picture{display:block;overflow:hidden;border-radius:2px}
+.covers img{width:100%;aspect-ratio:1/.86;object-fit:cover;transition:transform .5s}
+.covers figure:hover img{transform:scale(1.03)}
+.covers figcaption{font-size:.8rem;line-height:1.4;color:var(--muted);padding:10px 6px 11px}
+
 /* ---------- gallery ---------- */
 .filters{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:26px}
 .chip{background:var(--surface);border:1px solid var(--line2);color:var(--muted);
  border-radius:3px;padding:9px 15px;font:600 .88rem/1 var(--f);cursor:pointer}
 .chip:hover{color:var(--tx);border-color:var(--chrome-mid)}
 .chip[aria-pressed=true]{background:var(--cta);border-color:var(--cta);color:var(--cta-tx)}
-.masonry{column-count:4;column-gap:16px}
-.masonry figure{margin:0 0 16px;break-inside:avoid;padding:6px;background:var(--frame);border-radius:var(--rs);
- box-shadow:0 0 0 1px var(--chrome-lo),0 14px 26px -18px rgba(0,0,0,.9);position:relative;cursor:zoom-in;overflow:hidden}
-.masonry img{width:100%;transition:transform .5s ease,opacity .3s}
-.masonry figure:hover img{transform:scale(1.03)}
-.masonry figcaption{position:absolute;left:6px;right:6px;bottom:6px;padding:26px 12px 10px;
- font-size:.83rem;color:#fff;opacity:0;transition:opacity .22s;
+/* the gallery: rows of even height read left to right, every photo uncropped. Each figure's
+   width follows its photo's shape (--ar, set by figure(ar=True)); the frame is a shadow, so it
+   takes no width and every photo in a row ends up the same height. */
+.jgal{display:flex;flex-wrap:wrap;gap:20px}
+.jgal::after{content:"";flex:10000 1 0}  /* the last row keeps its height instead of stretching */
+.jgal figure{position:relative;margin:0;min-width:0;flex:var(--ar,.75) 1 calc(var(--ar,.75) * 260px);
+ background:var(--frame);border-radius:2px;cursor:zoom-in;overflow:hidden;
+ box-shadow:0 0 0 5px var(--frame),0 0 0 6px var(--chrome-lo),0 18px 30px -16px rgba(0,0,0,.9)}
+.jgal picture{display:block}
+.jgal img{width:100%;height:auto;transition:transform .5s ease}
+.jgal figure:hover img{transform:scale(1.03)}
+.jgal figcaption{position:absolute;left:0;right:0;bottom:0;padding:28px 12px 10px;
+ font-size:.83rem;line-height:1.35;color:#fff;opacity:0;transition:opacity .22s;
  background:linear-gradient(transparent,rgba(10,7,12,.9))}
-.masonry figure:hover figcaption,.masonry figure:focus-within figcaption{opacity:1}
-@media (hover:none){.masonry figcaption{opacity:1}}
-.masonry figure[hidden]{display:none}
+.jgal figure:hover figcaption,.jgal figure:focus-within figcaption,.jgal figure:focus-visible figcaption{opacity:1}
+@media (hover:none){.jgal figcaption{opacity:1}}
+.jgal figure[hidden]{display:none}
 .gal-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
 .gal-grid figure{margin:0;padding:6px;background:var(--frame);border-radius:var(--rs);overflow:hidden;
  box-shadow:0 0 0 1px var(--chrome-lo),0 14px 26px -18px rgba(0,0,0,.9);aspect-ratio:1;cursor:zoom-in}
@@ -241,10 +291,13 @@ a.card:hover{border-color:var(--chrome-mid);transform:translateY(-3px);box-shado
 .lb .next{right:20px;top:50%;transform:translateY(-50%)}
 
 /* ---------- reviews / steps / faq ---------- */
-.rev{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:28px;position:relative}
-.rev::before{content:"\\201C";position:absolute;right:20px;top:4px;font:800 4rem/1 var(--fd);color:var(--line2)}
-.rev blockquote{margin:0 0 16px;font-size:1.03rem}
-.rev cite{font-style:normal;color:var(--muted);font-size:.89rem;font-weight:600}
+.rev{background:linear-gradient(180deg,var(--surface2),var(--surface) 70%);border:1px solid var(--line2);
+ border-radius:var(--r);padding:52px 30px 28px;position:relative;display:flex;flex-direction:column}
+.rev::before{content:"\\201C";position:absolute;left:26px;top:12px;font:700 3.6rem/1 var(--fd);color:var(--accent);opacity:.55}
+.rev blockquote{margin:0 0 20px;font-size:1.06rem;font-style:italic;line-height:1.65;color:var(--tx)}
+.rev cite{margin-top:auto;font-style:normal;color:var(--muted);font-size:.89rem;font-weight:600;
+ display:flex;align-items:center;gap:10px}
+.rev cite::before{content:"";width:22px;height:1px;background:var(--accent);flex:none}
 ol.steps{list-style:none;counter-reset:s;padding:0;margin:0;display:grid;gap:15px}
 ol.steps li{counter-increment:s;background:var(--surface);border:1px solid var(--line);
  border-radius:var(--r);padding:25px 28px 25px 74px;position:relative}
@@ -263,6 +316,14 @@ summary::after{content:"+";color:var(--accent);font-weight:800;font-size:1.3rem;
 details[open] summary::after{content:"\\2013"}
 details p{margin:15px 0 0;color:var(--muted);font-size:.98rem}
 details p:last-child{margin-bottom:0}
+/* questions beside their heading on wide screens */
+.split{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:56px;align-items:start}
+.split .sec-head{position:sticky;top:100px;margin-bottom:0}
+@media(min-width:941px){
+ ol.steps{grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+ ol.steps li{padding:78px 24px 26px}
+ ol.steps li::before{left:24px;top:24px;width:38px;height:38px;font-size:1.05rem}
+}
 
 /* ---------- idea builder (no AI: the choices fill the text and pull his matching work) ---------- */
 .builder{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:30px;padding:32px;
@@ -364,6 +425,8 @@ footer h3{color:var(--tx);font:700 .76rem/1.3 var(--f);letter-spacing:.17em;text
 
 /* ---------- responsive ---------- */
 @media(max-width:1100px){
+ .trust-in{gap:10px 26px}
+ .trust-in>span{padding:0;border:0}  /* the row wraps below this width, and a divider would start a line */
  .navlinks{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;
   align-items:stretch;gap:0;background:var(--bg2);border-bottom:1px solid var(--line);padding:8px 0}
  .navlinks.open{display:flex}
@@ -372,7 +435,7 @@ footer h3{color:var(--tx);font:700 .76rem/1.3 var(--f);letter-spacing:.17em;text
  .callbtn{margin-left:auto;order:2}
 }
 @media(max-width:1040px){
- .masonry{column-count:3}
+ .jgal figure{flex-basis:calc(var(--ar,.75) * 220px)}
  .foot{grid-template-columns:1fr 1fr}
 }
 @media(max-width:940px){
@@ -399,6 +462,10 @@ footer h3{color:var(--tx);font:700 .76rem/1.3 var(--f);letter-spacing:.17em;text
  .hang figure:nth-child(even){margin-top:34px}
  .hang figure:nth-child(n+7){display:none}
  header{position:relative}
+ .scards{grid-template-columns:repeat(2,minmax(0,1fr));gap:36px 20px}
+ .cov{grid-template-columns:1fr;gap:30px}
+ .split{grid-template-columns:1fr;gap:0}
+ .split .sec-head{position:static;margin-bottom:34px}
 }
 @media(max-width:640px){
  section{padding:56px 0}
@@ -406,8 +473,15 @@ footer h3{color:var(--tx);font:700 .76rem/1.3 var(--f);letter-spacing:.17em;text
  .tagline{font-size:.86rem}
  .lede{font-size:1.02rem}
  .g2,.g3,.g4{grid-template-columns:1fr}
- .masonry{column-count:2;column-gap:10px}
- .masonry figure{margin-bottom:10px;padding:4px}
+ .filters{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;
+  margin-left:-6px;margin-right:calc(var(--gut) * -1);padding:6px var(--gut) 6px 6px}  /* one swipeable row per group; the padding keeps focus rings in view */
+ .filters::-webkit-scrollbar{display:none}
+ .chip{flex:none}
+ .jgal{gap:12px}
+ .jgal figure{flex-basis:calc(var(--ar,.75) * 150px);
+  box-shadow:0 0 0 3px var(--frame),0 0 0 4px var(--chrome-lo),0 12px 20px -14px rgba(0,0,0,.9)}
+ .jgal figcaption{opacity:1;position:absolute;width:1px;height:1px;padding:0;overflow:hidden;
+  clip:rect(0 0 0 0);white-space:nowrap}  /* too small to read at this size; the lightbox shows it */
  .gal-grid{grid-template-columns:repeat(2,1fr);gap:10px}
  .gal-grid figure{padding:4px}
  .posts,.posts.two{grid-template-columns:1fr}
@@ -421,5 +495,19 @@ footer h3{color:var(--tx);font:700 .76rem/1.3 var(--f);letter-spacing:.17em;text
  .lb button{width:42px;height:42px}
  ol.steps li{padding:22px 20px 22px 66px}
  ol.steps li::before{left:20px}
+ .trust-in{display:grid;grid-template-columns:1fr 1fr;gap:12px 18px;font-size:.9rem}
+ .trust-in>span{padding:0;border:0}
+ .trust-in>span:first-child{grid-column:1/-1}
+ /* style cards turn sideways: the piece on the left, the words on the right */
+ .scards{grid-template-columns:1fr;gap:22px}
+ .scard{flex-direction:row;gap:18px;align-items:flex-start}
+ .scard figure{flex:none;width:104px;margin:0;padding:5px}
+ .scard figcaption{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+ .scard h3{font-size:1.04rem}
+ .scard p{font-size:.9rem}
+ .scard .more{padding-top:10px}
+ .covers{gap:10px}
+ .covers figure{padding:4px 4px 0}
+ .covers figcaption{font-size:.74rem;padding:7px 3px 8px}
 }
 """

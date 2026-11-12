@@ -1,6 +1,6 @@
 # Anointed Ink project memory
 
-Last updated: 2026-11-08
+Last updated: 2026-11-11
 
 ## Purpose and preferences
 
@@ -76,7 +76,7 @@ Last updated: 2026-11-08
 - Actions, Pages configuration/deployment, live HTTPS, and outside-sandbox Codex health checks are complete as recorded above. Do not repeat these as unresolved setup work.
 - Codex CLI update is verified complete at 0.161.0; doctor advertises a further update to 0.162.0. Desktop update remains pending. Latest project launcher health diagnostics passed: 22 ok, 1 idle, 2 advisory warnings, 0 failures. Do not delete memory databases or change security protections as a routine fix.
 - Read current Git status before changes. The user authorized a local commit of the reviewed tooling and continuity notes on 2026-10-09. This request does not include pushing or publishing; keep debug.log out of commits.
-- The 2026-11-08 facelift by Simply Digital is the current design (see Design system below). Waiting on the owners: the sign's original logo file (for the favicon and schema logo), merch, and whether to add a piercing page.
+- The 2026-11-08 facelift by Simply Digital, with its 2026-11-11 second pass, is the current design (see Design system and Photos below). The logo is traced from the sign and the piercing page is live. Waiting on the owners: merch (a Printful account), the sign maker's original logo file for large prints, and the two held photos.
 
 ## Codex maintenance requested on 2026-10-09
 
@@ -111,3 +111,23 @@ Last updated: 2026-11-08
 - `_js.py` is a Python string: a JavaScript `'\n'` must be written `'\\n'` there. A bare one becomes a real line
   break inside the script and stops every script on the page. After editing it, check the built page has no script errors.
 
+## Photos and the second pass (2026-11-11, Simply Digital)
+
+- Brittany (co-owner) sent 39 photos of Nestor's work on 2026-11-09. 35 are on the site, so his portfolio is 100
+  pieces. Not added: two duplicates, and two held for the owners' OK (a first name beside an autism puzzle piece; a
+  piece under the chest that shows more than the photo rule allows). Brittany said the other artists' photos would
+  follow.
+- Film-character pieces (Wednesday and Sally, Thanos, Pennywise, Art the Clown, the Deathly Hallows, the Joker,
+  Darth Vader) are `noPromo`: portfolio only, never a share, preload or business image.
+- The cover-up once captioned "Aztec warrior" is a winged warrior woman in a crested, Greek-style helmet. Its caption
+  and tags are corrected; its file names stay `tattoo-aztec-warrior-cover-up-*` so image links keep working.
+- Simply Digital's photo pipeline (outside this workspace) rebuilds `img/manifest.json` from its catalog and keeps
+  any entry carrying a `source` key, such as D'Angelo's eight added here through Codex. Add photos that way and they
+  survive its next run.
+- Home: `STYLE_CARDS` gives each style card one of Nestor's photos (the last field is the img class that sets the
+  crop; `zb` zooms from the bottom so a top watermark falls outside the arch). `COVERS` is the four cover-ups.
+  `HANG` was refreshed with Brittany's photos. The altarpiece's center is Christ in prayer, and the page preloads it.
+- Gallery: rows of even height read left to right (`.jgal`; `figure(..., ar=True)` puts the photo's shape on the
+  figure). `recent_first()` in `build.py` puts the newer batch first within each quality, for the gallery and
+  Nestor's artist page. On phones the filter buttons are one swipeable row per group.
+- `LASTMOD` in `build.py` dates the pages whose content changed; a style-only change does not move a date.

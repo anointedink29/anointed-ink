@@ -79,15 +79,16 @@ def pic(slug, width, p="", cls="", lazy=True, sizes=None, w=None, h=None, widths
             f'{load}{" class=" + cls if cls else ""}></picture>')
 
 
-def figure(slug, p="", tag_attrs=True, eager=False, cls="", widths=None, sizes=None):
-    """A gallery figure wired for the filter and the lightbox. `cls` goes on the img (eg op-top)."""
+def figure(slug, p="", tag_attrs=True, eager=False, cls="", widths=None, sizes=None, ar=False):
+    """A gallery figure wired for the filter and the lightbox. `cls` goes on the img (eg op-top).
+    `ar` puts the photo's shape on the figure (--ar), for the gallery's rows of even height."""
     m = BYSLUG[slug]
     r = rel(p)
     fw, fh = m["sizes"]["1000"]
     cap = credit(m)
-    attrs = ""
+    attrs = f' style="--ar:{fw / fh:.3f}"' if ar else ""
     if tag_attrs:
-        attrs = (f' data-styles="{" ".join(m["styles"])}"'
+        attrs += (f' data-styles="{" ".join(m["styles"])}"'
                  f' data-artist="{m["artist"]}"'
                  f' data-full="{r}img/{slug}-1000.webp"'
                  f' data-fw="{fw}" data-fh="{fh}"'

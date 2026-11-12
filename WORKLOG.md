@@ -131,3 +131,24 @@ Keep entries concise and append new work below. Store durable context in `MEMORY
   committed files; 175 of 175 page-widths pass real phone emulation; titles, descriptions, H1s and canonicals of the 33
   existing pages are unchanged.
 - Outstanding: whether D'Angelo has his own booking link; whether Brittney is named as an owner on the site.
+
+## 2026-11-11: Brittany's photos and a second facelift pass (Simply Digital)
+
+- Request: Brittany (co-owner) texted Eddie 39 photos of Nestor's work on 2026-11-09 for the site; Eddie asked for
+  them to go up and for another facelift pass.
+- Photos: 35 added to Nestor's portfolio, which is now 100 pieces. Not added: two duplicates (one is the cover-up
+  already on the site) and two held for the owners' OK (a first name beside an autism puzzle piece; a piece under the
+  chest that shows more than the photo rule allows). The eight film-character pieces are `noPromo`. The cover-up
+  captioned "Aztec warrior" is a winged warrior woman in a crested helmet: caption and tag corrected, file names kept.
+- Changes: home: a photo on each style card, four cover-ups before and after, a new Selected work wall from Brittany's
+  photos, Christ in prayer at the center of the altarpiece, the booking steps in a row, the questions beside their
+  heading, restyled reviews, a tidier trust bar (its side margin on phones was missing). Gallery: rows of even height
+  read left to right, newest photos first (Nestor's artist page too), filter buttons that swipe on phones. Sitemap
+  dates moved for the 15 pages whose content changed.
+- Unchanged: every URL, title, H1, canonical, robots tag, schema type and internal link; every description except the
+  gallery's photo count.
+- Validation: build and lint pass (35 pages, 0 failures, the two standing sleeve-FAQ warnings); a clean rebuild matches
+  the committed files; 175 of 175 page-widths pass real phone emulation (360, 375, 390, 1024, 1280) with no script
+  errors or broken images, and the checker caught its negative control; the idea builder, lightbox and gallery filter
+  work; all six lead events still fire.
+- Outstanding: the two held photos; the other artists' photos Brittany said she would send.

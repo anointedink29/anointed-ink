@@ -87,8 +87,8 @@ ARTISTS = [
     dict(slug="nestor-juarez", name=ARTIST, short="Nestor", alt_names=[HANDLE],
          handle=IG_HANDLE, ig=IG, dm=IG_DM, role="Owner and tattoo artist",
          person_id="/about/#nestor",
-         photo_note=("Several carry his watermark, which reads <em>Ghtto_Mex</em> or "
-                     "<em>Tattoonestor_juarez</em>. Some pieces are photographed fresh, still "
+         photo_note=("Several carry his watermark, which reads <em>Tat2Nestuh</em>, <em>Ghtto_Mex</em> "
+                     "or <em>Tattoonestor_juarez</em>. Some pieces are photographed fresh, still "
                      "under wrap, which is why a few of them look glossy or soft.")),
     dict(slug="cristhian-oyola", name="Cristhian Oyola", short="Cristhian",
          alt_names=["Oyola Ink"], handle="@andrees_ink",

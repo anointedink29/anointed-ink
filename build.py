@@ -24,6 +24,18 @@ def and_list(items):
     return items[0] if len(items) == 1 else ", ".join(items[:-1]) + " and " + items[-1]
 
 
+def recent_first(ms):
+    """Best first, and within a quality the newer batch first. Brittany's photos of 11-09 carry
+    the highest catalog indexes and his current watermark, so they lead his gallery."""
+    return sorted(ms, key=lambda m: (-m["quality"], -m["index"]))
+
+
+def row_sizes(m):
+    """`sizes` for a gallery row figure, whose width follows the photo's shape (see .jgal)."""
+    w, h = m["sizes"]["1000"]
+    return f"(max-width:640px) {round(w / h * 170)}px, {round(w / h * 330)}px"
+
+
 def trust_bar():
     return f"""<div class="trust"><div class="wrap trust-in">
  <span><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> <b>{GRATING}</b> from
@@ -49,32 +61,47 @@ of them.</p></div>
 
 
 # ===================================================================== HOME
+# Each style card carries one of Nestor's pieces from that style. Picked for photos whose crop
+# keeps any watermark out of the frame; the last field is the img class that sets the crop
+# (zb zooms in from the bottom edge, so a watermark along the top falls outside the arch).
 STYLE_CARDS = [
     ("Black &amp; grey Chicano realism",
      "Smooth gray wash, hard contrast, and the masks, script and religious imagery the style was "
-     "built on. This is the work Nestor is asked for most.", "black-and-grey-chicano-realism/"),
+     "built on. This is the work Nestor is asked for most.", "black-and-grey-chicano-realism/",
+     "tattoo-dove-familia-script-and-red-rose", "zb"),
     ("Cover-ups",
      "Old work, faded work, or a name you would rather not explain. Cover-ups are their own "
-     "discipline and they need an artist who has done a lot of them.", "cover-up-tattoos/"),
+     "discipline and they need an artist who has done a lot of them.", "cover-up-tattoos/",
+     "tattoo-roses-and-rosary-cover-up", ""),
     ("Portraits",
      "Faces in black and grey or color, worked up from a photograph you bring in. The hardest "
-     "thing to get right and the first thing people notice.", "portrait-tattoos/"),
+     "thing to get right and the first thing people notice.", "portrait-tattoos/",
+     "tattoo-classical-statue-portrait", ""),
     ("Religious pieces",
      "Christ portraits, praying hands, crosses, scripture and cherubs. A large share of what "
-     "comes through this shop, and the reason for the shop&rsquo;s name.", "religious-tattoos/"),
+     "comes through this shop, and the reason for the shop&rsquo;s name.", "religious-tattoos/",
+     "tattoo-our-lady-of-guadalupe-with-a-rose", "op-left"),
     ("Memorials",
      "Portraits, dates, script and the imagery that belongs with them, laid out so the piece "
-     "stays as readable as possible for years to come.", "memorial-tattoos/"),
+     "stays as readable as possible for years to come.", "memorial-tattoos/",
+     "tattoo-grandpa-memorial-fishing-at-sunset", "op-b"),
     ("Aztec &amp; cultural work",
      "Jaguar and eagle warriors, sun stones, headdresses and the heritage imagery that sits at "
-     "the center of Chicano tattooing.", "aztec-and-chicano-culture-tattoos/"),
+     "the center of Chicano tattooing.", "aztec-and-chicano-culture-tattoos/",
+     "tattoo-aztec-sun-stone-medallion", "op-l20"),
     ("Color realism",
      "Fully saturated work, packed and blended, for pieces meant to be seen from across a room.",
-     "color-realism-tattoos/"),
+     "color-realism-tattoos/", "tattoo-galaxy-wolf-with-crescent-moon", ""),
     ("Sleeves",
      "Half and full sleeves planned as one composition and built over several sittings, rather "
-     "than collected one patch at a time.", "tattoo-sleeves/"),
+     "than collected one patch at a time.", "tattoo-sleeves/",
+     "tattoo-warrior-and-lion-sleeve-in-progress", ""),
 ]
+
+# Four cover-ups, each one job shown before and after. The class sets the crop (op-t0 keeps the
+# crowned skull's old watermark below the frame).
+COVERS = [("tattoo-crowned-skull-cover-up", "op-t0"), ("tattoo-medusa-cover-up", ""),
+          ("tattoo-koi-fish-cover-up", ""), ("tattoo-ornamental-elephant-cover-up", "")]
 
 FAQ = [
     ("Do you take walk-ins?",
@@ -139,15 +166,16 @@ STEPS = [
 # sign. Each panel carries its plate (title and credit), so lint's credit rule holds. The img
 # classes keep the old watermark out of the arch (zoom-top) or the frame (op-left).
 ALTAR = [("tattoo-catrina-woman-with-roses", "Catrina and roses", "wing wl", 400, "op-top"),
-         ("tattoo-jesus-portrait-with-thorns", "Jesus, crown of thorns", "mid", 1000, "zoom-top"),
+         ("tattoo-praying-christ-with-crown-of-thorns", "Christ in prayer", "mid", 1000, "op-t30"),
          ("tattoo-laugh-now-cry-later-masks", "Laugh now, cry later", "wing wr", 400, "op-left")]
 
 # Selected work on the home page, hung salon style. Picked for pieces whose photos carry no
-# old watermark inside the frame; the class sets the crop.
-HANG = [("tattoo-classical-statue-portrait", ""), ("tattoo-hummingbird-and-flowers", ""),
-        ("tattoo-jesus-with-dove-and-candles", "op-l20"), ("tattoo-roaring-tiger-face", ""),
-        ("tattoo-aztec-sun-stone-medallion", "op-l20"), ("tattoo-pocket-watch-and-rose", ""),
-        ("tattoo-cherub-on-clouds", ""), ("tattoo-heart-clock-with-roses", "op-t8")]
+# watermark inside the frame; the class sets the crop. Refreshed 2026-11-11 from the photos
+# Brittany sent on 11-09.
+HANG = [("tattoo-saint-michael-over-the-fallen-devil", ""), ("tattoo-skull-and-snake-with-thorns", ""),
+        ("tattoo-virgin-mary-in-prayer-with-christ", "op-l40"), ("tattoo-pit-bull-portrait-with-name", "op-t30"),
+        ("tattoo-blue-eyed-tiger-with-butterflies", ""), ("tattoo-traditional-scorpion-with-hearts", ""),
+        ("tattoo-crested-helmet-warrior-virtus-et-honor", ""), ("tattoo-ship-wheel-hand-piece-with-script", "op-t30")]
 
 # The idea builder's choices. Style chips carry the manifest tag they match.
 IDEA_STYLES = [("Black and grey", "black-and-grey-realism"), ("Religious", "religious"),
@@ -209,9 +237,16 @@ def idea_builder():
 
 
 def build_home():
+    sp_by = {s["slug"] + "/": s for s in STYLE_PAGES}
     cards = "".join(
-        f'<a class="card" href="{href}"><h3>{t}</h3><p>{d}</p>'
-        f'<span class="more">See the work &rarr;</span></a>' for t, d, href in STYLE_CARDS)
+        f'<a class="scard" href="{href}"><figure>'
+        f'{pic(slug, 400, cls=icls, widths=[400, 1000], sizes="(max-width:640px) 104px, (max-width:940px) 44vw, 270px")}'
+        f'<figcaption>{html.escape(credit(BYSLUG[slug]))}</figcaption></figure>'
+        f'<div class="scard-b"><h3>{t}</h3><p>{d}</p>'
+        f'<span class="more">{len(by_tags(sp_by[href]["tags"]))} pieces &middot; See the work &rarr;</span>'
+        f'</div></a>' for t, d, href, slug, icls in STYLE_CARDS)
+    covers = "".join(figure(x, cls=c, widths=[400, 1000], sizes="(max-width:940px) 46vw, 280px")
+                     for x, c in COVERS)
     gal = "".join(figure(x, cls=c, widths=[400, 1000], sizes="(max-width:940px) 46vw, 300px")
                   for x, c in HANG)
     faq = "".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q, a in FAQ)
@@ -221,13 +256,12 @@ def build_home():
                             "text": html.unescape(re.sub("<[^>]+>", "", a))}}
         for q, a in FAQ]}
     steps = "".join(f"<li><h3>{t}</h3><p>{d}</p></li>" for t, d in STEPS)
-    cov = BYSLUG.get("tattoo-crowned-skull-cover-up")
 
     return head(
         f"Tattoo Shop in {CITY}, IL | {BIZ}",
         f"Custom tattoos by {ARTIST} in {CITY}, IL. Black and grey Chicano realism, portraits, "
         f"cover-ups and memorials. {GRATING} stars from {GCOUNT} Google reviews.",
-        "", extra_ld=[faq_ld], preload="tattoo-jesus-portrait-with-thorns") + f"""
+        "", extra_ld=[faq_ld], preload=ALTAR[1][0]) + f"""
 <div class="hero" id="hero"><div class="wall" aria-hidden="true"></div><div class="halo" aria-hidden="true"></div><div class="floor" aria-hidden="true"></div><div class="wrap hero-grid">
  <div>
   <p class="eyebrow">{BIZ} &middot; {CITY}, {STATE_FULL}</p>
@@ -236,16 +270,16 @@ def build_home():
   <p class="lede">Black and grey Chicano realism, portraits, color, memorials, religious pieces
   and cover-ups, at {BIZ} on 111th Street. Every piece drawn for the person wearing it rather
   than pulled off a wall.</p>
-  <p class="lede" style="margin-top:18px;color:var(--tx)">
+  <p class="rating">
    <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
    <strong>{GRATING} from {GCOUNT} Google reviews</strong>
-   <span style="color:var(--muted2)"> as of {RATING_AS_OF}.</span>
+   <span class="asof"> as of {RATING_AS_OF}.</span>
    <a href="{GBP}" rel="noopener">Read them</a>.</p>
   <div class="cta">
    <a class="btn btn-p" href="{SMS}">Text your idea</a>
    <a class="btn btn-s" href="tel:{TEL}">Call {PHONE}</a>
-   <a class="btn btn-s" href="gallery/#{OWNER}">See {len(OWN)} tattoos by Nestor</a>
   </div>
+  <p class="herolink"><a href="gallery/#{OWNER}">See {len(OWN)} tattoos by Nestor &rarr;</a></p>
  </div>
  {altar()}
 </div></div>
@@ -257,7 +291,7 @@ def build_home():
  <h2>Every style, drawn from scratch</h2>
  <p>Nestor does not limit himself to one lane. The through line is custom work built around your
  idea, not a design that forty other people already have.</p></div>
- <div class="grid g4">{cards}</div>
+ <div class="scards">{cards}</div>
  <p class="areas" style="margin-top:24px">Piercing too: <a href="piercing/">see the prices and how to book</a>.
  Walk-ins are welcome when an artist is free: <a href="walk-in-tattoos/">what to expect</a>.</p>
 </div></section>
@@ -271,13 +305,13 @@ def build_home():
  Nestor&rsquo;s pieces &rarr;</a></p>
 </div></section>
 
-<section><div class="wrap">
+<section class="cov-sec"><div class="wrap">
  <div class="sec-head"><p class="eyebrow">Cover-ups</p>
  <h2>The tattoo you regret does not have to be the one people see</h2></div>
- <div class="grid g2" style="align-items:center">
+ <div class="cov">
   <div>
-   <p>The photograph beside this is one job, shown twice. On the left is an old dark tattoo with
-   the new design stenciled straight over the top of it. On the right is the finished piece.</p>
+   <p>Each photograph here is one job, shown before and after: the old tattoo, sometimes with the
+   new design stenciled straight over it, and then the finished piece.</p>
    <p>That is what a cover-up actually is. You are not erasing anything. You are designing a
    bigger, darker, busier piece whose shadows land exactly where the old ink sits, so the eye
    goes to the new piece instead.</p>
@@ -285,10 +319,7 @@ def build_home():
    realistic, including when the answer is that it needs to be bigger than you hoped.</p>
    <p><a class="btn btn-p" href="cover-up-tattoos/">How cover-ups work &rarr;</a></p>
   </div>
-  <div class="hero-img coverup">{pic('tattoo-crowned-skull-cover-up', 1000,
-                             sizes='(max-width:940px) 92vw, 46vw')}
-   <p class="areas" style="padding:14px 4px 0;font-size:.87rem">Stencil over the existing tattoo,
-   and the finished crowned skull. Same arm, before and after.</p></div>
+  <div class="covers">{covers}</div>
  </div>
 </div></section>
 
@@ -305,9 +336,10 @@ def build_home():
 
 {idea_builder()}
 
-<section><div class="wrap">
- <div class="sec-head"><p class="eyebrow">Questions</p><h2>Before you book</h2></div>
- {faq}
+<section><div class="wrap split">
+ <div class="sec-head"><p class="eyebrow">Questions</p><h2>Before you book</h2>
+ <p>Anything not answered here, text or call <a class="nowrap" href="tel:{TEL}">{PHONE}</a>.</p></div>
+ <div class="faq">{faq}</div>
 </div></section>
 
 {visit()}
@@ -323,7 +355,7 @@ def build_gallery():
             counts[s] = counts.get(s, 0) + 1
     order = [s for s, _ in sorted(counts.items(), key=lambda x: -x[1]) if counts[s] >= 2]
     per = [(a, by_artist(a["slug"])) for a in ARTISTS]
-    per = [(a, ms) for a, ms in per if ms]
+    per = [(a, recent_first(ms) if a["slug"] == OWNER else ms) for a, ms in per if ms]
     shown = [m for _, ms in per for m in ms]          # grouped by artist, each best first
     tally = and_list([f"{len(ms)} from {a['name']}&rsquo;s own portfolio"
                       if all(m.get("atShop") is False for m in ms)
@@ -336,8 +368,8 @@ def build_gallery():
     chips = "".join(
         f'<button class="chip" data-filter="{s}" aria-pressed="false">'
         f'{STYLE_LABELS.get(s, s)} {counts[s]}</button>' for s in order)
-    figs = "".join(figure(m["slug"], "gallery/", eager=(i < 6))
-                   for i, m in enumerate(shown))
+    figs = "".join(figure(m["slug"], "gallery/", eager=(i < 6), ar=True, widths=[400, 1000],
+                          sizes=row_sizes(m)) for i, m in enumerate(shown))
     notes = " ".join(
         f'<a href="../artists/{a["slug"]}/">{a["name"]}</a>: {a["photo_note"]}' for a, _ in per)
     ld = {"@context": "https://schema.org", "@type": "ImageGallery",
@@ -362,7 +394,7 @@ def build_gallery():
  <div class="filters" role="group" aria-label="Filter by artist" style="margin-bottom:12px">{who}</div>
  <div class="filters" role="group" aria-label="Filter by style">{chips}</div>
  <p class="count">Showing {len(MAN)} pieces.</p>
- <div class="masonry">{figs}</div>
+ <div class="jgal">{figs}</div>
  <div class="note" style="margin-top:34px"><strong>About these photographs.</strong>
  Each one is credited to the artist who tattooed it. {notes}</div>
  <div class="cta"><a class="btn btn-p" href="tel:{TEL}">Call {PHONE}</a>
@@ -848,7 +880,7 @@ def build_artist(a):
     p = f"artists/{a['slug']}/"
     c = ARTIST_COPY[a["slug"]]
     owner = a["slug"] == OWNER
-    work = by_artist(a["slug"])
+    work = recent_first(by_artist(a["slug"])) if owner else by_artist(a["slug"])
     shown = work[:12] if owner else work
     figs = "".join(figure(m["slug"], p, eager=(i < 4)) for i, m in enumerate(shown))
     ld = {"@context": "https://schema.org", "@type": "Person", "@id": person_id(a),
@@ -1392,8 +1424,14 @@ def build_blog_index():
 
 
 # ==================================================================== WRITE
-# Pages whose content changed after BUILT (the facelift, 2026-11-08); the sitemap says so.
-LASTMOD = {"": "2026-11-08", "piercing/": "2026-11-08", "walk-in-tattoos/": "2026-11-08"}
+# Pages whose content changed after BUILT (the facelift, 2026-11-08; Brittany's 35 photos and the
+# second pass, 2026-11-11); the sitemap says so. A style-only change does not move a date.
+LASTMOD = {"piercing/": "2026-11-08", "walk-in-tattoos/": "2026-11-08"}
+LASTMOD.update({u: "2026-11-11" for u in [
+    "", "gallery/", "about/", "artists/", "artists/nestor-juarez/", "tattoo-artist-oak-lawn/",
+    "es/tatuajes-estilo-chicano/", "black-and-grey-chicano-realism/", "cover-up-tattoos/",
+    "portrait-tattoos/", "religious-tattoos/", "memorial-tattoos/",
+    "aztec-and-chicano-culture-tattoos/", "color-realism-tattoos/", "tattoo-sleeves/"]})
 
 
 def emit():

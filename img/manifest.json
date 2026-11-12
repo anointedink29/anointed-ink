@@ -92,6 +92,96 @@
   }
  },
  {
+  "slug": "tattoo-christ-with-crown-of-thorns-on-the-neck",
+  "index": 128,
+  "artist": "nestor-juarez",
+  "alt": "Black and grey neck piece of Christ in a crown of thorns with eyes lowered.",
+  "caption": "Christ with a crown of thorns on the neck",
+  "subject": "christ with crown of thorns on the neck",
+  "styles": [
+   "religious",
+   "black-and-grey-realism",
+   "portrait"
+  ],
+  "palette": "black-and-grey",
+  "placement": "neck",
+  "quality": 5,
+  "isCollage": false,
+  "throughWrap": false,
+  "w": 1536,
+  "h": 2048,
+  "sizes": {
+   "400": [
+    400,
+    533
+   ],
+   "1000": [
+    1000,
+    1333
+   ]
+  }
+ },
+ {
+  "slug": "tattoo-color-floral-sleeve-with-bee-and-butterflies",
+  "index": 102,
+  "artist": "nestor-juarez",
+  "alt": "Full color floral arm sleeve of peonies, dahlias, irises and roses with a bee and butterflies, photographed outdoors.",
+  "caption": "Color floral sleeve with a bee and butterflies",
+  "subject": "color floral sleeve with bee and butterflies",
+  "styles": [
+   "color-realism",
+   "floral",
+   "sleeve"
+  ],
+  "palette": "color",
+  "placement": "full arm",
+  "quality": 5,
+  "isCollage": false,
+  "throughWrap": false,
+  "w": 1537,
+  "h": 2048,
+  "sizes": {
+   "400": [
+    400,
+    533
+   ],
+   "1000": [
+    1000,
+    1332
+   ]
+  }
+ },
+ {
+  "slug": "tattoo-grandpa-memorial-fishing-at-sunset",
+  "index": 119,
+  "artist": "nestor-juarez",
+  "alt": "Black and grey memorial forearm piece of a grandfather and a child fishing at sunset under a palm tree, with a script tribute to Grandpa.",
+  "caption": "Grandpa memorial, fishing at sunset",
+  "subject": "grandpa memorial fishing at sunset",
+  "styles": [
+   "memorial",
+   "black-and-grey-realism",
+   "lettering-script"
+  ],
+  "palette": "black-and-grey",
+  "placement": "forearm",
+  "quality": 5,
+  "isCollage": false,
+  "throughWrap": false,
+  "w": 1080,
+  "h": 1334,
+  "sizes": {
+   "400": [
+    400,
+    494
+   ],
+   "1000": [
+    1000,
+    1235
+   ]
+  }
+ },
+ {
   "slug": "tattoo-laugh-now-cry-later-masks",
   "index": 39,
   "artist": "nestor-juarez",
@@ -123,6 +213,36 @@
   }
  },
  {
+  "slug": "tattoo-medusa-cover-up",
+  "index": 136,
+  "artist": "nestor-juarez",
+  "alt": "Cover-up before and after: an old black castle piece, then a color Medusa with red snakes for hair and bared fangs.",
+  "caption": "Cover-up: an old black piece to a color Medusa",
+  "subject": "medusa cover-up",
+  "styles": [
+   "cover-up",
+   "color-realism",
+   "portrait"
+  ],
+  "palette": "color",
+  "placement": "",
+  "quality": 5,
+  "isCollage": true,
+  "throughWrap": false,
+  "w": 1920,
+  "h": 1920,
+  "sizes": {
+   "400": [
+    400,
+    400
+   ],
+   "1000": [
+    1000,
+    1000
+   ]
+  }
+ },
+ {
   "slug": "tattoo-norse-wolf-and-longship-sleeve",
   "index": 1,
   "artist": "nestor-juarez",
@@ -149,6 +269,96 @@
    "1000": [
     779,
     1000
+   ]
+  }
+ },
+ {
+  "slug": "tattoo-our-lady-of-guadalupe-with-a-rose",
+  "index": 112,
+  "artist": "nestor-juarez",
+  "alt": "Two views of a color forearm piece of Our Lady of Guadalupe in a star-covered mantle with rays behind her, above a pink rose.",
+  "caption": "Our Lady of Guadalupe with a rose",
+  "subject": "our lady of guadalupe with a rose",
+  "styles": [
+   "religious",
+   "chicano",
+   "color-realism",
+   "floral"
+  ],
+  "palette": "color",
+  "placement": "forearm",
+  "quality": 5,
+  "isCollage": true,
+  "throughWrap": false,
+  "w": 1056,
+  "h": 1056,
+  "sizes": {
+   "400": [
+    400,
+    400
+   ],
+   "1000": [
+    1000,
+    1000
+   ]
+  }
+ },
+ {
+  "slug": "tattoo-praying-christ-with-crown-of-thorns",
+  "index": 108,
+  "artist": "nestor-juarez",
+  "alt": "Black and grey forearm portrait of Christ in a crown of thorns, a tear on the cheek and hands folded in prayer, with a small butterfly.",
+  "caption": "Christ in prayer with a crown of thorns",
+  "subject": "praying christ with crown of thorns",
+  "styles": [
+   "religious",
+   "black-and-grey-realism",
+   "portrait"
+  ],
+  "palette": "black-and-grey",
+  "placement": "forearm",
+  "quality": 5,
+  "isCollage": false,
+  "throughWrap": false,
+  "w": 947,
+  "h": 1663,
+  "sizes": {
+   "400": [
+    400,
+    702
+   ],
+   "1000": [
+    947,
+    1663
+   ]
+  }
+ },
+ {
+  "slug": "tattoo-saint-michael-over-the-fallen-devil",
+  "index": 106,
+  "artist": "nestor-juarez",
+  "alt": "Black and grey leg piece of the archangel Michael with wings and a spear, standing over a fallen devil in clouds under a compass star.",
+  "caption": "Saint Michael over the fallen devil",
+  "subject": "saint michael over the fallen devil",
+  "styles": [
+   "religious",
+   "black-and-grey-realism"
+  ],
+  "palette": "black-and-grey",
+  "placement": "lower leg",
+  "quality": 5,
+  "isCollage": false,
+  "throughWrap": false,
+  "w": 1536,
+  "h": 2048,
+  "sizes": {
+   "400": [
+    400,
+    533
+   ],
+   "1000": [
+    1000,
+    1333
    ]
   }
  },
@@ -243,6 +453,36 @@
   }
  },
  {
+  "slug": "tattoo-virgin-mary-in-prayer-with-christ",
+  "index": 138,
+  "artist": "nestor-juarez",
+  "alt": "Black and grey forearm piece of the Virgin Mary in prayer holding a crucifix, beside a portrait of Christ.",
+  "caption": "Virgin Mary in prayer beside Christ",
+  "subject": "virgin mary in prayer with christ",
+  "styles": [
+   "religious",
+   "black-and-grey-realism",
+   "portrait"
+  ],
+  "palette": "black-and-grey",
+  "placement": "forearm",
+  "quality": 5,
+  "isCollage": false,
+  "throughWrap": false,
+  "w": 1537,
+  "h": 2048,
+  "sizes": {
+   "400": [
+    400,
+    533
+   ],
+   "1000": [
+    1000,
+    1332
+   ]
+  }
+ },
+ {
   "slug": "tattoo-woman-and-lioness-split-portrait",
   "index": 32,
   "artist": "nestor-juarez",
@@ -272,6 +512,65 @@
     1000
    ]
   }
+ },
+ {
+  "slug": "tattoo-anubis-over-the-all-seeing-eye",
+  "index": 120,
+  "artist": "nestor-juarez",
+  "alt": "Black and grey forearm piece of Anubis holding spears above a pyramid with a red all-seeing eye.",
+  "caption": "Anubis over the all-seeing eye",
+  "subject": "anubis over the all-seeing eye",
+  "styles": [
+   "black-and-grey-realism"
+  ],
+  "palette": "mixed",
+  "placement": "forearm",
+  "quality": 4,
+  "isCollage": false,
+  "throughWrap": false,
+  "w": 1536,
+  "h": 2048,
+  "sizes": {
+   "400": [
+    400,
+    533
+   ],
+   "1000": [
+    1000,
+    1333
+   ]
+  }
+ },
+ {
+  "slug": "tattoo-art-the-clown-portrait",
+  "index": 124,
+  "artist": "nestor-juarez",
+  "alt": "Black and grey portrait of the horror clown Art in a small black hat and white face paint.",
+  "caption": "Art the Clown in black and grey",
+  "subject": "art the clown portrait",
+  "styles": [
+   "black-and-grey-realism",
+   "portrait",
+   "anime-character"
+  ],
+  "palette": "black-and-grey",
+  "placement": "",
+  "quality": 4,
+  "isCollage": true,
+  "throughWrap": false,
+  "w": 1920,
+  "h": 1920,
+  "sizes": {
+   "400": [
+    400,
+    400
+   ],
+   "1000": [
+    1000,
+    1000
+   ]
+  },
+  "noPromo": true
  },
  {
   "slug": "tattoo-aztec-skull-and-anubis-hands",
@@ -417,6 +716,35 @@
    "1000": [
     1000,
     1000
+   ]
+  }
+ },
+ {
+  "slug": "tattoo-blue-eyed-tiger-with-butterflies",
+  "index": 117,
+  "artist": "nestor-juarez",
+  "alt": "Two views of a color piece of a tiger with blue eyes, butterflies, flowers and a skull.",
+  "caption": "Blue-eyed tiger with butterflies in color",
+  "subject": "blue-eyed tiger with butterflies",
+  "styles": [
+   "color-realism",
+   "animal"
+  ],
+  "palette": "color",
+  "placement": "upper arm",
+  "quality": 4,
+  "isCollage": true,
+  "throughWrap": false,
+  "w": 1079,
+  "h": 1070,
+  "sizes": {
+   "400": [
+    400,
+    397
+   ],
+   "1000": [
+    1000,
+    992
    ]
   }
  },
@@ -567,6 +895,35 @@
    "1000": [
     750,
     1000
+   ]
+  }
+ },
+ {
+  "slug": "tattoo-crested-helmet-warrior-virtus-et-honor",
+  "index": 123,
+  "artist": "nestor-juarez",
+  "alt": "Upper arm piece of a warrior in a red-crested helmet over a row of skulls, with VIRTUS ET HONOR lettering and a snarling beast behind.",
+  "caption": "Crested-helmet warrior, VIRTUS ET HONOR",
+  "subject": "crested helmet warrior virtus et honor",
+  "styles": [
+   "black-and-grey-realism",
+   "lettering-script"
+  ],
+  "palette": "mixed",
+  "placement": "upper arm",
+  "quality": 4,
+  "isCollage": false,
+  "throughWrap": false,
+  "w": 1536,
+  "h": 2048,
+  "sizes": {
+   "400": [
+    400,
+    533
+   ],
+   "1000": [
+    1000,
+    1333
    ]
   }
  },
@@ -724,6 +1081,68 @@
   }
  },
  {
+  "slug": "tattoo-darth-vader-color-sleeve",
+  "index": 137,
+  "artist": "nestor-juarez",
+  "alt": "Color forearm piece of Darth Vader with a red lightsaber above a blaster in a green burst.",
+  "caption": "Darth Vader in color",
+  "subject": "darth vader color sleeve",
+  "styles": [
+   "color-realism",
+   "anime-character",
+   "sleeve"
+  ],
+  "palette": "color",
+  "placement": "forearm",
+  "quality": 4,
+  "isCollage": false,
+  "throughWrap": false,
+  "w": 1152,
+  "h": 2048,
+  "sizes": {
+   "400": [
+    400,
+    711
+   ],
+   "1000": [
+    1000,
+    1778
+   ]
+  },
+  "noPromo": true
+ },
+ {
+  "slug": "tattoo-dove-familia-script-and-red-rose",
+  "index": 114,
+  "artist": "nestor-juarez",
+  "alt": "Two views of a forearm piece with a black and grey dove, Familia in script and a red rose.",
+  "caption": "Dove, Familia script and a red rose",
+  "subject": "dove familia script and red rose",
+  "styles": [
+   "black-and-grey-realism",
+   "chicano",
+   "lettering-script",
+   "floral"
+  ],
+  "palette": "mixed",
+  "placement": "forearm",
+  "quality": 4,
+  "isCollage": true,
+  "throughWrap": false,
+  "w": 1080,
+  "h": 1412,
+  "sizes": {
+   "400": [
+    400,
+    523
+   ],
+   "1000": [
+    1000,
+    1307
+   ]
+  }
+ },
+ {
   "slug": "tattoo-dove-in-flight",
   "index": 31,
   "artist": "nestor-juarez",
@@ -783,6 +1202,35 @@
   }
  },
  {
+  "slug": "tattoo-family-tree-with-names",
+  "index": 107,
+  "artist": "nestor-juarez",
+  "alt": "Black and grey family tree on the shoulder with names written in script along its branches, framed by clouds.",
+  "caption": "Family tree with names in script",
+  "subject": "family tree with names",
+  "styles": [
+   "black-and-grey-realism",
+   "lettering-script"
+  ],
+  "palette": "black-and-grey",
+  "placement": "shoulder",
+  "quality": 4,
+  "isCollage": false,
+  "throughWrap": false,
+  "w": 1536,
+  "h": 2048,
+  "sizes": {
+   "400": [
+    400,
+    533
+   ],
+   "1000": [
+    1000,
+    1333
+   ]
+  }
+ },
+ {
   "slug": "tattoo-firefighter-memorial-cross",
   "index": 50,
   "artist": "nestor-juarez",
@@ -837,6 +1285,35 @@
    "1000": [
     561,
     1000
+   ]
+  }
+ },
+ {
+  "slug": "tattoo-galaxy-wolf-with-crescent-moon",
+  "index": 122,
+  "artist": "nestor-juarez",
+  "alt": "Color forearm piece of a wolf under a crescent moon in purple, red and blue, with a howling wolf in silhouette below.",
+  "caption": "Galaxy wolf under a crescent moon",
+  "subject": "galaxy wolf with crescent moon",
+  "styles": [
+   "color-realism",
+   "animal"
+  ],
+  "palette": "color",
+  "placement": "forearm",
+  "quality": 4,
+  "isCollage": false,
+  "throughWrap": false,
+  "w": 1050,
+  "h": 1117,
+  "sizes": {
+   "400": [
+    400,
+    426
+   ],
+   "1000": [
+    1000,
+    1064
    ]
   }
  },
@@ -1053,6 +1530,69 @@
   }
  },
  {
+  "slug": "tattoo-joker-split-portrait",
+  "index": 133,
+  "artist": "nestor-juarez",
+  "alt": "Color upper arm piece of a laughing Joker above a weeping face, split by a tear, with lettering down the side.",
+  "caption": "Joker split portrait in color",
+  "subject": "joker split portrait",
+  "styles": [
+   "color-realism",
+   "portrait",
+   "anime-character",
+   "lettering-script"
+  ],
+  "palette": "color",
+  "placement": "upper arm",
+  "quality": 4,
+  "isCollage": false,
+  "throughWrap": false,
+  "w": 945,
+  "h": 1667,
+  "sizes": {
+   "400": [
+    400,
+    706
+   ],
+   "1000": [
+    945,
+    1667
+   ]
+  },
+  "noPromo": true
+ },
+ {
+  "slug": "tattoo-koi-fish-cover-up",
+  "index": 135,
+  "artist": "nestor-juarez",
+  "alt": "Cover-up before and after: two faded old tattoos, then a pair of koi in blue and orange over a sunset with name lettering, in color.",
+  "caption": "Cover-up: faded ink to a pair of koi",
+  "subject": "koi fish cover-up",
+  "styles": [
+   "cover-up",
+   "color-realism",
+   "animal",
+   "lettering-script"
+  ],
+  "palette": "color",
+  "placement": "upper arm",
+  "quality": 4,
+  "isCollage": true,
+  "throughWrap": false,
+  "w": 1920,
+  "h": 1920,
+  "sizes": {
+   "400": [
+    400,
+    400
+   ],
+   "1000": [
+    1000,
+    1000
+   ]
+  }
+ },
+ {
   "slug": "tattoo-lioness-with-two-cubs",
   "index": 5,
   "artist": "nestor-juarez",
@@ -1174,6 +1714,99 @@
   }
  },
  {
+  "slug": "tattoo-ornamental-elephant-cover-up",
+  "index": 130,
+  "artist": "nestor-juarez",
+  "alt": "Cover-up before and after: old script, a crown and a heart on the forearm, then an ornamental elephant in a jeweled headdress above a pink lotus, in color.",
+  "caption": "Cover-up: old script to an ornamental elephant",
+  "subject": "ornamental elephant cover-up",
+  "styles": [
+   "cover-up",
+   "animal",
+   "ornamental",
+   "color-realism"
+  ],
+  "palette": "color",
+  "placement": "forearm",
+  "quality": 4,
+  "isCollage": true,
+  "throughWrap": false,
+  "w": 2048,
+  "h": 2048,
+  "sizes": {
+   "400": [
+    400,
+    400
+   ],
+   "1000": [
+    1000,
+    1000
+   ]
+  }
+ },
+ {
+  "slug": "tattoo-pennywise-with-red-balloon",
+  "index": 116,
+  "artist": "nestor-juarez",
+  "alt": "Black and grey portrait of the clown Pennywise holding a red balloon over a child in a yellow raincoat.",
+  "caption": "Pennywise with the red balloon",
+  "subject": "pennywise with red balloon",
+  "styles": [
+   "black-and-grey-realism",
+   "anime-character",
+   "portrait"
+  ],
+  "palette": "mixed",
+  "placement": "",
+  "quality": 4,
+  "isCollage": false,
+  "throughWrap": false,
+  "w": 1075,
+  "h": 1604,
+  "sizes": {
+   "400": [
+    400,
+    597
+   ],
+   "1000": [
+    1000,
+    1492
+   ]
+  },
+  "noPromo": true
+ },
+ {
+  "slug": "tattoo-pit-bull-portrait-with-name",
+  "index": 118,
+  "artist": "nestor-juarez",
+  "alt": "Black and grey portrait of a pit bull with its name in script below its paws.",
+  "caption": "Pit bull portrait with its name",
+  "subject": "pit bull portrait with name",
+  "styles": [
+   "black-and-grey-realism",
+   "animal",
+   "portrait",
+   "lettering-script"
+  ],
+  "palette": "black-and-grey",
+  "placement": "upper arm",
+  "quality": 4,
+  "isCollage": false,
+  "throughWrap": false,
+  "w": 1536,
+  "h": 2048,
+  "sizes": {
+   "400": [
+    400,
+    533
+   ],
+   "1000": [
+    1000,
+    1333
+   ]
+  }
+ },
+ {
   "slug": "tattoo-pocket-watch-and-rose",
   "index": 37,
   "artist": "nestor-juarez",
@@ -1264,6 +1897,64 @@
   "atShop": false
  },
  {
+  "slug": "tattoo-purple-wolf-with-butterfly-and-roses",
+  "index": 111,
+  "artist": "nestor-juarez",
+  "alt": "Color piece of a purple wolf with orange eyes, a monarch butterfly and purple and blue roses.",
+  "caption": "Purple wolf with a monarch and roses",
+  "subject": "purple wolf with butterfly and roses",
+  "styles": [
+   "color-realism",
+   "animal",
+   "floral"
+  ],
+  "palette": "color",
+  "placement": "forearm",
+  "quality": 4,
+  "isCollage": false,
+  "throughWrap": false,
+  "w": 1080,
+  "h": 1080,
+  "sizes": {
+   "400": [
+    400,
+    400
+   ],
+   "1000": [
+    1000,
+    1000
+   ]
+  }
+ },
+ {
+  "slug": "tattoo-red-demon-masks-and-samurai-armor",
+  "index": 100,
+  "artist": "nestor-juarez",
+  "alt": "Color arm piece of a red horned demon mask above a dark samurai helmet with glowing orange eyes, and a fanged red mask below.",
+  "caption": "Red demon masks and samurai armor in color",
+  "subject": "red demon masks and samurai armor",
+  "styles": [
+   "color-realism"
+  ],
+  "palette": "color",
+  "placement": "arm",
+  "quality": 4,
+  "isCollage": false,
+  "throughWrap": false,
+  "w": 1536,
+  "h": 2048,
+  "sizes": {
+   "400": [
+    400,
+    533
+   ],
+   "1000": [
+    1000,
+    1333
+   ]
+  }
+ },
+ {
   "slug": "tattoo-roaring-tiger-face",
   "index": 7,
   "artist": "nestor-juarez",
@@ -1289,6 +1980,124 @@
    "1000": [
     750,
     1000
+   ]
+  }
+ },
+ {
+  "slug": "tattoo-roses-and-rosary-cover-up",
+  "index": 113,
+  "artist": "nestor-juarez",
+  "alt": "Cover-up shown twice: a stencil drawn over an old tattoo, then the finished red roses, rosary beads, cross and butterflies.",
+  "caption": "Cover-up: stencil to roses, rosary and cross",
+  "subject": "roses and rosary cover-up",
+  "styles": [
+   "cover-up",
+   "religious",
+   "floral"
+  ],
+  "palette": "mixed",
+  "placement": "forearm",
+  "quality": 4,
+  "isCollage": true,
+  "throughWrap": false,
+  "w": 1080,
+  "h": 1076,
+  "sizes": {
+   "400": [
+    400,
+    399
+   ],
+   "1000": [
+    1000,
+    996
+   ]
+  }
+ },
+ {
+  "slug": "tattoo-sally-pin-up-with-jack-skellington",
+  "index": 103,
+  "artist": "nestor-juarez",
+  "alt": "Two views of a color forearm piece of Sally from The Nightmare Before Christmas with Jack Skellington, bats, pumpkins and a lamppost.",
+  "caption": "Sally and Jack Skellington in color",
+  "subject": "sally pin-up with jack skellington",
+  "styles": [
+   "color-realism",
+   "anime-character"
+  ],
+  "palette": "color",
+  "placement": "forearm",
+  "quality": 4,
+  "isCollage": true,
+  "throughWrap": false,
+  "w": 1920,
+  "h": 1920,
+  "sizes": {
+   "400": [
+    400,
+    400
+   ],
+   "1000": [
+    1000,
+    1000
+   ]
+  },
+  "noPromo": true
+ },
+ {
+  "slug": "tattoo-ship-wheel-hand-piece-with-script",
+  "index": 126,
+  "artist": "nestor-juarez",
+  "alt": "Black and grey hand piece of a ship's wheel ringed by the words You are the captain of your own ship.",
+  "caption": "Ship's wheel with script on the hand",
+  "subject": "ship wheel hand piece with script",
+  "styles": [
+   "black-and-grey-realism",
+   "lettering-script"
+  ],
+  "palette": "black-and-grey",
+  "placement": "hand",
+  "quality": 4,
+  "isCollage": false,
+  "throughWrap": false,
+  "w": 1536,
+  "h": 2048,
+  "sizes": {
+   "400": [
+    400,
+    533
+   ],
+   "1000": [
+    1000,
+    1333
+   ]
+  }
+ },
+ {
+  "slug": "tattoo-skull-and-snake-with-thorns",
+  "index": 131,
+  "artist": "nestor-juarez",
+  "alt": "Black and grey rib piece of a skull wrapped by a snake and a thorned vine.",
+  "caption": "Skull and snake with thorns",
+  "subject": "skull and snake with thorns",
+  "styles": [
+   "black-and-grey-realism",
+   "animal"
+  ],
+  "palette": "black-and-grey",
+  "placement": "ribs",
+  "quality": 4,
+  "isCollage": false,
+  "throughWrap": false,
+  "w": 1536,
+  "h": 2048,
+  "sizes": {
+   "400": [
+    400,
+    533
+   ],
+   "1000": [
+    1000,
+    1333
    ]
   }
  },
@@ -1323,6 +2132,66 @@
   }
  },
  {
+  "slug": "tattoo-thanos-and-the-infinity-gauntlet",
+  "index": 110,
+  "artist": "nestor-juarez",
+  "alt": "Color calf piece of Thanos wearing the Infinity Gauntlet, with glowing stones and orange lights.",
+  "caption": "Thanos and the Infinity Gauntlet in color",
+  "subject": "thanos and the infinity gauntlet",
+  "styles": [
+   "color-realism",
+   "anime-character",
+   "portrait"
+  ],
+  "palette": "color",
+  "placement": "lower leg",
+  "quality": 4,
+  "isCollage": false,
+  "throughWrap": false,
+  "w": 1016,
+  "h": 1663,
+  "sizes": {
+   "400": [
+    400,
+    655
+   ],
+   "1000": [
+    1000,
+    1637
+   ]
+  },
+  "noPromo": true
+ },
+ {
+  "slug": "tattoo-tribal-and-dotwork-leg-sleeves",
+  "index": 105,
+  "artist": "nestor-juarez",
+  "alt": "Three panels of black tribal leg sleeves with bold banding, one with a dotwork geometric pattern and one with a spiral sun.",
+  "caption": "Tribal and dotwork geometric leg sleeves",
+  "subject": "tribal and dotwork leg sleeves",
+  "styles": [
+   "ornamental",
+   "sleeve"
+  ],
+  "palette": "black-and-grey",
+  "placement": "lower leg",
+  "quality": 4,
+  "isCollage": true,
+  "throughWrap": false,
+  "w": 1920,
+  "h": 1920,
+  "sizes": {
+   "400": [
+    400,
+    400
+   ],
+   "1000": [
+    1000,
+    1000
+   ]
+  }
+ },
+ {
   "slug": "tattoo-virgin-mary-praying",
   "index": 73,
   "artist": "nestor-juarez",
@@ -1348,6 +2217,66 @@
    "1000": [
     1000,
     1000
+   ]
+  }
+ },
+ {
+  "slug": "tattoo-wednesday-sally-and-jack-color-sleeve",
+  "index": 101,
+  "artist": "nestor-juarez",
+  "alt": "Three views of a color forearm sleeve with Wednesday Addams and a black cat, Sally from The Nightmare Before Christmas holding a rose, Jack Skellington on a spiral hill, and a red-haired figure among hearts.",
+  "caption": "Wednesday, Sally and Jack, a color forearm sleeve",
+  "subject": "wednesday sally and jack color sleeve",
+  "styles": [
+   "color-realism",
+   "anime-character",
+   "sleeve"
+  ],
+  "palette": "color",
+  "placement": "forearm",
+  "quality": 4,
+  "isCollage": true,
+  "throughWrap": false,
+  "w": 1920,
+  "h": 1920,
+  "sizes": {
+   "400": [
+    400,
+    400
+   ],
+   "1000": [
+    1000,
+    1000
+   ]
+  },
+  "noPromo": true
+ },
+ {
+  "slug": "tattoo-witch-cat-and-crowned-cat",
+  "index": 127,
+  "artist": "nestor-juarez",
+  "alt": "Color piece of an orange cat in a witch hat and a gray cat in a crown and red cape holding a sword, over a spell book, with a purple dragon above.",
+  "caption": "Witch cat and crowned cat in color",
+  "subject": "witch cat and crowned cat",
+  "styles": [
+   "color-realism",
+   "animal"
+  ],
+  "palette": "color",
+  "placement": "",
+  "quality": 4,
+  "isCollage": false,
+  "throughWrap": false,
+  "w": 1537,
+  "h": 2048,
+  "sizes": {
+   "400": [
+    400,
+    533
+   ],
+   "1000": [
+    1000,
+    1332
    ]
   }
  },
@@ -1448,11 +2377,10 @@
   "index": 16,
   "artist": "nestor-juarez",
   "alt": "Three panel cover-up showing an old red forearm tattoo, a purple stencil, then a finished winged warrior woman in a crested helmet",
-  "caption": "Cover-up: old ink to Aztec warrior",
+  "caption": "Cover-up: old ink to a winged warrior woman",
   "subject": "Aztec warrior cover-up",
   "styles": [
    "cover-up",
-   "aztec-cultural",
    "black-and-grey-realism"
   ],
   "palette": "black-and-grey",
@@ -1649,6 +2577,37 @@
     1000
    ]
   }
+ },
+ {
+  "slug": "tattoo-deathly-hallows-always",
+  "index": 132,
+  "artist": "nestor-juarez",
+  "alt": "Color piece of the Deathly Hallows symbol formed by a wand, with wings in a purple and blue galaxy, above the word Always.",
+  "caption": "Deathly Hallows and Always in galaxy color",
+  "subject": "deathly hallows always",
+  "styles": [
+   "color-realism",
+   "anime-character",
+   "lettering-script"
+  ],
+  "palette": "color",
+  "placement": "",
+  "quality": 3,
+  "isCollage": false,
+  "throughWrap": false,
+  "w": 1536,
+  "h": 2048,
+  "sizes": {
+   "400": [
+    400,
+    533
+   ],
+   "1000": [
+    1000,
+    1333
+   ]
+  },
+  "noPromo": true
  },
  {
   "slug": "tattoo-dragon-back-piece",
@@ -1916,6 +2875,93 @@
    "1000": [
     800,
     1000
+   ]
+  }
+ },
+ {
+  "slug": "tattoo-spider-forearm-piece",
+  "index": 125,
+  "artist": "nestor-juarez",
+  "alt": "Forearm piece of a black spider with a red and blue body.",
+  "caption": "Spider with a red and blue body",
+  "subject": "spider forearm piece",
+  "styles": [
+   "animal"
+  ],
+  "palette": "mixed",
+  "placement": "forearm",
+  "quality": 3,
+  "isCollage": false,
+  "throughWrap": false,
+  "w": 1536,
+  "h": 2048,
+  "sizes": {
+   "400": [
+    400,
+    533
+   ],
+   "1000": [
+    1000,
+    1333
+   ]
+  }
+ },
+ {
+  "slug": "tattoo-traditional-scorpion-with-hearts",
+  "index": 121,
+  "artist": "nestor-juarez",
+  "alt": "Color forearm piece of a red scorpion with hearts on its back under a red and black rose.",
+  "caption": "Traditional scorpion with hearts",
+  "subject": "traditional scorpion with hearts",
+  "styles": [
+   "animal",
+   "floral"
+  ],
+  "palette": "color",
+  "placement": "forearm",
+  "quality": 3,
+  "isCollage": false,
+  "throughWrap": false,
+  "w": 1536,
+  "h": 2048,
+  "sizes": {
+   "400": [
+    400,
+    533
+   ],
+   "1000": [
+    1000,
+    1333
+   ]
+  }
+ },
+ {
+  "slug": "tattoo-warrior-and-lion-sleeve-in-progress",
+  "index": 104,
+  "artist": "nestor-juarez",
+  "alt": "Black and grey forearm sleeve in progress: a warrior in a crested helmet with a spear, a lion with red eyes, and a robed figure near the wrist, with stencil lines still showing at the top.",
+  "caption": "Warrior and lion forearm sleeve, in progress",
+  "subject": "warrior and lion sleeve in progress",
+  "styles": [
+   "black-and-grey-realism",
+   "animal",
+   "sleeve"
+  ],
+  "palette": "black-and-grey",
+  "placement": "forearm",
+  "quality": 3,
+  "isCollage": false,
+  "throughWrap": false,
+  "w": 1080,
+  "h": 1920,
+  "sizes": {
+   "400": [
+    400,
+    711
+   ],
+   "1000": [
+    1000,
+    1778
    ]
   }
  },
