@@ -1714,6 +1714,36 @@
   }
  },
  {
+  "slug": "tattoo-ornamental-bat-with-jeweled-chains",
+  "index": 134,
+  "artist": "nestor-juarez",
+  "alt": "Sternum piece of an ornamental bat in black dotwork with its wings spread, hung with dotted chains and purple gems.",
+  "caption": "Ornamental bat with dotwork chains and purple gems",
+  "subject": "ornamental bat with jeweled chains",
+  "styles": [
+   "ornamental",
+   "animal"
+  ],
+  "palette": "mixed",
+  "placement": "sternum",
+  "quality": 4,
+  "isCollage": false,
+  "throughWrap": false,
+  "w": 1460,
+  "h": 1465,
+  "sizes": {
+   "400": [
+    400,
+    401
+   ],
+   "1000": [
+    1000,
+    1003
+   ]
+  },
+  "noPromo": true
+ },
+ {
   "slug": "tattoo-ornamental-elephant-cover-up",
   "index": 130,
   "artist": "nestor-juarez",
@@ -2371,6 +2401,35 @@
     1000
    ]
   }
+ },
+ {
+  "slug": "tattoo-autism-awareness-puzzle-piece-with-script-name",
+  "index": 129,
+  "artist": "nestor-juarez",
+  "alt": "Color forearm piece of an autism awareness puzzle piece in yellow, red, green, blue and purple above a name in flowing script.",
+  "caption": "Autism awareness puzzle piece over a name in script",
+  "subject": "autism awareness puzzle piece with script name",
+  "styles": [
+   "lettering-script"
+  ],
+  "palette": "color",
+  "placement": "forearm",
+  "quality": 3,
+  "isCollage": false,
+  "throughWrap": false,
+  "w": 1036,
+  "h": 880,
+  "sizes": {
+   "400": [
+    400,
+    340
+   ],
+   "1000": [
+    1000,
+    849
+   ]
+  },
+  "noPromo": true
  },
  {
   "slug": "tattoo-aztec-warrior-cover-up",

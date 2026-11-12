@@ -152,3 +152,17 @@ Keep entries concise and append new work below. Store durable context in `MEMORY
   errors or broken images, and the checker caught its negative control; the idea builder, lightbox and gallery filter
   work; all six lead events still fire.
 - Outstanding: the two held photos; the other artists' photos Brittany said she would send.
+
+## 2026-11-11 (night): the two held photos added (Simply Digital)
+
+- Request: Eddie, 2026-11-11 21:17 CST: "if Brittany sent it it is ok to use."
+- Photos: the two held photos are on the site, so Nestor's portfolio is 102 pieces and the gallery 113. The puzzle
+  piece with a first name is cropped to the piece (an older wrist tattoo and a wristband fall outside), and its alt
+  text and caption never spell the name. The ornamental bat under the chest is cropped to the piece, with less of the
+  chest. Both are `noPromo`: never a share, preload or business image.
+- Unchanged: every URL, title, H1, canonical, robots tag, schema type, internal link and sitemap date; every
+  description except the gallery's photo count.
+- Validation: build and lint pass (35 pages, 0 failures, the two standing warnings); every existing image file is
+  byte-identical after the pipeline run; 56 of 56 checks pass on the five changed pages at five widths, and the
+  checker caught its negative control; the gallery shows 113 in even rows, and its cover-up filter still shows 6.
+- Outstanding: the other artists' photos Brittany said she would send.

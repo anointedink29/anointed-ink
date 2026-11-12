@@ -113,10 +113,11 @@ Last updated: 2026-11-11
 
 ## Photos and the second pass (2026-11-11, Simply Digital)
 
-- Brittany (co-owner) sent 39 photos of Nestor's work on 2026-11-09. 35 are on the site, so his portfolio is 100
-  pieces. Not added: two duplicates, and two held for the owners' OK (a first name beside an autism puzzle piece; a
-  piece under the chest that shows more than the photo rule allows). Brittany said the other artists' photos would
-  follow.
+- Brittany (co-owner) sent 39 photos of Nestor's work on 2026-11-09. 37 are on the site, so his portfolio is 102
+  pieces; the two duplicates were left out. Eddie, 2026-11-11: "if Brittany sent it it is ok to use." Two photos
+  held that day went up the same night: a first name beside an autism puzzle piece (its alt text and caption never
+  spell the name) and an ornamental bat under the chest, each cropped to the piece and `noPromo`. Brittany said the
+  other artists' photos would follow.
 - Film-character pieces (Wednesday and Sally, Thanos, Pennywise, Art the Clown, the Deathly Hallows, the Joker,
   Darth Vader) are `noPromo`: portfolio only, never a share, preload or business image.
 - The cover-up once captioned "Aztec warrior" is a winged warrior woman in a crested, Greek-style helmet. Its caption
