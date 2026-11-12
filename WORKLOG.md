@@ -166,3 +166,17 @@ Keep entries concise and append new work below. Store durable context in `MEMORY
   byte-identical after the pipeline run; 56 of 56 checks pass on the five changed pages at five widths, and the
   checker caught its negative control; the gallery shows 113 in even rows, and its cover-up filter still shows 6.
 - Outstanding: the other artists' photos Brittany said she would send.
+
+## 2026-11-11 (night): the shop's own logo (Simply Digital)
+
+- Request: Eddie saved the shop's logo card from their Facebook into Simply Digital's brand folder, then said, at
+  21:35:29 CST: "its their logo".
+- Changes: the footer, the schema logo and the share card now show their logo (gold wings and cross over "Anointed
+  Ink" in purple and gold) on its own parchment, as a small plaque with rounded corners and a thin gold rule, in place
+  of the logo traced from the sign. The footer image's alt text is now "Anointed Ink", since the new logo carries no
+  "Tattoo Studio" line. The header text and the icons are unchanged.
+- Unchanged: every URL, title, description, H1, canonical, robots tag, schema type, internal link and sitemap date.
+- Validation: build and lint pass (35 pages, 0 failures, the two standing warnings); on every page only the footer
+  image's alt, height and one style rule changed; 386 of 386 checks pass at five widths on all 35 pages, and the
+  checker caught its negative control.
+- Outstanding: the full-size original of their logo, for large prints.

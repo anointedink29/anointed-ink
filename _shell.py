@@ -312,7 +312,7 @@ def foot(path=""):
     return f"""</main>
 <footer><div class="wrap"><div class="foot">
  <div>
-  <img class="footlogo" src="{r}img/logo-footer.webp" alt="{BIZ} Tattoo Studio" width="520" height="244" loading="lazy" decoding="async">
+  <img class="footlogo" src="{r}img/logo-footer.webp" alt="{BIZ}" width="520" height="232" loading="lazy" decoding="async">
   <h3 class="sr">{BIZ}</h3>
   <p>Custom tattooing in {CITY}, {STATE_FULL}. Owned by {ARTIST}.<br>
   Black &amp; grey Chicano realism, portraits, color, memorials and cover-ups.</p>

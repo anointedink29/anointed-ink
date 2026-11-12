@@ -32,7 +32,7 @@ body{width:1200px;height:630px;display:flex;color:#f4f1f6;font-family:S,-apple-s
  overflow:hidden;background:radial-gradient(75% 95% at 76% 40%,#523863 0%,#3f2a4a 42%,#221827 78%,#120e15 100%)}
 .l{flex:1;padding:64px 40px 64px 64px;display:flex;flex-direction:column;justify-content:center}
 .eyebrow{font-size:19px;font-weight:700;letter-spacing:.22em;color:#e0d2fa;margin-bottom:22px}
-.logo{width:600px;height:auto;display:block;margin:-6px 0 18px -14px}
+.logo{width:600px;height:auto;display:block;margin:0 0 24px;filter:drop-shadow(0 16px 26px rgba(0,0,0,.45))}
 .sub{font-size:26px;color:#d6cfdc;line-height:1.45;margin-bottom:30px}
 .meta{display:flex;gap:14px;align-items:center;font-size:22px;font-weight:700}
 .pill{background:#1e1724;border:1.5px solid #b8b1c2;padding:11px 20px}

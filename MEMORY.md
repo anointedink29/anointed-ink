@@ -76,7 +76,7 @@ Last updated: 2026-11-11
 - Actions, Pages configuration/deployment, live HTTPS, and outside-sandbox Codex health checks are complete as recorded above. Do not repeat these as unresolved setup work.
 - Codex CLI update is verified complete at 0.161.0; doctor advertises a further update to 0.162.0. Desktop update remains pending. Latest project launcher health diagnostics passed: 22 ok, 1 idle, 2 advisory warnings, 0 failures. Do not delete memory databases or change security protections as a routine fix.
 - Read current Git status before changes. The user authorized a local commit of the reviewed tooling and continuity notes on 2026-10-09. This request does not include pushing or publishing; keep debug.log out of commits.
-- The 2026-11-08 facelift by Simply Digital, with its 2026-11-11 second pass, is the current design (see Design system and Photos below). The logo is traced from the sign and the piercing page is live. Waiting on the owners: merch (a Printful account), the sign maker's original logo file for large prints, and the two held photos.
+- The 2026-11-08 facelift by Simply Digital, with its 2026-11-11 second pass, is the current design (see Design system and Photos below). The logo is the shop's own, from their Facebook logo card (2026-11-11), and the piercing page is live. Waiting on the owners: merch (a Printful account) and their logo's full-size original for large prints.
 
 ## Codex maintenance requested on 2026-10-09
 
@@ -103,8 +103,11 @@ Last updated: 2026-11-11
 - The idea builder (`idea_builder()`, script in `_js.py`) fills the text to Nestor from the visitor's picks. No AI and
   no upload; its style chips map to manifest tags.
 - Every figure still needs a plain `<figcaption>` with "by <artist>": lint reads only an attribute-free figcaption.
-- The logo is traced from the shop's sign (Simply Digital's brand kit holds the SVG masters). On the site: the icons,
-  `img/logo.png` (schema), `img/logo-footer.webp` and `img/logo-reverse.webp` (share card).
+- The logo is the shop's own (Eddie, 2026-11-11: "its their logo"), from their Facebook logo card, shown as a small
+  parchment plaque the way their card shows it, since its 3D lettering casts shadows on the parchment inside every
+  loop and no clean cutout exists. Simply Digital's brand kit (`logo-2026-11-11`) rebuilds it. On the site:
+  `img/logo.png` (schema), `img/logo-footer.webp` and `img/logo-reverse.webp` (the share card's logo, `make-og.py`).
+  The icons are still the cross from the logo traced from the sign on 11-08.
 - `piercing/` shows D'Angelo Andolini's posted prices with their date (`PIERCING_AS_OF`); re-read the list in the shop
   before changing a price. `walk-in-tattoos/` carries the walk-in policy (`WALK_INS`).
 - The hero motion stops for visitors who turn motion off, and the page reads fine without JavaScript.
